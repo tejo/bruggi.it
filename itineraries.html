@@ -53,49 +53,11 @@
       scrollbar-width: none;
     }
   </style>
+  <script src="main.js" defer></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-[#111811] dark:text-gray-100 min-h-screen flex flex-col">
-  <header
-    class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark border-b border-[#f0f4f0] dark:border-[#2a402a] px-6 py-3 shadow-sm">
-    <div class="max-w-7xl mx-auto flex items-center justify-between whitespace-nowrap">
-      <div class="flex items-center gap-4 text-[#111811] dark:text-white">
-        <div class="size-8 text-primary flex items-center justify-center">
-          <span class="material-symbols-outlined text-3xl">filter_hdr</span>
-        </div>
-        <h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">Bruggi</h2>
-      </div>
-      <div class="hidden md:flex items-center gap-8">
-        <nav class="flex items-center gap-6">
-          <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
-          <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Village</a>
-          <a class="text-sm font-bold text-primary" href="#">Itineraries</a>
-          <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
-        </nav>
-      </div>
-      <div class="flex gap-2 items-center">
-        <div class="hidden sm:flex bg-[#f0f4f0] dark:bg-[#2a402a] rounded-lg p-1">
-          <button class="px-3 py-1.5 rounded bg-primary text-[#111811] text-xs font-bold shadow-sm">IT</button>
-          <button
-            class="px-3 py-1.5 rounded hover:bg-black/5 dark:hover:bg-white/10 text-[#111811] dark:text-gray-300 text-xs font-medium transition-colors">EN</button>
-          <button
-            class="px-3 py-1.5 rounded hover:bg-black/5 dark:hover:bg-white/10 text-[#111811] dark:text-gray-300 text-xs font-medium transition-colors">DE</button>
-        </div>
-        <button
-          class="flex items-center justify-center rounded-lg size-10 bg-[#f0f4f0] dark:bg-[#2a402a] hover:bg-[#e0e4e0] dark:hover:bg-[#3a503a] transition-colors text-[#111811] dark:text-white">
-          <span class="material-symbols-outlined text-[20px]">light_mode</span>
-        </button>
-        <button
-          class="flex items-center justify-center rounded-lg size-10 bg-[#f0f4f0] dark:bg-[#2a402a] hover:bg-[#e0e4e0] dark:hover:bg-[#3a503a] transition-colors text-[#111811] dark:text-white">
-          <span class="material-symbols-outlined text-[20px]">person</span>
-        </button>
-        <button
-          class="md:hidden flex items-center justify-center rounded-lg size-10 bg-[#f0f4f0] dark:bg-[#2a402a] text-[#111811] dark:text-white">
-          <span class="material-symbols-outlined text-[20px]">menu</span>
-        </button>
-      </div>
-    </div>
-  </header>
+  <div id="layout-header"></div>
   <main class="flex-1 flex flex-col">
     <div class="relative w-full bg-surface-light dark:bg-surface-dark">
       <div class="absolute inset-0 z-0">
@@ -411,48 +373,7 @@
       </div>
     </div>
   </main>
-  <footer class="bg-white dark:bg-surface-dark border-t border-[#f0f4f0] dark:border-[#2a402a] py-12 px-6">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-2 text-[#111811] dark:text-white">
-          <span class="material-symbols-outlined text-primary text-2xl">filter_hdr</span>
-          <h2 class="text-xl font-bold">Bruggi</h2>
-        </div>
-        <p class="text-sm text-gray-500 max-w-xs">The official tourism guide for the village of Bruggi. Discover nature,
-          culture, and adventure.</p>
-        <div class="flex gap-4 mt-2">
-          <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
-              class="text-sm font-bold">IG</span></a>
-          <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
-              class="text-sm font-bold">FB</span></a>
-          <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
-              class="text-sm font-bold">TW</span></a>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
-        <div class="flex flex-col gap-2">
-          <h4 class="font-bold text-sm dark:text-white">Explore</h4>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Routes</a>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Events</a>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Eat &amp; Sleep</a>
-        </div>
-        <div class="flex flex-col gap-2">
-          <h4 class="font-bold text-sm dark:text-white">Info</h4>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Getting Here</a>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Contact</a>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Weather</a>
-        </div>
-        <div class="flex flex-col gap-2">
-          <h4 class="font-bold text-sm dark:text-white">Legal</h4>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Privacy</a>
-          <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Cookies</a>
-        </div>
-      </div>
-    </div>
-    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-100 dark:border-gray-800 text-center md:text-left">
-      <p class="text-xs text-gray-400">© 2024 Comune di Bruggi. All rights reserved.</p>
-    </div>
-  </footer>
+  <div id="layout-footer"></div>
 </body>
 
 </html>

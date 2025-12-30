@@ -45,42 +45,13 @@
       scrollbar-width: none;
     }
   </style>
+  <script src="main.js" defer></script>
 </head>
 
 <body
   class="bg-background-light dark:bg-background-dark font-display text-[#111811] dark:text-gray-100 transition-colors duration-300">
   <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
-    <header
-      class="sticky top-0 z-50 w-full border-b border-[#e5e7eb] dark:border-[#2a402a] bg-white/90 dark:bg-background-dark/90 backdrop-blur-md transition-colors duration-300">
-      <div class="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-4">
-          <div
-            class="flex size-10 items-center justify-center rounded-lg bg-primary/20 dark:bg-primary/10 text-primary">
-            <span class="material-symbols-outlined text-2xl">landscape</span>
-          </div>
-          <h2 class="text-xl font-bold tracking-tight text-[#111811] dark:text-white">Bruggi</h2>
-        </div>
-        <nav class="hidden md:flex items-center gap-8">
-          <a class="text-sm font-medium hover:text-primary transition-colors text-neutral-600 dark:text-gray-300"
-            href="#">Home</a>
-          <a class="text-sm font-bold text-primary" href="#">Gallery</a>
-          <a class="text-sm font-medium hover:text-primary transition-colors text-neutral-600 dark:text-gray-300"
-            href="#">History</a>
-          <a class="text-sm font-medium hover:text-primary transition-colors text-neutral-600 dark:text-gray-300"
-            href="#">Visit</a>
-        </nav>
-        <div class="flex items-center gap-4">
-          <button
-            class="flex h-9 items-center justify-center rounded-lg bg-primary/10 hover:bg-primary/20 px-3 text-xs font-bold text-primary dark:text-primary transition-colors">
-            IT | EN | DE
-          </button>
-          <button
-            class="md:hidden flex size-9 items-center justify-center rounded-lg text-neutral-800 dark:text-white hover:bg-neutral-100 dark:hover:bg-[#1c331c]">
-            <span class="material-symbols-outlined">menu</span>
-          </button>
-        </div>
-      </div>
-    </header>
+    <div id="layout-header"></div>
     <main class="flex-1">
       <div class="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8">
         <div class="mb-8 flex flex-col gap-4 py-4 md:flex-row md:items-end md:justify-between">
@@ -234,72 +205,7 @@
         </div>
       </div>
     </main>
-    <footer class="bg-white dark:bg-[#0c1a0c] border-t border-[#e5e7eb] dark:border-[#2a402a] py-12">
-      <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <div class="grid gap-8 md:grid-cols-3">
-          <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-3">
-              <div class="flex size-8 items-center justify-center rounded-lg bg-primary/20 text-primary">
-                <span class="material-symbols-outlined text-lg">landscape</span>
-              </div>
-              <span class="text-lg font-bold text-[#111811] dark:text-white">Bruggi</span>
-            </div>
-            <p class="max-w-xs text-sm leading-relaxed text-neutral-600 dark:text-gray-400">
-              A timeless Italian village in the heart of the Alps. Visit us to experience nature, history, and
-              community.
-            </p>
-          </div>
-          <div class="flex flex-col gap-4">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">Navigation
-            </h3>
-            <div class="flex flex-col gap-2">
-              <a class="text-sm font-medium text-[#111811] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                href="#">Galleria Foto</a>
-              <a class="text-sm font-medium text-[#111811] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                href="#">Historical Archives</a>
-              <a class="text-sm font-medium text-[#111811] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                href="#">Plan Your Visit</a>
-              <a class="text-sm font-medium text-[#111811] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
-                href="#">Events Calendar</a>
-            </div>
-          </div>
-          <div class="flex flex-col gap-4">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">Contact</h3>
-            <div class="flex flex-col gap-3">
-              <div class="flex items-center gap-2 text-sm text-[#111811] dark:text-gray-300">
-                <span class="material-symbols-outlined text-primary">location_on</span>
-                Piazza Centrale 1, 39031 Bruggi (BZ)
-              </div>
-              <div class="flex items-center gap-2 text-sm text-[#111811] dark:text-gray-300">
-                <span class="material-symbols-outlined text-primary">mail</span>
-                info@bruggi.it
-              </div>
-              <div class="flex gap-4 mt-2">
-                <a class="text-neutral-400 hover:text-primary transition-colors" href="#">
-                  <span class="sr-only">Instagram</span>
-                  <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path clip-rule="evenodd"
-                      d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465 1.067-.047 1.409-.06 3.809-.06h.63zm1.418 2.003l-.135.005c-1.205.056-2.072.197-2.636.567-.655.43-1.166 1.167-1.378 2.112-.224.995-.27 2.016-.067 2.98.243 1.157 1.042 2.158 2.106 2.637.954.428 2.067.436 3.03.045 1.037-.42 1.77-1.343 1.956-2.453.156-.934.02-1.9-.384-2.748-.485-1.018-1.428-1.758-2.492-1.956zm-1.31 1.74c1.232-.057 2.378.694 2.768 1.83.33 1.037-.035 2.183-.902 2.825-.92.68-2.223.493-2.91-.41-.745-.98-.445-2.395.666-2.993.43-.23.908-.34 1.378-.316zm5.827-1.084c-.452-.02-.857.307-.936.757-.087.494.246.97.74.965.48-.005.862-.395.862-.876 0-.46-.364-.842-.666-.846z"
-                      fill-rule="evenodd"></path>
-                  </svg>
-                </a>
-                <a class="text-neutral-400 hover:text-primary transition-colors" href="#">
-                  <span class="sr-only">Facebook</span>
-                  <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path clip-rule="evenodd"
-                      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                      fill-rule="evenodd"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-12 border-t border-[#e5e7eb] dark:border-[#2a402a] pt-8 text-center">
-          <p class="text-xs text-neutral-400">© 2024 Comune di Bruggi. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
+    <div id="layout-footer"></div>
   </div>
 </body>
 
