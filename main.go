@@ -35,10 +35,37 @@ type SharedWelcomeSection struct {
 }
 
 type IndexLocale struct {
-	Nav      NavLocale      `toml:"nav"`
-	Hero     HeroLocale     `toml:"hero"`
-	Welcome  WelcomeLocale  `toml:"welcome"`
-	Sections SectionTitles  `toml:"sections"`
+	Nav        NavLocale        `toml:"nav"`
+	Hero       HeroLocale       `toml:"hero"`
+	Welcome    WelcomeLocale    `toml:"welcome"`
+	Sections   SectionTitles    `toml:"sections"`
+	WebcamPage WebcamPageLocale `toml:"webcam_page"`
+}
+
+type WebcamPageLocale struct {
+	Live            string `toml:"live"`
+	HD              string `toml:"hd"`
+	PanoramaTitle   string `toml:"panorama_title"`
+	Location        string `toml:"location"`
+	Share           string `toml:"share"`
+	Snapshot        string `toml:"snapshot"`
+	Timelapse       string `toml:"timelapse"`
+	StatusOnline    string `toml:"status_online"`
+	NextUpdate      string `toml:"next_update"`
+	ReportIssue     string `toml:"report_issue"`
+	ConditionsTitle string `toml:"conditions_title"`
+	UpdatedAgo      string `toml:"updated_ago"`
+	Temperature     string `toml:"temperature"`
+	FeelsLike       string `toml:"feels_like"`
+	Wind            string `toml:"wind"`
+	Direction       string `toml:"direction"`
+	Humidity        string `toml:"humidity"`
+	Precip          string `toml:"precip"`
+	Visibility      string `toml:"visibility"`
+	VisRange        string `toml:"vis_range"`
+	VisGood         string `toml:"vis_good"`
+	VisPoor         string `toml:"vis_poor"`
+	VisModerate     string `toml:"vis_moderate"`
 }
 
 type NavLocale struct {
@@ -130,10 +157,37 @@ type RenderItinerary struct {
 
 // Helper struct to pass to templates, flattening the structure
 type RenderIndex struct {
-	Nav      RenderNav
-	Hero     RenderHero
-	Welcome  RenderWelcome
-	Sections SectionTitles
+	Nav        RenderNav
+	Hero       RenderHero
+	Welcome    RenderWelcome
+	Sections   SectionTitles
+	WebcamPage RenderWebcamPage
+}
+
+type RenderWebcamPage struct {
+	Live            string
+	HD              string
+	PanoramaTitle   string
+	Location        string
+	Share           string
+	Snapshot        string
+	Timelapse       string
+	StatusOnline    string
+	NextUpdate      string
+	ReportIssue     string
+	ConditionsTitle string
+	UpdatedAgo      string
+	Temperature     string
+	FeelsLike       string
+	Wind            string
+	Direction       string
+	Humidity        string
+	Precip          string
+	Visibility      string
+	VisRange        string
+	VisGood         string
+	VisPoor         string
+	VisModerate     string
 }
 
 type RenderNav struct {
@@ -236,23 +290,20 @@ func collectUsedImages(index *IndexFile, gallery *GalleryData, itineraries []Iti
 
 	// Helper to add path
 	add := func(p string) {
-		// p is like "/static/img/foo.jpg"
-		// We want to store relative path on disk: "static/img/foo.jpg"
-		if strings.HasPrefix(p, "/static/") {
-			rel := strings.TrimPrefix(p, "/")
-			used[rel] = true
-			
-			// Also add the thumbnail version if it implies one
-			// Our processImage logic creates thumbs in static/thumbs/img/...
-			// But the input 'p' here is the generated URL from load* functions.
-			
-			// Wait, the load* functions return the *processed* URL.
-			// loadIndex: prepends /static/
-			// loadGallery: calls processImage -> returns /static/img/... and /static/thumbs/img/...
-			// loadItineraries: calls processImage -> returns /static/img/... and /static/thumbs/img/...
-			
-			// So if we have /static/img/foo.jpg, we expect static/img/foo.jpg to exist.
+		if p == "" {
+			return
 		}
+		// p is like "/static/img/foo.jpg" or "img/hero.jpg" (from index.toml)
+		clean := p
+		if strings.HasPrefix(clean, "/") {
+			clean = strings.TrimPrefix(clean, "/")
+		} else {
+			// If it doesn't have /static prefix, it might be from TOML relative to static/
+			if !strings.HasPrefix(clean, "static/") {
+				clean = "static/" + clean
+			}
+		}
+		used[clean] = true
 	}
 
 	add(index.Hero.Image)
@@ -416,6 +467,31 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 			Image:       indexData.Welcome.Image,
 		},
 		Sections: l.Sections,
+		WebcamPage: RenderWebcamPage{
+			Live:            l.WebcamPage.Live,
+			HD:              l.WebcamPage.HD,
+			PanoramaTitle:   l.WebcamPage.PanoramaTitle,
+			Location:        l.WebcamPage.Location,
+			Share:           l.WebcamPage.Share,
+			Snapshot:        l.WebcamPage.Snapshot,
+			Timelapse:       l.WebcamPage.Timelapse,
+			StatusOnline:    l.WebcamPage.StatusOnline,
+			NextUpdate:      l.WebcamPage.NextUpdate,
+			ReportIssue:     l.WebcamPage.ReportIssue,
+			ConditionsTitle: l.WebcamPage.ConditionsTitle,
+			UpdatedAgo:      l.WebcamPage.UpdatedAgo,
+			Temperature:     l.WebcamPage.Temperature,
+			FeelsLike:       l.WebcamPage.FeelsLike,
+			Wind:            l.WebcamPage.Wind,
+			Direction:       l.WebcamPage.Direction,
+			Humidity:        l.WebcamPage.Humidity,
+			Precip:          l.WebcamPage.Precip,
+			Visibility:      l.WebcamPage.Visibility,
+			VisRange:        l.WebcamPage.VisRange,
+			VisGood:         l.WebcamPage.VisGood,
+			VisPoor:         l.WebcamPage.VisPoor,
+			VisModerate:     l.WebcamPage.VisModerate,
+		},
 	}
 
 	// Prepare Itineraries for this locale
