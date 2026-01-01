@@ -11,12 +11,13 @@
 *   **Configuration:** TOML files (`content/`) for data and localization
 *   **Styling:** Tailwind CSS (via CDN in templates)
 *   **Output:** Static HTML files generated in `dist/`
+*   **Watcher:** `fsnotify` for auto-rebuilding during development.
 
 ## Directory Structure
 
 *   `main.go`: The core generator logic.
 *   `content/`: TOML data files defining the site's content.
-    *   `index.toml`: Homepage content.
+    *   `index.toml`: Homepage content and navigation.
     *   `galleries.toml`: Photo collection.
     *   `itineraries/*.toml`: Individual itinerary definitions.
 *   `templates/`: Pongo2 HTML templates.
@@ -29,6 +30,7 @@
 *   `static/`: Static assets (JS, CSS, images) copied to `dist/` during build.
     *   `js/main.js`: Client-side scripts.
 *   `dist/`: The generated output directory (Git ignored recommended).
+*   `legacy_html/`: Unused HTML files from the previous static version.
 
 ## Building and Running
 
@@ -38,15 +40,15 @@
     go run main.go
     ```
 
-2.  **Serve the Site:**
-    Serve the `dist/` directory using any static file server.
-    *   **Python:** `python3 -m http.server -d dist`
-    *   **Node.js:** `npx serve dist`
-    *   **Go:** `go run github.com/jessvdk/go-static@latest -d dist`
+2.  **Watch and Serve (Development Mode):**
+    Build the site, watch for file changes, and serve at `http://localhost:8080`.
+    ```bash
+    go run main.go -serve
+    ```
 
 ## Localization
 The site supports multiple locales (currently `it` and `en`).
 *   **Italian (Default):** Generated at `dist/*.html`
 *   **English:** Generated at `dist/en/*.html`
 
-Data in TOML files is structured with `[it]` and `[en]` sections for translation.
+Data in TOML files is structured with shared fields at the root and localized fields in `[it]` and `[en]` sections. The navigation bar is also fully localized via `index.toml`.
