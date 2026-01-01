@@ -188,6 +188,7 @@ type RenderWebcamPage struct {
 	VisGood         string
 	VisPoor         string
 	VisModerate     string
+	Images          []string
 }
 
 type RenderNav struct {
@@ -321,7 +322,7 @@ func collectUsedImages(index *IndexFile, gallery *GalleryData, itineraries []Iti
 			add(img.Thumbnail)
 		}
 	}
-	
+
 	return used
 }
 
@@ -370,7 +371,7 @@ func cleanupImages(usedImages map[string]bool) error {
 		}
 		return nil
 	})
-	
+
 	return err
 }
 
@@ -429,8 +430,7 @@ func watchAndServe() {
 		log.Fatal(http.ListenAndServe(":8080", nil))
 	}()
 
-	<-
-done
+	<-done
 }
 
 func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
@@ -519,6 +519,11 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		})
 	}
 
+	webcamImages, err := loadWebcamImages("static/webcam")
+	if err != nil {
+		log.Printf("Error loading webcam images: %v", err)
+	}
+
 	// Render Index
 	ctx := pongo2.Context{
 		"locale":         locale,
@@ -530,13 +535,16 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		"itineraries":    localItineraries,
 	}
 
+	// Update WebcamPage with loaded images
+	renderIndex.WebcamPage.Images = webcamImages
+
 	tpl := pongo2.Must(pongo2.FromFile("templates/index.html"))
 	outPath := "dist/index.html"
 	if locale == "en" {
 		outPath = "dist/en/index.html"
 	}
 
-	err := renderToFile(tpl, ctx, outPath)
+	err = renderToFile(tpl, ctx, outPath)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -749,7 +757,7 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 			if it.GpxFile != "" {
 				it.GpxFile = "/static/" + it.GpxFile
 			}
-			
+
 			// Process Gallery
 			it.ProcessedGallery = make([]GalleryImage, len(it.Gallery))
 			for i, rawPath := range it.Gallery {
@@ -761,7 +769,7 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 					it.ProcessedGallery[i] = GalleryImage{Url: url, Thumbnail: thumb}
 				}
 			}
-			
+
 			its = append(its, it)
 		}
 		return nil
@@ -779,11 +787,11 @@ func copyDir(src string, dst string) error {
 		}
 		rel, _ := filepath.Rel(src, path)
 		destPath := filepath.Join(dst, rel)
-		
+
 		if d.IsDir() {
 			return os.MkdirAll(destPath, 0755)
 		}
-		
+
 		data, err := os.ReadFile(path)
 		if err != nil {
 			return err
@@ -855,4 +863,30 @@ func processImage(rawPath string) (originalWeb string, thumbWeb string, err erro
 	}
 
 	return "/static/" + cleanPath, "/static/thumbs/" + cleanPath, nil
+}
+
+func loadWebcamImages(dir string) ([]string, error) {
+	var images []string
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return images, nil
+		}
+		return nil, err
+	}
+
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".jpg") {
+			// Exclude current.jpg from the time-lapse list if desired,
+			// or keep it. The user said "all the images in the folder in a loop".
+			// Usually time-lapse is history. Let's exclude 'current.jpg' to avoid
+			// it being out of order or duplicate if it matches a timestamp.
+			// But for now, let's include everything except 'current.jpg' for the list,
+			// assuming 'current' is the live view and others are history.
+			if entry.Name() != "current.jpg" {
+				images = append(images, "/static/webcam/"+entry.Name())
+			}
+		}
+	}
+	return images, nil
 }

@@ -100,9 +100,9 @@
           <div class="mb-8">
             <div
               class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
-              <div
+              <div id="webcam-image"
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0PDI1AEh7QIlj2FC4aaZNv5aIbbOfE7j80ot2nseBqxeo6WwIF939QzC3_ittgQJ4svrtBR49VO_nTK6kEFZTN0dGsof8X_lIFRrpd9dkxJXAX8wmsBtUvXBSYeu8A0HRp6o5_GWer6znifJpFVKuIp49XH6fxybGAeh4P-V5c6PRwHvCsLHif9ho-ojJa7c1-uFY2Hro9TbreGQEFFJeBeAwVi_aLSSC-qda6h3a9kxqyXSR0DSzXFZiByJeyrnGpF77b-i7fF0");'>
+                style='background-image: url("/static/webcam/current.jpg");'>
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
@@ -135,7 +135,7 @@
                   </p>
                 </div>
                 <div class="flex gap-3 pointer-events-auto shrink-0">
-                  <button
+                  <button id="timelapse-btn"
                     class="flex items-center justify-center h-10 md:h-12 px-4 md:px-6 rounded-full bg-primary hover:bg-[#0eb80e] text-[#102210] transition-all font-bold gap-2 shadow-lg shadow-primary/20">
                     <span class="material-symbols-outlined">play_circle</span>
                     <span class="hidden sm:inline">Time-lapse</span>
@@ -269,6 +269,44 @@
 
     fetchWeather();
     setInterval(fetchWeather, 300000); // Update every 5 minutes
+
+    // 3. Time-lapse Logic
+    const timelapseImages = [
+      
+        "/static/webcam/2026-01-01_08-00-00.jpg",
+      
+        "/static/webcam/2026-01-01_09-00-00.jpg",
+      
+        "/static/webcam/2026-01-01_10-00-00.jpg",
+      
+        "/static/webcam/2026-01-01_11-00-00.jpg",
+      
+    ];
+    let timelapseInterval;
+    let isPlaying = false;
+    let imgIndex = 0;
+    const webcamImgDiv = document.getElementById("webcam-image");
+    const timelapseBtn = document.getElementById("timelapse-btn");
+    const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
+
+    timelapseBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        // Stop
+        clearInterval(timelapseInterval);
+        isPlaying = false;
+        timelapseIcon.textContent = "play_circle";
+        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/current.jpg")';
+      } else {
+        // Start
+        if (timelapseImages.length === 0) return;
+        isPlaying = true;
+        timelapseIcon.textContent = "stop_circle";
+        timelapseInterval = setInterval(() => {
+          webcamImgDiv.style.backgroundImage = `url("${timelapseImages[imgIndex]}")`;
+          imgIndex = (imgIndex + 1) % timelapseImages.length;
+        }, 500); // 500ms per frame
+      }
+    });
   });
 </script>
 
