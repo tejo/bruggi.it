@@ -89,6 +89,7 @@ type ItineraryFile struct {
 	Slug          string          `toml:"slug"`
 	Type          string          `toml:"type"`
 	Image         string          `toml:"image"`
+	GpxFile       string          `toml:"gpx_file"`
 	Difficulty    string          `toml:"difficulty"`
 	DistanceKM    float64         `toml:"distance_km"`
 	Duration      string          `toml:"duration"`
@@ -109,6 +110,7 @@ type RenderItinerary struct {
 	Slug          string
 	Type          string
 	Image         string
+	GpxFile       string
 	Difficulty    string
 	DistanceKM    float64
 	Duration      string
@@ -321,6 +323,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 			Slug:          raw.Slug,
 			Type:          raw.Type,
 			Image:         raw.Image,
+			GpxFile:       raw.GpxFile,
 			Difficulty:    raw.Difficulty,
 			DistanceKM:    raw.DistanceKM,
 			Duration:      raw.Duration,

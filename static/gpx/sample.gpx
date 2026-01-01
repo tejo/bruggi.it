@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="BruggiGenerator">
+  <metadata>
+    <name>Sample Itinerary</name>
+    <desc>A sample path around Bruggi.</desc>
+  </metadata>
+  <trk>
+    <name>Bruggi Loop</name>
+    <trkseg>
+      <trkpt lat="46.000000" lon="8.000000">
+        <ele>1200</ele>
+        <time>2023-01-01T10:00:00Z</time>
+      </trkpt>
+      <trkpt lat="46.001000" lon="8.001000">
+        <ele>1250</ele>
+        <time>2023-01-01T10:15:00Z</time>
+      </trkpt>
+      <trkpt lat="46.002000" lon="8.002000">
+        <ele>1300</ele>
+        <time>2023-01-01T10:30:00Z</time>
+      </trkpt>
+      <trkpt lat="46.001000" lon="8.003000">
+        <ele>1280</ele>
+        <time>2023-01-01T10:45:00Z</time>
+      </trkpt>
+      <trkpt lat="46.000000" lon="8.000000">
+        <ele>1200</ele>
+        <time>2023-01-01T11:00:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
