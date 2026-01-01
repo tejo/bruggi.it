@@ -53,11 +53,11 @@
           <div class="flex gap-3 items-center">
              <!-- Locale Switcher -->
              {% if locale == "it" %}
-             <a href="/en/" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             <a href="{{ alternate_url }}" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
                 EN
              </a>
              {% else %}
-             <a href="/" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             <a href="{{ alternate_url }}" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
                 IT
              </a>
              {% endif %}
@@ -67,9 +67,21 @@
             </a>
           </div>
         </div>
-        <button id="burger-btn" class="md:hidden text-[#111811] dark:text-white">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
+        <div class="flex md:hidden items-center gap-3">
+          <!-- Mobile Locale Switcher -->
+          {% if locale == "it" %}
+          <a href="{{ alternate_url }}" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             EN
+          </a>
+          {% else %}
+          <a href="{{ alternate_url }}" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             IT
+          </a>
+          {% endif %}
+          <button id="burger-btn" class="text-[#111811] dark:text-white">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
       </div>
       <!-- Mobile Menu -->
       <div id="mobile-menu"

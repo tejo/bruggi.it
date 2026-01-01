@@ -336,6 +336,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 	ctx := pongo2.Context{
 		"locale":         locale,
 		"base_url":       baseUrl,
+		"alternate_url":  computeAlternateUrl(locale, "/"),
 		"page_title":     renderIndex.Hero.Title,
 		"t":              renderIndex, // We pass our flattened struct as 't'
 		"gallery_images": galleryT.Images,
@@ -357,6 +358,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 	galleryCtx := pongo2.Context{
 		"locale":         locale,
 		"base_url":       baseUrl,
+		"alternate_url":  computeAlternateUrl(locale, "/galleries.html"),
 		"page_title":     renderIndex.Sections.GalleryTitle,
 		"t":              renderIndex,
 		"gallery_images": galleryT.Images,
@@ -372,10 +374,11 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 
 	// Render Webcam
 	webcamCtx := pongo2.Context{
-		"locale":     locale,
-		"base_url":   baseUrl,
-		"page_title": "Bruggi Webcams",
-		"t":          renderIndex,
+		"locale":        locale,
+		"base_url":      baseUrl,
+		"alternate_url": computeAlternateUrl(locale, "/webcam.html"),
+		"page_title":    "Bruggi Webcams",
+		"t":             renderIndex,
 	}
 	webcamTpl := pongo2.Must(pongo2.FromFile("templates/webcam.html"))
 	webcamOutPath := "dist/webcam.html"
@@ -388,10 +391,11 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 
 	// Render Contacts
 	contactsCtx := pongo2.Context{
-		"locale":     locale,
-		"base_url":   baseUrl,
-		"page_title": renderIndex.Nav.Contact,
-		"t":          renderIndex,
+		"locale":        locale,
+		"base_url":      baseUrl,
+		"alternate_url": computeAlternateUrl(locale, "/contacts.html"),
+		"page_title":    renderIndex.Nav.Contact,
+		"t":             renderIndex,
 	}
 	contactsTpl := pongo2.Must(pongo2.FromFile("templates/contacts.html"))
 	contactsOutPath := "dist/contacts.html"
@@ -418,9 +422,17 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 			}
 		}
 
+		var relativePath string
+		if filter == "all" {
+			relativePath = "/itineraries.html"
+		} else {
+			relativePath = "/itineraries/" + filter + ".html"
+		}
+
 		listCtx := pongo2.Context{
 			"locale":         locale,
 			"base_url":       baseUrl,
+			"alternate_url":  computeAlternateUrl(locale, relativePath),
 			"page_title":     renderIndex.Sections.ItinerariesTitle,
 			"t":              renderIndex,
 			"itineraries":    filteredIts,
@@ -469,12 +481,14 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 	}
 
 	for _, it := range localItineraries {
+		relativePath := "/itineraries/" + it.Slug + ".html"
 		detailCtx := pongo2.Context{
-			"locale":     locale,
-			"base_url":   baseUrl,
-			"page_title": it.Title,
-			"itinerary":  it,
-			"t":          renderIndex, // Pass main translations if needed for header/footer
+			"locale":        locale,
+			"base_url":      baseUrl,
+			"alternate_url": computeAlternateUrl(locale, relativePath),
+			"page_title":    it.Title,
+			"itinerary":     it,
+			"t":             renderIndex, // Pass main translations if needed for header/footer
 		}
 		detailOutPath := filepath.Join(itineraryOutDir, it.Slug+".html")
 		if err := renderToFile(detailTpl, detailCtx, detailOutPath); err != nil {
@@ -559,4 +573,19 @@ func copyDir(src string, dst string) error {
 		}
 		return os.WriteFile(destPath, data, 0644)
 	})
+}
+
+func computeAlternateUrl(currentLocale string, relativePath string) string {
+	if currentLocale == "it" {
+		if relativePath == "/" {
+			return "/en/"
+		}
+		return "/en" + relativePath
+	} else {
+		// current is en
+		if relativePath == "/" {
+			return "/"
+		}
+		return relativePath
+	}
 }
