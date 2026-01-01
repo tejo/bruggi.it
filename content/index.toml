@@ -1,15 +1,19 @@
+[hero]
+    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuB1JKjyeXuZeZO2S7lKP4s5PjMXagz8GSw-SsvD7EAidRUbF4EnFyzDciwwCy-NguLKWrCt6bg5DRlPUu1K1Q775YcNWhKNfABVEQzHhj4ce_EYB1AvTAR7BVRkXuoxdJ8FbGwsoz7cWfOHC0q9adPqhI6qL-IC3n0vfe0TttMoX0BMvCkeHn2MBnUVOqsfQBuHttdmzaua1mi5p4ix8QuCIsq8JHFsPxZNxkP7P_t7uebkCDLYB3kZrAGBWhx61mgCOZ0D8w6HW7U"
+
+[welcome]
+    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNvEUDyJoLyFQu0JtYOMNbsrndr7QBm_WvRczwuop8oToFi-UZgaaiHAPKYdWonzWBp9Fk37O9Ls67_vfNhAr2cvSSS6lyIPqfi7agAI5nYcyqmUXuog8AUbzWaeaJuSnVRylGtb9JiXxI830eVry12z3PpjyMapyk-xwCUCtnxvgbcZh4GJLSNDrNKK6YzvQIiUmpr6eXo3OuQcUeAsW5z_cj6X2UeXzRc3Qcm8ph29bQy3bsvVxfOa_kVSYuE4K70rx8S8IQ_uo"
+
 [it]
     [it.hero]
     title = "Scopri la magia di Bruggi"
     subtitle = "Un rifugio autentico nel cuore delle montagne italiane, dove natura e tradizione si incontrano."
     cta = "Esplora il villaggio"
-    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuB1JKjyeXuZeZO2S7lKP4s5PjMXagz8GSw-SsvD7EAidRUbF4EnFyzDciwwCy-NguLKWrCt6bg5DRlPUu1K1Q775YcNWhKNfABVEQzHhj4ce_EYB1AvTAR7BVRkXuoxdJ8FbGwsoz7cWfOHC0q9adPqhI6qL-IC3n0vfe0TttMoX0BMvCkeHn2MBnUVOqsfQBuHttdmzaua1mi5p4ix8QuCIsq8JHFsPxZNxkP7P_t7uebkCDLYB3kZrAGBWhx61mgCOZ0D8w6HW7U"
 
     [it.welcome]
     title = "Benvenuti a Bruggi"
     subtitle = "Storia e Natura"
     description = "Immerso nel verde a 1200m di altitudine, Bruggi è un luogo dove il tempo sembra essersi fermato. Scopri la nostra storia antica, le tradizioni culinarie e i paesaggi mozzafiato che circondano il nostro piccolo borgo. Un'esperienza unica per chi cerca pace e bellezza."
-    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNvEUDyJoLyFQu0JtYOMNbsrndr7QBm_WvRczwuop8oToFi-UZgaaiHAPKYdWonzWBp9Fk37O9Ls67_vfNhAr2cvSSS6lyIPqfi7agAI5nYcyqmUXuog8AUbzWaeaJuSnVRylGtb9JiXxI830eVry12z3PpjyMapyk-xwCUCtnxvgbcZh4GJLSNDrNKK6YzvQIiUmpr6eXo3OuQcUeAsW5z_cj6X2UeXzRc3Qcm8ph29bQy3bsvVxfOa_kVSYuE4K70rx8S8IQ_uo"
     altitude = "1200m Altitudine"
     founded = "Fondato nel 1400"
     cta_history = "Leggi la storia completa"
@@ -27,13 +31,11 @@
     title = "Discover the magic of Bruggi"
     subtitle = "An authentic retreat in the heart of the Italian mountains, where nature and tradition meet."
     cta = "Explore the village"
-    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuB1JKjyeXuZeZO2S7lKP4s5PjMXagz8GSw-SsvD7EAidRUbF4EnFyzDciwwCy-NguLKWrCt6bg5DRlPUu1K1Q775YcNWhKNfABVEQzHhj4ce_EYB1AvTAR7BVRkXuoxdJ8FbGwsoz7cWfOHC0q9adPqhI6qL-IC3n0vfe0TttMoX0BMvCkeHn2MBnUVOqsfQBuHttdmzaua1mi5p4ix8QuCIsq8JHFsPxZNxkP7P_t7uebkCDLYB3kZrAGBWhx61mgCOZ0D8w6HW7U"
 
     [en.welcome]
     title = "Welcome to Bruggi"
     subtitle = "History and Nature"
     description = "Immersed in greenery at 1200m altitude, Bruggi is a place where time seems to have stopped. Discover our ancient history, culinary traditions, and breathtaking landscapes surrounding our small village. A unique experience for those seeking peace and beauty."
-    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNvEUDyJoLyFQu0JtYOMNbsrndr7QBm_WvRczwuop8oToFi-UZgaaiHAPKYdWonzWBp9Fk37O9Ls67_vfNhAr2cvSSS6lyIPqfi7agAI5nYcyqmUXuog8AUbzWaeaJuSnVRylGtb9JiXxI830eVry12z3PpjyMapyk-xwCUCtnxvgbcZh4GJLSNDrNKK6YzvQIiUmpr6eXo3OuQcUeAsW5z_cj6X2UeXzRc3Qcm8ph29bQy3bsvVxfOa_kVSYuE4K70rx8S8IQ_uo"
     altitude = "1200m Altitude"
     founded = "Founded in 1400"
     cta_history = "Read full history"

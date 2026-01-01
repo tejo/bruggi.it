@@ -13,29 +13,37 @@ import (
 
 // Data Structures
 
-type IndexData struct {
-	It IndexLocale `toml:"it"`
-	En IndexLocale `toml:"en"`
+type IndexFile struct {
+	Hero    SharedHeroSection    `toml:"hero"`
+	Welcome SharedWelcomeSection `toml:"welcome"`
+	It      IndexLocale          `toml:"it"`
+	En      IndexLocale          `toml:"en"`
+}
+
+type SharedHeroSection struct {
+	Image string `toml:"image"`
+}
+
+type SharedWelcomeSection struct {
+	Image string `toml:"image"`
 }
 
 type IndexLocale struct {
-	Hero     HeroSection    `toml:"hero"`
-	Welcome  WelcomeSection `toml:"welcome"`
+	Hero     HeroLocale     `toml:"hero"`
+	Welcome  WelcomeLocale  `toml:"welcome"`
 	Sections SectionTitles  `toml:"sections"`
 }
 
-type HeroSection struct {
+type HeroLocale struct {
 	Title    string `toml:"title"`
 	Subtitle string `toml:"subtitle"`
 	CTA      string `toml:"cta"`
-	Image    string `toml:"image"`
 }
 
-type WelcomeSection struct {
+type WelcomeLocale struct {
 	Title       string `toml:"title"`
 	Subtitle    string `toml:"subtitle"`
 	Description string `toml:"description"`
-	Image       string `toml:"image"`
 	Altitude    string `toml:"altitude"`
 	Founded     string `toml:"founded"`
 	CTAHistory  string `toml:"cta_history"`
@@ -91,6 +99,30 @@ type RenderItinerary struct {
 	Tags          []string
 }
 
+// Helper struct to pass to templates, flattening the structure
+type RenderIndex struct {
+	Hero     RenderHero
+	Welcome  RenderWelcome
+	Sections SectionTitles
+}
+
+type RenderHero struct {
+	Title    string
+	Subtitle string
+	CTA      string
+	Image    string
+}
+
+type RenderWelcome struct {
+	Title       string
+	Subtitle    string
+	Description string
+	Image       string
+	Altitude    string
+	Founded     string
+	CTAHistory  string
+}
+
 func main() {
 	fmt.Println("Starting Bruggi Static Site Generator...")
 
@@ -129,16 +161,44 @@ func main() {
 
 	// 3. Render Pages for IT (Default)
 	fmt.Println("Rendering IT locale...")
-	renderLocale("it", "", indexData.It, *galleryData, itineraries)
+	renderLocale("it", "", indexData, *galleryData, itineraries)
 
 	// 4. Render Pages for EN
 	fmt.Println("Rendering EN locale...")
-	renderLocale("en", "/en", indexData.En, *galleryData, itineraries)
+	renderLocale("en", "/en", indexData, *galleryData, itineraries)
 
 	fmt.Println("Build Complete!")
 }
 
-func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT GalleryData, rawItineraries []ItineraryFile) {
+func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
+	// Pick the right locale data
+	var l IndexLocale
+	if locale == "it" {
+		l = indexData.It
+	} else {
+		l = indexData.En
+	}
+
+	// Merge shared and localized
+	renderIndex := RenderIndex{
+		Hero: RenderHero{
+			Title:    l.Hero.Title,
+			Subtitle: l.Hero.Subtitle,
+			CTA:      l.Hero.CTA,
+			Image:    indexData.Hero.Image,
+		},
+		Welcome: RenderWelcome{
+			Title:       l.Welcome.Title,
+			Subtitle:    l.Welcome.Subtitle,
+			Description: l.Welcome.Description,
+			Altitude:    l.Welcome.Altitude,
+			Founded:     l.Welcome.Founded,
+			CTAHistory:  l.Welcome.CTAHistory,
+			Image:       indexData.Welcome.Image,
+		},
+		Sections: l.Sections,
+	}
+
 	// Prepare Itineraries for this locale
 	var localItineraries []RenderItinerary
 	for _, raw := range rawItineraries {
@@ -164,10 +224,10 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 	ctx := pongo2.Context{
 		"locale":         locale,
 		"base_url":       baseUrl,
-		"page_title":     indexT.Hero.Title,
-		"t":              indexT,
-		"gallery_images": galleryT.Images, // Take first 4 for homepage?
-		"itineraries":    localItineraries, // Maybe limit number in template or here
+		"page_title":     renderIndex.Hero.Title,
+		"t":              renderIndex, // We pass our flattened struct as 't'
+		"gallery_images": galleryT.Images,
+		"itineraries":    localItineraries,
 	}
 
 	tpl := pongo2.Must(pongo2.FromFile("templates/index.html"))
@@ -175,7 +235,7 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 	if locale == "en" {
 		outPath = "dist/en/index.html"
 	}
-	
+
 	err := renderToFile(tpl, ctx, outPath)
 	if err != nil {
 		panic(err)
@@ -185,8 +245,8 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 	galleryCtx := pongo2.Context{
 		"locale":         locale,
 		"base_url":       baseUrl,
-		"page_title":     indexT.Sections.GalleryTitle,
-		"t":              indexT,
+		"page_title":     renderIndex.Sections.GalleryTitle,
+		"t":              renderIndex,
 		"gallery_images": galleryT.Images,
 	}
 	galTpl := pongo2.Must(pongo2.FromFile("templates/gallery.html"))
@@ -203,7 +263,7 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 		"locale":     locale,
 		"base_url":   baseUrl,
 		"page_title": "Bruggi Webcams",
-		"t":          indexT,
+		"t":          renderIndex,
 	}
 	webcamTpl := pongo2.Must(pongo2.FromFile("templates/webcam.html"))
 	webcamOutPath := "dist/webcam.html"
@@ -219,7 +279,7 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 		"locale":     locale,
 		"base_url":   baseUrl,
 		"page_title": "Contattaci", // TODO: Translate
-		"t":          indexT,
+		"t":          renderIndex,
 	}
 	contactsTpl := pongo2.Must(pongo2.FromFile("templates/contacts.html"))
 	contactsOutPath := "dist/contacts.html"
@@ -231,13 +291,11 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 	}
 
 	// Render Itineraries List
-
-	// Render Itineraries List
 	listCtx := pongo2.Context{
 		"locale":      locale,
 		"base_url":    baseUrl,
-		"page_title":  indexT.Sections.ItinerariesTitle, // Or a specific string
-		"t":           indexT,
+		"page_title":  renderIndex.Sections.ItinerariesTitle,
+		"t":           renderIndex,
 		"itineraries": localItineraries,
 	}
 	listTpl := pongo2.Must(pongo2.FromFile("templates/itinerary_list.html"))
@@ -251,7 +309,7 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 
 	// Render Itinerary Details
 	detailTpl := pongo2.Must(pongo2.FromFile("templates/itinerary_detail.html"))
-	
+
 	// Create itineraries dir if not exists (for root/itineraries/...)
 	// For EN, it will be dist/en/itineraries/...
 	itineraryOutDir := "dist/itineraries"
@@ -268,7 +326,7 @@ func renderLocale(locale string, baseUrl string, indexT IndexLocale, galleryT Ga
 			"base_url":   baseUrl,
 			"page_title": it.Title,
 			"itinerary":  it,
-			"t":          indexT, // Pass main translations if needed for header/footer
+			"t":          renderIndex, // Pass main translations if needed for header/footer
 		}
 		detailOutPath := filepath.Join(itineraryOutDir, it.Slug+".html")
 		if err := renderToFile(detailTpl, detailCtx, detailOutPath); err != nil {
@@ -286,12 +344,12 @@ func renderToFile(tpl *pongo2.Template, ctx pongo2.Context, path string) error {
 	return tpl.ExecuteWriter(ctx, f)
 }
 
-func loadIndex(path string) (*IndexData, error) {
+func loadIndex(path string) (*IndexFile, error) {
 	b, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	var data IndexData
+	var data IndexFile
 	if err := toml.Unmarshal(b, &data); err != nil {
 		return nil, err
 	}
