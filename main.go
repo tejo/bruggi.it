@@ -1,13 +1,18 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/fs"
+	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/flosch/pongo2/v6"
+	"github.com/fsnotify/fsnotify"
 	"github.com/pelletier/go-toml/v2"
 )
 
@@ -29,9 +34,18 @@ type SharedWelcomeSection struct {
 }
 
 type IndexLocale struct {
+	Nav      NavLocale      `toml:"nav"`
 	Hero     HeroLocale     `toml:"hero"`
 	Welcome  WelcomeLocale  `toml:"welcome"`
 	Sections SectionTitles  `toml:"sections"`
+}
+
+type NavLocale struct {
+	Home        string `toml:"home"`
+	Itineraries string `toml:"itineraries"`
+	Webcam      string `toml:"webcam"`
+	Gallery     string `toml:"gallery"`
+	Contact     string `toml:"contact"`
 }
 
 type HeroLocale struct {
@@ -101,9 +115,18 @@ type RenderItinerary struct {
 
 // Helper struct to pass to templates, flattening the structure
 type RenderIndex struct {
+	Nav      RenderNav
 	Hero     RenderHero
 	Welcome  RenderWelcome
 	Sections SectionTitles
+}
+
+type RenderNav struct {
+	Home        string
+	Itineraries string
+	Webcam      string
+	Gallery     string
+	Contact     string
 }
 
 type RenderHero struct {
@@ -124,50 +147,125 @@ type RenderWelcome struct {
 }
 
 func main() {
-	fmt.Println("Starting Bruggi Static Site Generator...")
+	serveMode := flag.Bool("serve", false, "Watch for changes and serve the site")
+	flag.Parse()
+
+	if *serveMode {
+		watchAndServe()
+	} else {
+		buildSite()
+	}
+}
+
+func buildSite() {
+	fmt.Println("Building site...")
+	start := time.Now()
 
 	// 1. Load Data
 	indexData, err := loadIndex("content/index.toml")
 	if err != nil {
-		panic(err)
+		log.Printf("Error loading index: %v", err)
+		return
 	}
 
 	galleryData, err := loadGallery("content/galleries.toml")
 	if err != nil {
-		panic(err)
+		log.Printf("Error loading gallery: %v", err)
+		return
 	}
 
 	itineraries, err := loadItineraries("content/itineraries")
 	if err != nil {
-		panic(err)
+		log.Printf("Error loading itineraries: %v", err)
+		return
 	}
 
 	// 2. Prepare Output Directory
 	if err := os.RemoveAll("dist"); err != nil {
-		panic(err)
+		log.Printf("Error clearing dist: %v", err)
+		return
 	}
 	if err := os.MkdirAll("dist", 0755); err != nil {
-		panic(err)
+		log.Printf("Error creating dist: %v", err)
+		return
 	}
 	if err := os.MkdirAll("dist/en", 0755); err != nil {
-		panic(err)
+		log.Printf("Error creating dist/en: %v", err)
+		return
 	}
 	if err := os.MkdirAll("dist/static", 0755); err != nil {
-		panic(err)
+		log.Printf("Error creating dist/static: %v", err)
+		return
 	}
 
 	// Copy Static Files
 	copyDir("static", "dist/static")
 
 	// 3. Render Pages for IT (Default)
-	fmt.Println("Rendering IT locale...")
 	renderLocale("it", "", indexData, *galleryData, itineraries)
 
 	// 4. Render Pages for EN
-	fmt.Println("Rendering EN locale...")
 	renderLocale("en", "/en", indexData, *galleryData, itineraries)
 
-	fmt.Println("Build Complete!")
+	fmt.Printf("Build complete in %v\n", time.Since(start))
+}
+
+func watchAndServe() {
+	// Initial build
+	buildSite()
+
+	// Watcher
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer watcher.Close()
+
+	done := make(chan bool)
+
+	go func() {
+		for {
+			select {
+			case event, ok := <-watcher.Events:
+				if !ok {
+					return
+				}
+				if event.Op&fsnotify.Write == fsnotify.Write || event.Op&fsnotify.Create == fsnotify.Create || event.Op&fsnotify.Remove == fsnotify.Remove {
+					log.Println("Modified file:", event.Name)
+					buildSite()
+				}
+			case err, ok := <-watcher.Errors:
+				if !ok {
+					return
+				}
+				log.Println("error:", err)
+			}
+		}
+	}()
+
+	// Add directories to watch
+	dirsToWatch := []string{"content", "content/itineraries", "templates", "static"}
+	for _, dir := range dirsToWatch {
+		err = watcher.Add(dir)
+		if err != nil {
+			log.Printf("Error watching %s: %v", dir, err) // Don't crash if dir doesn't exist yet
+		}
+	}
+	// Also watch individual files in static/js/ etc if needed, but 'static' covers direct children.
+	// Recursive watch is not built-in to fsnotify, but we have a flat structure mostly.
+	// Add static/js explicitly if needed.
+	watcher.Add("static/js")
+
+	// Server
+	fs := http.FileServer(http.Dir("dist"))
+	http.Handle("/", fs)
+
+	log.Println("Serving on http://localhost:8080")
+	go func() {
+		log.Fatal(http.ListenAndServe(":8080", nil))
+	}()
+
+	<-done
 }
 
 func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
@@ -181,6 +279,13 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 
 	// Merge shared and localized
 	renderIndex := RenderIndex{
+		Nav: RenderNav{
+			Home:        l.Nav.Home,
+			Itineraries: l.Nav.Itineraries,
+			Webcam:      l.Nav.Webcam,
+			Gallery:     l.Nav.Gallery,
+			Contact:     l.Nav.Contact,
+		},
 		Hero: RenderHero{
 			Title:    l.Hero.Title,
 			Subtitle: l.Hero.Subtitle,
@@ -238,7 +343,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 
 	err := renderToFile(tpl, ctx, outPath)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	// Render Galleries
@@ -255,7 +360,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		galOutPath = "dist/en/galleries.html"
 	}
 	if err := renderToFile(galTpl, galleryCtx, galOutPath); err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	// Render Webcam
@@ -271,14 +376,14 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		webcamOutPath = "dist/en/webcam.html"
 	}
 	if err := renderToFile(webcamTpl, webcamCtx, webcamOutPath); err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	// Render Contacts
 	contactsCtx := pongo2.Context{
 		"locale":     locale,
 		"base_url":   baseUrl,
-		"page_title": "Contattaci", // TODO: Translate
+		"page_title": renderIndex.Nav.Contact,
 		"t":          renderIndex,
 	}
 	contactsTpl := pongo2.Must(pongo2.FromFile("templates/contacts.html"))
@@ -287,7 +392,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		contactsOutPath = "dist/en/contacts.html"
 	}
 	if err := renderToFile(contactsTpl, contactsCtx, contactsOutPath); err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	// Render Itineraries List
@@ -304,7 +409,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		listOutPath = "dist/en/itineraries.html"
 	}
 	if err := renderToFile(listTpl, listCtx, listOutPath); err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	// Render Itinerary Details
@@ -317,7 +422,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		itineraryOutDir = "dist/en/itineraries"
 	}
 	if err := os.MkdirAll(itineraryOutDir, 0755); err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	for _, it := range localItineraries {
@@ -330,7 +435,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		}
 		detailOutPath := filepath.Join(itineraryOutDir, it.Slug+".html")
 		if err := renderToFile(detailTpl, detailCtx, detailOutPath); err != nil {
-			panic(err)
+			log.Panic(err)
 		}
 	}
 }

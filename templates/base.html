@@ -51,12 +51,11 @@
         </a>
         <div class="hidden md:flex flex-1 justify-end items-center gap-8">
           <nav class="flex items-center gap-8">
-            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/">{{ t.Nav.Home }}</a>
             <a class="text-sm font-medium hover:text-primary transition-colors nav-link"
-              href="{{ base_url }}/itineraries.html">Itinerari</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/webcam.html">Webcam</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/galleries.html">Galleria
-              Foto</a>
+              href="{{ base_url }}/itineraries.html">{{ t.Nav.Itineraries }}</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/webcam.html">{{ t.Nav.Webcam }}</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/galleries.html">{{ t.Nav.Gallery }}</a>
           </nav>
           <div class="flex gap-3 items-center">
              <!-- Locale Switcher -->
@@ -71,7 +70,7 @@
              {% endif %}
             <a href="{{ base_url }}/contacts.html"
               class="flex items-center justify-center rounded-lg h-9 px-5 bg-primary text-[#111811] text-sm font-bold shadow-sm hover:bg-green-500 transition-colors">
-              Contattaci
+              {{ t.Nav.Contact }}
             </a>
           </div>
         </div>
@@ -83,12 +82,11 @@
       <div id="mobile-menu"
         class="hidden md:hidden bg-white/95 dark:bg-[#111811]/95 border-b border-[#f0f4f0] dark:border-gray-800 backdrop-blur-md absolute w-full left-0 top-full shadow-lg">
         <nav class="flex flex-col p-6 gap-6 text-center">
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/">Home</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/itineraries.html">Itinerari</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/webcam.html">Webcam</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/galleries.html">Galleria
-            Foto</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/contacts.html">Contattaci</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/">{{ t.Nav.Home }}</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/itineraries.html">{{ t.Nav.Itineraries }}</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/webcam.html">{{ t.Nav.Webcam }}</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/galleries.html">{{ t.Nav.Gallery }}</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="{{ base_url }}/contacts.html">{{ t.Nav.Contact }}</a>
         </nav>
       </div>
     </header>

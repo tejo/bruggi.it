@@ -5,6 +5,13 @@
     image = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNvEUDyJoLyFQu0JtYOMNbsrndr7QBm_WvRczwuop8oToFi-UZgaaiHAPKYdWonzWBp9Fk37O9Ls67_vfNhAr2cvSSS6lyIPqfi7agAI5nYcyqmUXuog8AUbzWaeaJuSnVRylGtb9JiXxI830eVry12z3PpjyMapyk-xwCUCtnxvgbcZh4GJLSNDrNKK6YzvQIiUmpr6eXo3OuQcUeAsW5z_cj6X2UeXzRc3Qcm8ph29bQy3bsvVxfOa_kVSYuE4K70rx8S8IQ_uo"
 
 [it]
+    [it.nav]
+    home = "Home"
+    itineraries = "Itinerari"
+    webcam = "Webcam"
+    gallery = "Galleria Foto"
+    contact = "Contattaci"
+
     [it.hero]
     title = "Scopri la magia di Bruggi"
     subtitle = "Un rifugio autentico nel cuore delle montagne italiane, dove natura e tradizione si incontrano."
@@ -27,6 +34,13 @@
     see_all_gallery = "Vedi tutte"
 
 [en]
+    [en.nav]
+    home = "Home"
+    itineraries = "Itineraries"
+    webcam = "Webcam"
+    gallery = "Photo Gallery"
+    contact = "Contact Us"
+
     [en.hero]
     title = "Discover the magic of Bruggi"
     subtitle = "An authentic retreat in the heart of the Italian mountains, where nature and tradition meet."
