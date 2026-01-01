@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/disintegration/imaging"
 	"github.com/flosch/pongo2/v6"
 	"github.com/fsnotify/fsnotify"
 	"github.com/pelletier/go-toml/v2"
@@ -81,23 +82,25 @@ type GalleryData struct {
 }
 
 type GalleryImage struct {
-	Url string `toml:"url"`
-	Alt string `toml:"alt"`
+	Url       string `toml:"url"`
+	Alt       string `toml:"alt"`
+	Thumbnail string // Populated during load
 }
 
 type ItineraryFile struct {
-	Slug          string          `toml:"slug"`
-	Type          string          `toml:"type"`
-	Image         string          `toml:"image"`
-	GpxFile       string          `toml:"gpx_file"`
-	YoutubeVideoID string         `toml:"youtube_video_id"`
-	Gallery       []string        `toml:"gallery"`
-	Difficulty    string          `toml:"difficulty"`
-	DistanceKM    float64         `toml:"distance_km"`
-	Duration      string          `toml:"duration"`
-	ElevationGain int             `toml:"elevation_gain"`
-	It            ItineraryLocale `toml:"it"`
-	En            ItineraryLocale `toml:"en"`
+	Slug             string          `toml:"slug"`
+	Type             string          `toml:"type"`
+	Image            string          `toml:"image"`
+	GpxFile          string          `toml:"gpx_file"`
+	YoutubeVideoID   string          `toml:"youtube_video_id"`
+	Gallery          []string        `toml:"gallery"`
+	ProcessedGallery []GalleryImage  `toml:"-"`
+	Difficulty       string          `toml:"difficulty"`
+	DistanceKM       float64         `toml:"distance_km"`
+	Duration         string          `toml:"duration"`
+	ElevationGain    int             `toml:"elevation_gain"`
+	It               ItineraryLocale `toml:"it"`
+	En               ItineraryLocale `toml:"en"`
 }
 
 type ItineraryLocale struct {
@@ -109,20 +112,20 @@ type ItineraryLocale struct {
 
 // Renderable Item for Templates
 type RenderItinerary struct {
-	Slug          string
-	Type          string
-	Image         string
-	GpxFile       string
+	Slug           string
+	Type           string
+	Image          string
+	GpxFile        string
 	YoutubeVideoID string
-	Gallery       []string
-	Difficulty    string
-	DistanceKM    float64
-	Duration      string
-	ElevationGain int
-	Title         string
-	Description   string
-	LongDesc      string
-	Tags          []string
+	Gallery        []GalleryImage
+	Difficulty     string
+	DistanceKM     float64
+	Duration       string
+	ElevationGain  int
+	Title          string
+	Description    string
+	LongDesc       string
+	Tags           []string
 }
 
 // Helper struct to pass to templates, flattening the structure
@@ -277,7 +280,8 @@ func watchAndServe() {
 		log.Fatal(http.ListenAndServe(":8080", nil))
 	}()
 
-	<-done
+	<-
+done
 }
 
 func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
@@ -324,20 +328,20 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 			l = raw.En
 		}
 		localItineraries = append(localItineraries, RenderItinerary{
-			Slug:          raw.Slug,
-			Type:          raw.Type,
-			Image:         raw.Image,
-			GpxFile:       raw.GpxFile,
+			Slug:           raw.Slug,
+			Type:           raw.Type,
+			Image:          raw.Image,
+			GpxFile:        raw.GpxFile,
 			YoutubeVideoID: raw.YoutubeVideoID,
-			Gallery:       raw.Gallery,
-			Difficulty:    raw.Difficulty,
-			DistanceKM:    raw.DistanceKM,
-			Duration:      raw.Duration,
-			ElevationGain: raw.ElevationGain,
-			Title:         l.Title,
-			Description:   l.Description,
-			LongDesc:      l.LongDesc,
-			Tags:          l.Tags,
+			Gallery:        raw.ProcessedGallery, // Use processed gallery
+			Difficulty:     raw.Difficulty,
+			DistanceKM:     raw.DistanceKM,
+			Duration:       raw.Duration,
+			ElevationGain:  raw.ElevationGain,
+			Title:          l.Title,
+			Description:    l.Description,
+			LongDesc:       l.LongDesc,
+			Tags:           l.Tags,
 		})
 	}
 
@@ -539,7 +543,15 @@ func loadGallery(path string) (*GalleryData, error) {
 		return nil, err
 	}
 	for i := range data.Images {
-		data.Images[i].Url = "/static/" + data.Images[i].Url
+		url, thumb, err := processImage(data.Images[i].Url)
+		if err != nil {
+			log.Printf("Warning: processing image %s failed: %v", data.Images[i].Url, err)
+			data.Images[i].Url = "/static/" + data.Images[i].Url
+			data.Images[i].Thumbnail = data.Images[i].Url // Fallback
+		} else {
+			data.Images[i].Url = url
+			data.Images[i].Thumbnail = thumb
+		}
 	}
 	return &data, nil
 }
@@ -563,9 +575,19 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 			if it.GpxFile != "" {
 				it.GpxFile = "/static/" + it.GpxFile
 			}
-			for i := range it.Gallery {
-				it.Gallery[i] = "/static/" + it.Gallery[i]
+			
+			// Process Gallery
+			it.ProcessedGallery = make([]GalleryImage, len(it.Gallery))
+			for i, rawPath := range it.Gallery {
+				url, thumb, err := processImage(rawPath)
+				if err != nil {
+					log.Printf("Warning: processing itinerary image %s failed: %v", rawPath, err)
+					it.ProcessedGallery[i] = GalleryImage{Url: "/static/" + rawPath, Thumbnail: "/static/" + rawPath}
+				} else {
+					it.ProcessedGallery[i] = GalleryImage{Url: url, Thumbnail: thumb}
+				}
 			}
+			
 			its = append(its, it)
 		}
 		return nil
@@ -609,4 +631,54 @@ func computeAlternateUrl(currentLocale string, relativePath string) string {
 		}
 		return relativePath
 	}
+}
+
+// processImage ensures a thumbnail exists for the given image and returns the web paths for original and thumbnail.
+// rawPath: e.g. "img/photo.jpg" (relative to static/) or "/static/img/photo.jpg"
+func processImage(rawPath string) (originalWeb string, thumbWeb string, err error) {
+	// Clean rawPath
+	cleanPath := rawPath
+	if strings.HasPrefix(cleanPath, "/static/") {
+		cleanPath = strings.TrimPrefix(cleanPath, "/static/")
+	} else if strings.HasPrefix(cleanPath, "static/") {
+		cleanPath = strings.TrimPrefix(cleanPath, "static/")
+	}
+	cleanPath = strings.TrimPrefix(cleanPath, "/")
+
+	srcPath := filepath.Join("static", cleanPath)
+	thumbPath := filepath.Join("static", "thumbs", cleanPath)
+
+	// Check if source exists
+	info, err := os.Stat(srcPath)
+	if err != nil {
+		return "", "", fmt.Errorf("source image not found: %w", err)
+	}
+
+	// Check if thumb exists and is newer
+	thumbInfo, err := os.Stat(thumbPath)
+	if err == nil && thumbInfo.ModTime().After(info.ModTime()) {
+		// Thumb is up to date
+		return "/static/" + cleanPath, "/static/thumbs/" + cleanPath, nil
+	}
+
+	// Create thumb dir
+	if err := os.MkdirAll(filepath.Dir(thumbPath), 0755); err != nil {
+		return "", "", fmt.Errorf("failed to create thumb dir: %w", err)
+	}
+
+	// Generate
+	// log.Printf("Generating thumbnail for %s...", srcPath) // Verbose
+	srcImg, err := imaging.Open(srcPath)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to open image: %w", err)
+	}
+
+	// Resize to width 600, preserving aspect ratio
+	thumbImg := imaging.Resize(srcImg, 600, 0, imaging.Lanczos)
+
+	if err := imaging.Save(thumbImg, thumbPath); err != nil {
+		return "", "", fmt.Errorf("failed to save thumbnail: %w", err)
+	}
+
+	return "/static/" + cleanPath, "/static/thumbs/" + cleanPath, nil
 }

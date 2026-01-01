@@ -7,6 +7,7 @@
   <title>Galleria Foto - Bruggi</title>
   <link href="/static/css/fonts.css" rel="stylesheet" />
   <link href="/static/css/leaflet.css" rel="stylesheet" />
+  <link href="/static/css/lightbox.css" rel="stylesheet" />
   <script src="/static/js/leaflet.js"></script>
   <script src="/static/js/leaflet-gpx.js"></script>
   <script src="/static/js/tailwindcss.js"></script>
@@ -32,6 +33,7 @@
     }
   </script>
   <script src="/static/js/main.js" defer></script>
+  <script src="/static/js/lightbox.js" defer></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-[#111811] dark:text-white">
@@ -100,33 +102,33 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[250px]">
           
-            <div class="rounded-xl overflow-hidden relative group">
+            <a href="/static/img/gallery-peaks.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Snowy mountain peaks">
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('/static//static/img/gallery-peaks.jpg');">
+                style="background-image: url('/static/thumbs/img/gallery-peaks.jpg');">
               </div>
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-            </div>
+            </a>
           
-            <div class="rounded-xl overflow-hidden relative group">
+            <a href="/static/img/gallery-dish.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Traditional dish">
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('/static/img/gallery-dish.jpg');">
+                style="background-image: url('/static/thumbs/img/gallery-dish.jpg');">
               </div>
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-            </div>
+            </a>
           
-            <div class="rounded-xl overflow-hidden relative group">
+            <a href="/static/img/gallery-hiker.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Hiker view">
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('/static/img/gallery-hiker.jpg');">
+                style="background-image: url('/static/thumbs/img/gallery-hiker.jpg');">
               </div>
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-            </div>
+            </a>
           
-            <div class="rounded-xl overflow-hidden relative group">
+            <a href="/static/img/gallery-river.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="River valley">
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('/static/img/gallery-river.jpg');">
+                style="background-image: url('/static/thumbs/img/gallery-river.jpg');">
               </div>
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-            </div>
+            </a>
           
         </div>
       </div>

@@ -56,9 +56,9 @@
         {% if itinerary.Gallery %}
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             {% for img in itinerary.Gallery %}
-            <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
-                <img src="{{ img }}" alt="Itinerary image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </div>
+            <a href="{{ img.Url }}" class="aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 lightbox-trigger">
+                <img src="{{ img.Thumbnail }}" alt="Itinerary image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            </a>
             {% endfor %}
         </div>
         {% endif %}

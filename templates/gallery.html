@@ -9,12 +9,12 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[250px]">
           {% for img in gallery_images %}
-            <div class="rounded-xl overflow-hidden relative group">
+            <a href="{{ img.Url }}" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="{{ img.Alt }}">
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style="background-image: url('{{ img.Url }}');">
+                style="background-image: url('{{ img.Thumbnail }}');">
               </div>
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-            </div>
+            </a>
           {% endfor %}
         </div>
       </div>
