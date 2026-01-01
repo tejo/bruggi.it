@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Our Itineraries - Bruggi</title>
+  <link href="/static/css/fonts.css" rel="stylesheet" />
+  <script src="/static/js/tailwindcss.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#11d411",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102210",
+            "surface-light": "#ffffff",
+            "surface-dark": "#1a2e1a",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Noto Sans", "sans-serif"],
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <script src="/static/js/main.js" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111811] dark:text-white">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#f0f4f0] dark:bg-[#111811]/90 dark:border-gray-800"
+      id="main-header">
+      <div class="px-4 md:px-10 py-3 flex items-center justify-between mx-auto max-w-[1280px] w-full">
+        <a href="/en/" class="flex items-center gap-2 text-[#111811] dark:text-white">
+          <span class="material-symbols-outlined text-primary text-3xl">landscape</span>
+          <h2 class="text-xl font-bold tracking-tight">Bruggi</h2>
+        </a>
+        <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+          <nav class="flex items-center gap-8">
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link"
+              href="/en/itineraries.html">Itineraries</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Photo Gallery</a>
+          </nav>
+          <div class="flex gap-3 items-center">
+             <!-- Locale Switcher -->
+             
+             <a href="/itineraries/hiking.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+                IT
+             </a>
+             
+            <a href="/en/contacts.html"
+              class="flex items-center justify-center rounded-lg h-9 px-5 bg-primary text-[#111811] text-sm font-bold shadow-sm hover:bg-green-500 transition-colors">
+              Contact Us
+            </a>
+          </div>
+        </div>
+        <div class="flex md:hidden items-center gap-3">
+          <!-- Mobile Locale Switcher -->
+          
+          <a href="/itineraries/hiking.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             IT
+          </a>
+          
+          <button id="burger-btn" class="text-[#111811] dark:text-white">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu"
+        class="hidden md:hidden bg-white/95 dark:bg-[#111811]/95 border-b border-[#f0f4f0] dark:border-gray-800 backdrop-blur-md absolute w-full left-0 top-full shadow-lg">
+        <nav class="flex flex-col p-6 gap-6 text-center">
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/itineraries.html">Itineraries</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Photo Gallery</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/contacts.html">Contact Us</a>
+        </nav>
+      </div>
+    </header>
+
+    
+<div class="relative w-full bg-surface-light dark:bg-surface-dark">
+      <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-cover bg-center"
+          style='background-image: linear-gradient(rgba(16, 34, 16, 0.4), rgba(16, 34, 16, 0.7)), url("/static/img/hero.jpg");'>
+        </div>
+      </div>
+      <div
+        class="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-32 flex flex-col items-center justify-center text-center">
+        <h1 class="text-white text-4xl md:text-6xl font-black leading-tight tracking-[-0.033em] mb-4 shadow-sm">
+          Our Itineraries
+        </h1>
+        <h2 class="text-gray-200 text-lg md:text-xl font-medium max-w-2xl mb-8 shadow-sm">
+          Explore the most beautiful trails around the village
+        </h2>
+      </div>
+</div>
+
+<div class="flex-1 max-w-7xl mx-auto w-full px-6 py-8 flex flex-col lg:flex-row gap-8">
+      <div class="flex-1 flex flex-col gap-6">
+        <!-- Filter Buttons -->
+        <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2" id="itinerary-filters">
+          <a href="/en/itineraries.html"
+            class="flex shrink-0 items-center justify-center rounded-full px-5 py-2 text-sm transition-colors bg-white dark:bg-[#2a402a] border border-[#e5e7eb] dark:border-[#3a503a] hover:border-primary text-[#111811] dark:text-gray-200 font-medium">
+            All
+          </a>
+          <a href="/en/itineraries/hiking.html"
+            class="flex gap-2 shrink-0 items-center justify-center rounded-full px-5 py-2 text-sm transition-colors bg-[#111811] dark:bg-white text-white dark:text-[#111811] font-bold active-filter">
+            <span class="material-symbols-outlined text-lg">hiking</span>
+            Hiking
+          </a>
+          <a href="/en/itineraries/biking.html"
+            class="flex gap-2 shrink-0 items-center justify-center rounded-full px-5 py-2 text-sm transition-colors bg-white dark:bg-[#2a402a] border border-[#e5e7eb] dark:border-[#3a503a] hover:border-primary text-[#111811] dark:text-gray-200 font-medium">
+            <span class="material-symbols-outlined text-lg">directions_bike</span>
+            Biking
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="itinerary-grid">
+          
+          <a href="/en/itineraries/centro-storico.html"
+            class="itinerary-card group flex flex-col bg-surface-light dark:bg-surface-dark border border-[#f0f4f0] dark:border-[#2a402a] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="relative h-48 w-full overflow-hidden">
+               <!-- Difficulty Badge -->
+               <div class="absolute top-3 right-3 z-10 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                  
+                    <span class="material-symbols-outlined text-green-600 text-sm">eco</span>
+                    <span class="text-xs font-bold uppercase text-green-700 dark:text-green-400">Easy</span>
+                  
+               </div>
+
+              <div
+                class="w-full h-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
+                style='background-image: url("/static/img/centro-storico.jpg");'>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="text-lg font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">
+                  Historic Center Walk</h4>
+              </div>
+              <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">Discover the ancient architecture, churches, and hidden alleys of the town center.</p>
+              <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-gray-500 dark:text-gray-400 mb-5">
+                <div class="flex items-center gap-1">
+                  
+                    <span class="material-symbols-outlined text-lg">hiking</span>
+                  
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">schedule</span>
+                  <span>1h 15m</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">straighten</span>
+                  <span>2.000000 km</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">vertical_align_top</span>
+                  <span>30m</span>
+                </div>
+              </div>
+              <div
+                class="mt-auto w-full py-2.5 rounded-lg bg-[#f0f4f0] dark:bg-[#2a402a] text-[#111811] dark:text-white font-bold text-sm group-hover:bg-primary group-hover:text-[#111811] transition-colors flex items-center justify-center gap-2">
+                <span>Read more</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </div>
+            </div>
+          </a>
+          
+          <a href="/en/itineraries/forest-retreat.html"
+            class="itinerary-card group flex flex-col bg-surface-light dark:bg-surface-dark border border-[#f0f4f0] dark:border-[#2a402a] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="relative h-48 w-full overflow-hidden">
+               <!-- Difficulty Badge -->
+               <div class="absolute top-3 right-3 z-10 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                  
+                    <span class="material-symbols-outlined text-yellow-600 text-sm">hiking</span>
+                    <span class="text-xs font-bold uppercase text-yellow-700 dark:text-yellow-400">Medium</span>
+                  
+               </div>
+
+              <div
+                class="w-full h-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
+                style='background-image: url("/static/img/forest-retreat.jpg");'>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="text-lg font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">
+                  Forest Retreat</h4>
+              </div>
+              <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">A deep dive into the silent pine forests. Great for forest bathing and bird watching.</p>
+              <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-gray-500 dark:text-gray-400 mb-5">
+                <div class="flex items-center gap-1">
+                  
+                    <span class="material-symbols-outlined text-lg">hiking</span>
+                  
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">schedule</span>
+                  <span>2h 45m</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">straighten</span>
+                  <span>6.000000 km</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">vertical_align_top</span>
+                  <span>350m</span>
+                </div>
+              </div>
+              <div
+                class="mt-auto w-full py-2.5 rounded-lg bg-[#f0f4f0] dark:bg-[#2a402a] text-[#111811] dark:text-white font-bold text-sm group-hover:bg-primary group-hover:text-[#111811] transition-colors flex items-center justify-center gap-2">
+                <span>Read more</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </div>
+            </div>
+          </a>
+          
+          <a href="/en/itineraries/vetta-bruggi.html"
+            class="itinerary-card group flex flex-col bg-surface-light dark:bg-surface-dark border border-[#f0f4f0] dark:border-[#2a402a] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="relative h-48 w-full overflow-hidden">
+               <!-- Difficulty Badge -->
+               <div class="absolute top-3 right-3 z-10 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                  
+                    <span class="material-symbols-outlined text-red-600 text-sm">terrain</span>
+                    <span class="text-xs font-bold uppercase text-red-700 dark:text-red-400">Hard</span>
+                  
+               </div>
+
+              <div
+                class="w-full h-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
+                style='background-image: url("/static/img/vetta-bruggi.jpg");'>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="text-lg font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">
+                  Bruggi Summit</h4>
+              </div>
+              <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">Challenging climb for experienced hikers offering the best panoramic views of the entire valley.</p>
+              <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-gray-500 dark:text-gray-400 mb-5">
+                <div class="flex items-center gap-1">
+                  
+                    <span class="material-symbols-outlined text-lg">hiking</span>
+                  
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">schedule</span>
+                  <span>6h 30m</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">straighten</span>
+                  <span>12.500000 km</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-lg">vertical_align_top</span>
+                  <span>980m</span>
+                </div>
+              </div>
+              <div
+                class="mt-auto w-full py-2.5 rounded-lg bg-[#f0f4f0] dark:bg-[#2a402a] text-[#111811] dark:text-white font-bold text-sm group-hover:bg-primary group-hover:text-[#111811] transition-colors flex items-center justify-center gap-2">
+                <span>Read more</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </div>
+            </div>
+          </a>
+          
+        </div>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="bg-[#111811] text-white py-12 px-4 md:px-40 border-t border-gray-800" id="main-footer">
+      <div class="max-w-[960px] mx-auto flex flex-col md:flex-row justify-between gap-10">
+        <div class="flex flex-col gap-4 max-w-xs">
+          <div class="flex items-center gap-2 text-white">
+            <span class="material-symbols-outlined text-primary text-2xl">landscape</span>
+            <h2 class="text-xl font-bold">Bruggi</h2>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Un villaggio incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l'esperienza della
+            vera montagna italiana.
+          </p>
+          <div class="flex gap-4 mt-2">
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">public</span></a>
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">photo_camera</span></a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Esplora</h3>
+          <div class="flex flex-col gap-2 text-sm text-gray-400">
+            <a class="hover:text-primary transition-colors" href="/en/">Home</a>
+            <a class="hover:text-primary transition-colors" href="/en/itineraries.html">Itinerari e Guide</a>
+            <a class="hover:text-primary transition-colors" href="/en/galleries.html">Galleria</a>
+            <a class="hover:text-primary transition-colors" href="/en/contacts.html">Contattaci</a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Contatti</h3>
+          <div class="flex flex-col gap-3 text-sm text-gray-400">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+              <span>Via Roma 1, 12345 Bruggi (IT)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">mail</span>
+              <span>info@bruggi.it</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">call</span>
+              <span>+39 0123 456789</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-[960px] mx-auto pt-8 mt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-500">
+        <p>© 2023 Comune di Bruggi. Tutti i diritti riservati.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
