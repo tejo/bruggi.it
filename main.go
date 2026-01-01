@@ -518,8 +518,8 @@ func loadIndex(path string) (*IndexFile, error) {
 	if err := toml.Unmarshal(b, &data); err != nil {
 		return nil, err
 	}
-	data.Hero.Image = fixStaticPath(data.Hero.Image)
-	data.Welcome.Image = fixStaticPath(data.Welcome.Image)
+	data.Hero.Image = "/static/" + data.Hero.Image
+	data.Welcome.Image = "/static/" + data.Welcome.Image
 	return &data, nil
 }
 
@@ -533,7 +533,7 @@ func loadGallery(path string) (*GalleryData, error) {
 		return nil, err
 	}
 	for i := range data.Images {
-		data.Images[i].Url = fixStaticPath(data.Images[i].Url)
+		data.Images[i].Url = "/static/" + data.Images[i].Url
 	}
 	return &data, nil
 }
@@ -553,8 +553,10 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 			if err := toml.Unmarshal(b, &it); err != nil {
 				return err
 			}
-			it.Image = fixStaticPath(it.Image)
-			it.GpxFile = fixStaticPath(it.GpxFile)
+			it.Image = "/static/" + it.Image
+			if it.GpxFile != "" {
+				it.GpxFile = "/static/" + it.GpxFile
+			}
 			its = append(its, it)
 		}
 		return nil
@@ -598,20 +600,4 @@ func computeAlternateUrl(currentLocale string, relativePath string) string {
 		}
 		return relativePath
 	}
-}
-
-func fixStaticPath(path string) string {
-	if path == "" {
-		return ""
-	}
-	if strings.HasPrefix(path, "/static/") {
-		return path
-	}
-	if strings.HasPrefix(path, "static/") {
-		return "/" + path
-	}
-	if strings.HasPrefix(path, "/") {
-		return "/static" + path
-	}
-	return "/static/" + path
 }
