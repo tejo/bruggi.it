@@ -21,12 +21,17 @@ import (
 // Data Structures
 
 type IndexFile struct {
-	Hero         SharedHeroSection    `toml:"hero"`
-	Welcome      SharedWelcomeSection `toml:"welcome"`
-	Contacts     SharedContacts       `toml:"contacts"`
-	AugustEvents SharedAugustEvents   `toml:"august_events"`
-	It           IndexLocale          `toml:"it"`
-	En           IndexLocale          `toml:"en"`
+	Hero     SharedHeroSection    `toml:"hero"`
+	Welcome  SharedWelcomeSection `toml:"welcome"`
+	Contacts SharedContacts       `toml:"contacts"`
+	It       IndexLocale          `toml:"it"`
+	En       IndexLocale          `toml:"en"`
+}
+
+type EventsFile struct {
+	Enabled bool               `toml:"enabled"`
+	It      AugustEventsLocale `toml:"it"`
+	En      AugustEventsLocale `toml:"en"`
 }
 
 type SharedHeroSection struct {
@@ -48,13 +53,12 @@ type SharedContacts struct {
 }
 
 type IndexLocale struct {
-	Nav          NavLocale          `toml:"nav"`
-	Hero         HeroLocale         `toml:"hero"`
-	Welcome      WelcomeLocale      `toml:"welcome"`
-	Sections     SectionTitles      `toml:"sections"`
-	WebcamPage   WebcamPageLocale   `toml:"webcam_page"`
-	ContactInfo  ContactInfoLocale  `toml:"contact_info"`
-	AugustEvents AugustEventsLocale `toml:"august_events"`
+	Nav         NavLocale         `toml:"nav"`
+	Hero        HeroLocale        `toml:"hero"`
+	Welcome     WelcomeLocale     `toml:"welcome"`
+	Sections    SectionTitles     `toml:"sections"`
+	WebcamPage  WebcamPageLocale  `toml:"webcam_page"`
+	ContactInfo ContactInfoLocale `toml:"contact_info"`
 }
 
 type AugustEventsLocale struct {
@@ -317,19 +321,21 @@ func handleWebcamUpdate(srcPath string) {
 	}
 
 	// 5. Update Pages
-	// We only need to reload index toml to get translations
 	indexData, err := loadIndex("content/index.toml")
 	if err != nil {
 		log.Fatalf("Error loading index: %v", err)
 	}
+	eventsData, err := loadEvents("content/august_events.toml")
+	if err != nil {
+		log.Fatalf("Error loading events: %v", err)
+	}
 
-	updateWebcamPages(indexData)
+	updateWebcamPages(indexData, eventsData)
 	fmt.Println("Webcam update complete.")
 }
 
-func updateWebcamPages(indexData *IndexFile) {
+func updateWebcamPages(indexData *IndexFile, eventsData *EventsFile) {
 	// Re-render ONLY webcam.html for IT and EN
-	// This relies on the file system having the new images in static/webcam (which we just did)
 	
 	webcamImages, err := loadWebcamImages("static/webcam")
 	if err != nil {
@@ -337,7 +343,7 @@ func updateWebcamPages(indexData *IndexFile) {
 	}
 
 	render := func(locale string, baseUrl string, outPath string) {
-		renderIndex := createRenderIndex(locale, indexData)
+		renderIndex := createRenderIndex(locale, indexData, eventsData)
 		renderIndex.WebcamPage.Images = webcamImages
 
 		ctx := pongo2.Context{
@@ -371,6 +377,12 @@ func buildSite() {
 	indexData, err := loadIndex("content/index.toml")
 	if err != nil {
 		log.Printf("Error loading index: %v", err)
+		return
+	}
+
+	eventsData, err := loadEvents("content/august_events.toml")
+	if err != nil {
+		log.Printf("Error loading events: %v", err)
 		return
 	}
 
@@ -408,10 +420,10 @@ func buildSite() {
 	copyDir("static", "dist/static")
 
 	// 3. Render Pages for IT (Default)
-	renderLocale("it", "", indexData, *galleryData, itineraries)
+	renderLocale("it", "", indexData, eventsData, *galleryData, itineraries)
 
 	// 4. Render Pages for EN
-	renderLocale("en", "/en", indexData, *galleryData, itineraries)
+	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries)
 
 	// 5. Cleanup Unused Images
 	usedImages := collectUsedImages(indexData, galleryData, itineraries)
@@ -464,8 +476,6 @@ func watchAndServe() {
 		}
 	}
 	// Also watch individual files in static/js/ etc if needed, but 'static' covers direct children.
-	// Recursive watch is not built-in to fsnotify, but we have a flat structure mostly.
-	// Add static/js explicitly if needed.
 	watcher.Add("static/js")
 
 	// Server
@@ -481,12 +491,15 @@ func watchAndServe() {
 done
 }
 
-func createRenderIndex(locale string, indexData *IndexFile) RenderIndex {
+func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFile) RenderIndex {
 	var l IndexLocale
+	var el AugustEventsLocale
 	if locale == "it" {
 		l = indexData.It
+		el = eventsData.It
 	} else {
 		l = indexData.En
+		el = eventsData.En
 	}
 
 	return RenderIndex{
@@ -516,9 +529,9 @@ func createRenderIndex(locale string, indexData *IndexFile) RenderIndex {
 		Contacts:    indexData.Contacts,
 		ContactInfo: l.ContactInfo,
 		AugustEvents: RenderAugustEvents{
-			Enabled: indexData.AugustEvents.Enabled,
-			Title:   l.AugustEvents.Title,
-			Items:   l.AugustEvents.Items,
+			Enabled: eventsData.Enabled,
+			Title:   el.Title,
+			Items:   el.Items,
 		},
 		WebcamPage: RenderWebcamPage{
 			Live:            l.WebcamPage.Live,
@@ -548,9 +561,9 @@ func createRenderIndex(locale string, indexData *IndexFile) RenderIndex {
 	}
 }
 
-func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
+func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsData *EventsFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
 	// Merge shared and localized
-	renderIndex := createRenderIndex(locale, indexData)
+	renderIndex := createRenderIndex(locale, indexData, eventsData)
 
 	// Prepare Itineraries for this locale
 	var localItineraries []RenderItinerary
@@ -724,7 +737,6 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 	detailTpl := pongo2.Must(pongo2.FromFile("templates/itinerary_detail.html"))
 
 	// Create itineraries dir if not exists (for root/itineraries/...)
-	// For EN, it will be dist/en/itineraries/...
 	itineraryOutDir := "dist/itineraries"
 	if locale == "en" {
 		itineraryOutDir = "dist/en/itineraries"
@@ -770,6 +782,18 @@ func loadIndex(path string) (*IndexFile, error) {
 	}
 	data.Hero.Image = "/static/" + data.Hero.Image
 	data.Welcome.Image = "/static/" + data.Welcome.Image
+	return &data, nil
+}
+
+func loadEvents(path string) (*EventsFile, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var data EventsFile
+	if err := toml.Unmarshal(b, &data); err != nil {
+		return nil, err
+	}
 	return &data, nil
 }
 
@@ -926,8 +950,6 @@ func cleanupImages(usedImages map[string]bool) error {
 				if err := os.Remove(path); err != nil {
 					return err
 				}
-				// Also try to remove corresponding thumb if it wasn't tracked (though collectUsedImages should track thumbs)
-				// But let's check strict "static/thumbs/..." scan next.
 			}
 		}
 		return nil
@@ -937,7 +959,6 @@ func cleanupImages(usedImages map[string]bool) error {
 	}
 
 	// 2. Scan static/thumbs/img
-	// Note: We might have other thumbs folders later, but for now it mirrors img
 	thumbsDir := "static/thumbs/img"
 	if _, err := os.Stat(thumbsDir); os.IsNotExist(err) {
 		return nil
@@ -963,7 +984,6 @@ func cleanupImages(usedImages map[string]bool) error {
 }
 
 // processImage ensures a thumbnail exists for the given image and returns the web paths for original and thumbnail.
-// rawPath: e.g. "img/photo.jpg" (relative to static/) or "/static/img/photo.jpg"
 func processImage(rawPath string) (originalWeb string, thumbWeb string, err error) {
 	// Clean rawPath
 	cleanPath := rawPath
@@ -996,7 +1016,6 @@ func processImage(rawPath string) (originalWeb string, thumbWeb string, err erro
 	}
 
 	// Generate
-	// log.Printf("Generating thumbnail for %s...", srcPath) // Verbose
 	srcImg, err := imaging.Open(srcPath)
 	if err != nil {
 		return "", "", fmt.Errorf("failed to open image: %w", err)
@@ -1024,12 +1043,6 @@ func loadWebcamImages(dir string) ([]string, error) {
 
 	for _, entry := range entries {
 		if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".jpg") {
-			// Exclude current.jpg from the time-lapse list if desired,
-			// or keep it. The user said "all the images in the folder in a loop".
-			// Usually time-lapse is history. Let's exclude 'current.jpg' to avoid
-			// it being out of order or duplicate if it matches a timestamp.
-			// But for now, let's include everything except 'current.jpg' for the list,
-			// assuming 'current' is the live view and others are history.
 			if entry.Name() != "current.jpg" {
 				images = append(images, "/static/webcam/"+entry.Name())
 			}
