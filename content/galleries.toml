@@ -3,13 +3,13 @@ url = "/static/img/gallery-peaks.jpg"
 alt = "Snowy mountain peaks"
 
 [[images]]
-url = "/static/img/gallery-dish.jpg"
+url = "img/gallery-dish.jpg"
 alt = "Traditional dish"
 
 [[images]]
-url = "/static/img/gallery-hiker.jpg"
+url = "img/gallery-hiker.jpg"
 alt = "Hiker view"
 
 [[images]]
-url = "/static/img/gallery-river.jpg"
+url = "img/gallery-river.jpg"
 alt = "River valley"

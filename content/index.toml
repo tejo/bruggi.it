@@ -1,8 +1,8 @@
 [hero]
-    image = "/static/img/hero.jpg"
+    image = "img/hero.jpg"
 
 [welcome]
-    image = "/static/img/welcome.jpg"
+    image = "img/welcome.jpg"
 
 [it]
     [it.nav]

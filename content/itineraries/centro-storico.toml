@@ -1,7 +1,7 @@
 slug = "centro-storico"
 type = "hiking"
-image = "/static/img/centro-storico.jpg"
-gpx_file = "/static/gpx/sample.gpx"
+image = "img/centro-storico.jpg"
+gpx_file = "gpx/sample.gpx"
 difficulty = "easy"
 distance_km = 2.0
 duration = "1h 15m"
