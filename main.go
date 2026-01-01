@@ -90,6 +90,8 @@ type ItineraryFile struct {
 	Type          string          `toml:"type"`
 	Image         string          `toml:"image"`
 	GpxFile       string          `toml:"gpx_file"`
+	YoutubeVideoID string         `toml:"youtube_video_id"`
+	Gallery       []string        `toml:"gallery"`
 	Difficulty    string          `toml:"difficulty"`
 	DistanceKM    float64         `toml:"distance_km"`
 	Duration      string          `toml:"duration"`
@@ -111,6 +113,8 @@ type RenderItinerary struct {
 	Type          string
 	Image         string
 	GpxFile       string
+	YoutubeVideoID string
+	Gallery       []string
 	Difficulty    string
 	DistanceKM    float64
 	Duration      string
@@ -324,6 +328,8 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 			Type:          raw.Type,
 			Image:         raw.Image,
 			GpxFile:       raw.GpxFile,
+			YoutubeVideoID: raw.YoutubeVideoID,
+			Gallery:       raw.Gallery,
 			Difficulty:    raw.Difficulty,
 			DistanceKM:    raw.DistanceKM,
 			Duration:      raw.Duration,
@@ -556,6 +562,9 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 			it.Image = "/static/" + it.Image
 			if it.GpxFile != "" {
 				it.GpxFile = "/static/" + it.GpxFile
+			}
+			for i := range it.Gallery {
+				it.Gallery[i] = "/static/" + it.Gallery[i]
 			}
 			its = append(its, it)
 		}

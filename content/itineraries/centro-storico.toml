@@ -2,6 +2,12 @@ slug = "centro-storico"
 type = "hiking"
 image = "img/centro-storico.jpg"
 gpx_file = "gpx/sample.gpx"
+youtube_video_id = "dQw4w9WgXcQ"
+gallery = [
+    "img/gallery-peaks.jpg",
+    "img/gallery-dish.jpg",
+    "img/gallery-hiker.jpg"
+]
 difficulty = "easy"
 distance_km = 2.0
 duration = "1h 15m"

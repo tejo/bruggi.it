@@ -47,6 +47,22 @@
         </script>
         {% endif %}
 
+        {% if itinerary.YoutubeVideoID %}
+        <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-sm">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{ itinerary.YoutubeVideoID }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        {% endif %}
+
+        {% if itinerary.Gallery %}
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {% for img in itinerary.Gallery %}
+            <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
+                <img src="{{ img }}" alt="Itinerary image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <div class="prose dark:prose-invert max-w-none">
             <h2 class="text-2xl font-bold mb-4">Description</h2>
             <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
