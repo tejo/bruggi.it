@@ -41,7 +41,7 @@
                 shadowUrl: '/static/css/images/marker-shadow.png'
               }
             }).on('loaded', function(e) {
-              map.fitBounds(e.target.getBounds());
+              map.fitBounds(e.target.getBounds(), { maxZoom: 15 });
             }).addTo(map);
           });
         </script>
