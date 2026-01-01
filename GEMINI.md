@@ -5,43 +5,48 @@
 "Bruggi - Villaggio di Montagna" is a static website for a fictional or real mountain village named Bruggi. It showcases the village's attractions, itineraries, galleries, and contact information.
 
 **Key Technologies:**
-*   **HTML5:** Semantic markup for structure.
-*   **Tailwind CSS:** Used via CDN for styling, including a custom in-browser configuration for colors, fonts, and dark mode.
-*   **Vanilla JavaScript:** `main.js` handles client-side dynamic behavior, primarily the injection of shared layout components (header/footer).
-*   **External Assets:** Fonts (Google Fonts), Icons (Material Symbols), and Images are hosted externally.
+*   **Language:** Go (Golang)
+*   **Generator:** Custom Static Site Generator (SSG) in `main.go`
+*   **Templating:** [Pongo2](https://github.com/flosch/pongo2) (Django/Jinja2-like syntax)
+*   **Configuration:** TOML files (`content/`) for data and localization
+*   **Styling:** Tailwind CSS (via CDN in templates)
+*   **Output:** Static HTML files generated in `dist/`
 
 ## Directory Structure
 
-*   `index.html`: The main landing page.
-*   `itineraries.html`, `galleries.html`, `contacts.html`: Main content pages.
-*   `itinerary.html`: Detail view for a specific itinerary.
-*   `webcam.html`: Page likely for viewing a live webcam feed.
-*   `layout.html`: Contains the source code for the shared Header and Footer.
-*   `main.js`: The core script that orchestrates the layout injection and interactive elements (mobile menu, active link highlighting).
+*   `main.go`: The core generator logic.
+*   `content/`: TOML data files defining the site's content.
+    *   `index.toml`: Homepage content.
+    *   `galleries.toml`: Photo collection.
+    *   `itineraries/*.toml`: Individual itinerary definitions.
+*   `templates/`: Pongo2 HTML templates.
+    *   `base.html`: Shared layout (Header/Footer).
+    *   `index.html`: Homepage template.
+    *   `itinerary_list.html`: List of itineraries.
+    *   `itinerary_detail.html`: Detail view for a single itinerary.
+    *   `gallery.html`: Photo gallery page.
+    *   `webcam.html`, `contacts.html`: Other page templates.
+*   `static/`: Static assets (JS, CSS, images) copied to `dist/` during build.
+    *   `js/main.js`: Client-side scripts.
+*   `dist/`: The generated output directory (Git ignored recommended).
 
 ## Building and Running
 
-Since this is a static site without a build process (no `package.json`, `npm`, or bundlers):
+1.  **Generate the Site:**
+    Run the Go program to build the static files into the `dist/` directory.
+    ```bash
+    go run main.go
+    ```
 
-1.  **Run:** Open any `.html` file (e.g., `index.html`) directly in a web browser.
-    *   *Note:* Because `main.js` uses `fetch()` to load `layout.html`, you **must** serve the files via a local web server to avoid CORS errors (browsers often block `fetch` on `file://` protocol).
-    *   **Recommended:** Use a simple HTTP server.
-        *   Python: `python3 -m http.server`
-        *   Node.js: `npx serve .` or `npx http-server .`
-        *   VS Code: "Live Server" extension.
+2.  **Serve the Site:**
+    Serve the `dist/` directory using any static file server.
+    *   **Python:** `python3 -m http.server -d dist`
+    *   **Node.js:** `npx serve dist`
+    *   **Go:** `go run github.com/jessvdk/go-static@latest -d dist`
 
-## Development Conventions
+## Localization
+The site supports multiple locales (currently `it` and `en`).
+*   **Italian (Default):** Generated at `dist/*.html`
+*   **English:** Generated at `dist/en/*.html`
 
-### Shared Layout Pattern
-This project avoids code duplication for the header and footer using a client-side injection technique:
-1.  **Source:** `layout.html` defines elements with IDs `main-header` and `main-footer`.
-2.  **Placeholders:** Content pages (like `index.html`) include `<div id="layout-header"></div>` and `<div id="layout-footer"></div>`.
-3.  **Injection:** `main.js` fetches `layout.html`, parses the response, and replaces the placeholders with the actual content from the source.
-
-### Styling
-*   **Tailwind via CDN:** Styling is applied using utility classes. Configuration (colors, fonts) is defined in a `<script>` tag within the `<head>` of each page.
-*   **Themes:** Supports Light and Dark modes via the `class="light"` (or dark) attribute on the `<html>` tag.
-
-### Navigation
-*   Links in the header should match the filenames (e.g., `itineraries.html`).
-*   `main.js` automatically applies the `text-primary` class to the navigation link that matches the current URL path.
+Data in TOML files is structured with `[it]` and `[en]` sections for translation.
