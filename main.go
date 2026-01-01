@@ -402,21 +402,57 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		log.Panic(err)
 	}
 
-	// Render Itineraries List
-	listCtx := pongo2.Context{
-		"locale":      locale,
-		"base_url":    baseUrl,
-		"page_title":  renderIndex.Sections.ItinerariesTitle,
-		"t":           renderIndex,
-		"itineraries": localItineraries,
-	}
+	// Render Itineraries List (All + Filtered)
+	filters := []string{"all", "hiking", "biking"}
 	listTpl := pongo2.Must(pongo2.FromFile("templates/itinerary_list.html"))
-	listOutPath := "dist/itineraries.html"
-	if locale == "en" {
-		listOutPath = "dist/en/itineraries.html"
-	}
-	if err := renderToFile(listTpl, listCtx, listOutPath); err != nil {
-		log.Panic(err)
+
+	for _, filter := range filters {
+		var filteredIts []RenderItinerary
+		if filter == "all" {
+			filteredIts = localItineraries
+		} else {
+			for _, it := range localItineraries {
+				if it.Type == filter {
+					filteredIts = append(filteredIts, it)
+				}
+			}
+		}
+
+		listCtx := pongo2.Context{
+			"locale":         locale,
+			"base_url":       baseUrl,
+			"page_title":     renderIndex.Sections.ItinerariesTitle,
+			"t":              renderIndex,
+			"itineraries":    filteredIts,
+			"current_filter": filter,
+		}
+
+		var listOutPath string
+		if filter == "all" {
+			if locale == "en" {
+				listOutPath = "dist/en/itineraries.html"
+			} else {
+				listOutPath = "dist/itineraries.html"
+			}
+		} else {
+			// Ensure itineraries dir exists
+			itineraryDir := "dist/itineraries"
+			if locale == "en" {
+				itineraryDir = "dist/en/itineraries"
+			}
+			if err := os.MkdirAll(itineraryDir, 0755); err != nil {
+				log.Panic(err)
+			}
+			if locale == "en" {
+				listOutPath = filepath.Join("dist/en/itineraries", filter+".html")
+			} else {
+				listOutPath = filepath.Join("dist/itineraries", filter+".html")
+			}
+		}
+
+		if err := renderToFile(listTpl, listCtx, listOutPath); err != nil {
+			log.Panic(err)
+		}
 	}
 
 	// Render Itinerary Details
