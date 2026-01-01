@@ -222,7 +222,105 @@ func buildSite() {
 	// 4. Render Pages for EN
 	renderLocale("en", "/en", indexData, *galleryData, itineraries)
 
+	// 5. Cleanup Unused Images
+	usedImages := collectUsedImages(indexData, galleryData, itineraries)
+	if err := cleanupImages(usedImages); err != nil {
+		log.Printf("Error cleaning up images: %v", err)
+	}
+
 	fmt.Printf("Build complete in %v\n", time.Since(start))
+}
+
+func collectUsedImages(index *IndexFile, gallery *GalleryData, itineraries []ItineraryFile) map[string]bool {
+	used := make(map[string]bool)
+
+	// Helper to add path
+	add := func(p string) {
+		// p is like "/static/img/foo.jpg"
+		// We want to store relative path on disk: "static/img/foo.jpg"
+		if strings.HasPrefix(p, "/static/") {
+			rel := strings.TrimPrefix(p, "/")
+			used[rel] = true
+			
+			// Also add the thumbnail version if it implies one
+			// Our processImage logic creates thumbs in static/thumbs/img/...
+			// But the input 'p' here is the generated URL from load* functions.
+			
+			// Wait, the load* functions return the *processed* URL.
+			// loadIndex: prepends /static/
+			// loadGallery: calls processImage -> returns /static/img/... and /static/thumbs/img/...
+			// loadItineraries: calls processImage -> returns /static/img/... and /static/thumbs/img/...
+			
+			// So if we have /static/img/foo.jpg, we expect static/img/foo.jpg to exist.
+		}
+	}
+
+	add(index.Hero.Image)
+	add(index.Welcome.Image)
+
+	for _, img := range gallery.Images {
+		add(img.Url)
+		add(img.Thumbnail)
+	}
+
+	for _, it := range itineraries {
+		add(it.Image)
+		for _, img := range it.ProcessedGallery {
+			add(img.Url)
+			add(img.Thumbnail)
+		}
+	}
+	
+	return used
+}
+
+func cleanupImages(usedImages map[string]bool) error {
+	// 1. Scan static/img
+	err := filepath.WalkDir("static/img", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() {
+			// path is like "static/img/foo.jpg"
+			if !usedImages[path] {
+				log.Printf("Removing unused image: %s", path)
+				if err := os.Remove(path); err != nil {
+					return err
+				}
+				// Also try to remove corresponding thumb if it wasn't tracked (though collectUsedImages should track thumbs)
+				// But let's check strict "static/thumbs/..." scan next.
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	// 2. Scan static/thumbs/img
+	// Note: We might have other thumbs folders later, but for now it mirrors img
+	thumbsDir := "static/thumbs/img"
+	if _, err := os.Stat(thumbsDir); os.IsNotExist(err) {
+		return nil
+	}
+
+	err = filepath.WalkDir(thumbsDir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() {
+			// path is like "static/thumbs/img/foo.jpg"
+			if !usedImages[path] {
+				log.Printf("Removing unused thumbnail: %s", path)
+				if err := os.Remove(path); err != nil {
+					return err
+				}
+			}
+		}
+		return nil
+	})
+	
+	return err
 }
 
 func watchAndServe() {
