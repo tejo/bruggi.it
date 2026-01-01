@@ -9,7 +9,8 @@
 *   **Generator:** Custom Static Site Generator (SSG) in `main.go`
 *   **Templating:** [Pongo2](https://github.com/flosch/pongo2) (Django/Jinja2-like syntax)
 *   **Configuration:** TOML files (`content/`) for data and localization
-*   **Styling:** Tailwind CSS (via CDN in templates)
+*   **Styling:** Tailwind CSS (via local script in `static/js/tailwindcss.js`) and custom CSS.
+*   **Maps:** Leaflet.js with OpenTopoMap tiles.
 *   **Output:** Static HTML files generated in `dist/`
 *   **Watcher:** `fsnotify` for auto-rebuilding during development.
 
@@ -27,10 +28,35 @@
     *   `itinerary_detail.html`: Detail view for a single itinerary.
     *   `gallery.html`: Photo gallery page.
     *   `webcam.html`, `contacts.html`: Other page templates.
-*   `static/`: Static assets (JS, CSS, images) copied to `dist/` during build.
-    *   `js/main.js`: Client-side scripts.
+*   `static/`: Static assets copied to `dist/` during build.
+    *   `css/`: Stylesheets (including `fonts.css` and `leaflet.css`).
+    *   `fonts/`: Local font files.
+    *   `gpx/`: GPX tracks for itineraries.
+    *   `img/`: Images for the site.
+    *   `js/`: Client-side scripts (`main.js`, `leaflet.js`, `leaflet-gpx.js`).
 *   `dist/`: The generated output directory (Git ignored recommended).
 *   `legacy_html/`: Unused HTML files from the previous static version.
+
+## Key Features
+
+### Itineraries
+*   **Filtering:** Itineraries can be filtered by type (`hiking` or `biking`). This is implemented via **static page generation** (e.g., `dist/itineraries/hiking.html`).
+*   **Details:** Each itinerary page supports:
+    *   **Interactive Map:** Leaflet map visualizing the GPX track.
+    *   **GPX Download:** Button to download the associated `.gpx` file.
+    *   **YouTube Video:** Embedded video below the map.
+    *   **Gallery:** Grid of additional images specific to the itinerary.
+*   **Data Structure:** Defined in TOML files with fields for `type`, `gpx_file`, `youtube_video_id`, and `gallery`.
+
+### Localization
+The site supports multiple locales (currently `it` and `en`).
+*   **Italian (Default):** Generated at `dist/*.html`
+*   **English:** Generated at `dist/en/*.html`
+*   **Switcher:** The language switcher intelligently links to the *current page* in the alternate language.
+
+### Assets
+*   **Fonts:** Served locally from `static/fonts/` (no Google Fonts CDN).
+*   **Paths:** Asset paths in TOML (e.g., `img/photo.jpg`) are relative to `static/`. The generator automatically prepends `/static/` during build.
 
 ## Building and Running
 
@@ -45,10 +71,3 @@
     ```bash
     go run main.go -serve
     ```
-
-## Localization
-The site supports multiple locales (currently `it` and `en`).
-*   **Italian (Default):** Generated at `dist/*.html`
-*   **English:** Generated at `dist/en/*.html`
-
-Data in TOML files is structured with shared fields at the root and localized fields in `[it]` and `[en]` sections. The navigation bar is also fully localized via `index.toml`.
