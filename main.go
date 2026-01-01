@@ -68,6 +68,9 @@ type SectionTitles struct {
 	ItinerariesSubtitle string `toml:"itineraries_subtitle"`
 	SeeAllItineraries   string `toml:"see_all_itineraries"`
 	ReadMore            string `toml:"read_more"`
+	FilterAll           string `toml:"filter_all"`
+	FilterHiking        string `toml:"filter_hiking"`
+	FilterBiking        string `toml:"filter_biking"`
 	GalleryTitle        string `toml:"gallery_title"`
 	GallerySubtitle     string `toml:"gallery_subtitle"`
 	SeeAllGallery       string `toml:"see_all_gallery"`
