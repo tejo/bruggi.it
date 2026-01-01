@@ -4,6 +4,11 @@
 [welcome]
     image = "img/welcome.jpg"
 
+[contacts]
+    email = "info@bruggi.it"
+    phone = "+39 0123 456789"
+    address = "Via Roma 1, 12345 Bruggi (IT)"
+
 [it]
     [it.nav]
     home = "Home"
@@ -11,6 +16,18 @@
     webcam = "Webcam"
     gallery = "Galleria Foto"
     contact = "Contattaci"
+
+    [it.contact_info]
+    title = "Contatti"
+    subtitle = "Siamo qui per aiutarti"
+    email_label = "Email"
+    phone_label = "Telefono"
+    address_label = "Indirizzo"
+    form_title = "Inviaci un messaggio"
+    form_name = "Nome"
+    form_email = "Email"
+    form_message = "Messaggio"
+    form_submit = "Invia"
 
     [it.hero]
     title = "Scopri la magia di Bruggi"
@@ -69,6 +86,18 @@ home = "Home"
     webcam = "Webcam"
     gallery = "Photo Gallery"
     contact = "Contact Us"
+
+    [en.contact_info]
+    title = "Contacts"
+    subtitle = "We are here to help"
+    email_label = "Email"
+    phone_label = "Phone"
+    address_label = "Address"
+    form_title = "Send us a message"
+    form_name = "Name"
+    form_email = "Email"
+    form_message = "Message"
+    form_submit = "Send"
 
     [en.hero]
     title = "Discover the magic of Bruggi"

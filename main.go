@@ -21,10 +21,11 @@ import (
 // Data Structures
 
 type IndexFile struct {
-	Hero    SharedHeroSection    `toml:"hero"`
-	Welcome SharedWelcomeSection `toml:"welcome"`
-	It      IndexLocale          `toml:"it"`
-	En      IndexLocale          `toml:"en"`
+	Hero     SharedHeroSection    `toml:"hero"`
+	Welcome  SharedWelcomeSection `toml:"welcome"`
+	Contacts SharedContacts       `toml:"contacts"`
+	It       IndexLocale          `toml:"it"`
+	En       IndexLocale          `toml:"en"`
 }
 
 type SharedHeroSection struct {
@@ -35,12 +36,32 @@ type SharedWelcomeSection struct {
 	Image string `toml:"image"`
 }
 
+type SharedContacts struct {
+	Email   string `toml:"email"`
+	Phone   string `toml:"phone"`
+	Address string `toml:"address"`
+}
+
 type IndexLocale struct {
-	Nav        NavLocale        `toml:"nav"`
-	Hero       HeroLocale       `toml:"hero"`
-	Welcome    WelcomeLocale    `toml:"welcome"`
-	Sections   SectionTitles    `toml:"sections"`
-	WebcamPage WebcamPageLocale `toml:"webcam_page"`
+	Nav         NavLocale         `toml:"nav"`
+	Hero        HeroLocale        `toml:"hero"`
+	Welcome     WelcomeLocale     `toml:"welcome"`
+	Sections    SectionTitles     `toml:"sections"`
+	WebcamPage  WebcamPageLocale  `toml:"webcam_page"`
+	ContactInfo ContactInfoLocale `toml:"contact_info"`
+}
+
+type ContactInfoLocale struct {
+	Title        string `toml:"title"`
+	Subtitle     string `toml:"subtitle"`
+	EmailLabel   string `toml:"email_label"`
+	PhoneLabel   string `toml:"phone_label"`
+	AddressLabel string `toml:"address_label"`
+	FormTitle    string `toml:"form_title"`
+	FormName     string `toml:"form_name"`
+	FormEmail    string `toml:"form_email"`
+	FormMessage  string `toml:"form_message"`
+	FormSubmit   string `toml:"form_submit"`
 }
 
 type WebcamPageLocale struct {
@@ -158,11 +179,13 @@ type RenderItinerary struct {
 
 // Helper struct to pass to templates, flattening the structure
 type RenderIndex struct {
-	Nav        RenderNav
-	Hero       RenderHero
-	Welcome    RenderWelcome
-	Sections   SectionTitles
-	WebcamPage RenderWebcamPage
+	Nav         RenderNav
+	Hero        RenderHero
+	Welcome     RenderWelcome
+	Sections    SectionTitles
+	WebcamPage  RenderWebcamPage
+	Contacts    SharedContacts
+	ContactInfo ContactInfoLocale
 }
 
 type RenderWebcamPage struct {
@@ -465,7 +488,9 @@ func createRenderIndex(locale string, indexData *IndexFile) RenderIndex {
 			CTAHistory:  l.Welcome.CTAHistory,
 			Image:       indexData.Welcome.Image,
 		},
-		Sections: l.Sections,
+		Sections:    l.Sections,
+		Contacts:    indexData.Contacts,
+		ContactInfo: l.ContactInfo,
 		WebcamPage: RenderWebcamPage{
 			Live:            l.WebcamPage.Live,
 			HD:              l.WebcamPage.HD,
