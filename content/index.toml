@@ -9,6 +9,9 @@
     phone = "+39 0123 456789"
     address = "Via Roma 1, 12345 Bruggi (IT)"
 
+[august_events]
+    enabled = true
+
 [it]
     [it.nav]
     home = "Home"
@@ -16,6 +19,21 @@
     webcam = "Webcam"
     gallery = "Galleria Foto"
     contact = "Contattaci"
+
+    [it.august_events]
+    title = "Agosto Bruggese"
+    [[it.august_events.items]]
+        name = "Torneo di Ping Pong"
+        date = "10 Agosto"
+        time = "15:00"
+    [[it.august_events.items]]
+        name = "Torneo di Basket"
+        date = "15 Agosto"
+        time = "16:00"
+    [[it.august_events.items]]
+        name = "Festa del Paese"
+        date = "16 Agosto"
+        time = "Tutto il giorno"
 
     [it.contact_info]
     title = "Contatti"
@@ -86,6 +104,21 @@ home = "Home"
     webcam = "Webcam"
     gallery = "Photo Gallery"
     contact = "Contact Us"
+
+    [en.august_events]
+    title = "August in Bruggi"
+    [[en.august_events.items]]
+        name = "Ping Pong Tournament"
+        date = "August 10th"
+        time = "3:00 PM"
+    [[en.august_events.items]]
+        name = "Basketball Tournament"
+        date = "August 15th"
+        time = "4:00 PM"
+    [[en.august_events.items]]
+        name = "Village Festival"
+        date = "August 16th"
+        time = "All day"
 
     [en.contact_info]
     title = "Contacts"

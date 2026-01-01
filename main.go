@@ -21,11 +21,12 @@ import (
 // Data Structures
 
 type IndexFile struct {
-	Hero     SharedHeroSection    `toml:"hero"`
-	Welcome  SharedWelcomeSection `toml:"welcome"`
-	Contacts SharedContacts       `toml:"contacts"`
-	It       IndexLocale          `toml:"it"`
-	En       IndexLocale          `toml:"en"`
+	Hero         SharedHeroSection    `toml:"hero"`
+	Welcome      SharedWelcomeSection `toml:"welcome"`
+	Contacts     SharedContacts       `toml:"contacts"`
+	AugustEvents SharedAugustEvents   `toml:"august_events"`
+	It           IndexLocale          `toml:"it"`
+	En           IndexLocale          `toml:"en"`
 }
 
 type SharedHeroSection struct {
@@ -36,6 +37,10 @@ type SharedWelcomeSection struct {
 	Image string `toml:"image"`
 }
 
+type SharedAugustEvents struct {
+	Enabled bool `toml:"enabled"`
+}
+
 type SharedContacts struct {
 	Email   string `toml:"email"`
 	Phone   string `toml:"phone"`
@@ -43,12 +48,24 @@ type SharedContacts struct {
 }
 
 type IndexLocale struct {
-	Nav         NavLocale         `toml:"nav"`
-	Hero        HeroLocale        `toml:"hero"`
-	Welcome     WelcomeLocale     `toml:"welcome"`
-	Sections    SectionTitles     `toml:"sections"`
-	WebcamPage  WebcamPageLocale  `toml:"webcam_page"`
-	ContactInfo ContactInfoLocale `toml:"contact_info"`
+	Nav          NavLocale          `toml:"nav"`
+	Hero         HeroLocale         `toml:"hero"`
+	Welcome      WelcomeLocale      `toml:"welcome"`
+	Sections     SectionTitles      `toml:"sections"`
+	WebcamPage   WebcamPageLocale   `toml:"webcam_page"`
+	ContactInfo  ContactInfoLocale  `toml:"contact_info"`
+	AugustEvents AugustEventsLocale `toml:"august_events"`
+}
+
+type AugustEventsLocale struct {
+	Title string      `toml:"title"`
+	Items []EventItem `toml:"items"`
+}
+
+type EventItem struct {
+	Name string `toml:"name"`
+	Date string `toml:"date"`
+	Time string `toml:"time"`
 }
 
 type ContactInfoLocale struct {
@@ -179,13 +196,20 @@ type RenderItinerary struct {
 
 // Helper struct to pass to templates, flattening the structure
 type RenderIndex struct {
-	Nav         RenderNav
-	Hero        RenderHero
-	Welcome     RenderWelcome
-	Sections    SectionTitles
-	WebcamPage  RenderWebcamPage
-	Contacts    SharedContacts
-	ContactInfo ContactInfoLocale
+	Nav          RenderNav
+	Hero         RenderHero
+	Welcome      RenderWelcome
+	Sections     SectionTitles
+	WebcamPage   RenderWebcamPage
+	Contacts     SharedContacts
+	ContactInfo  ContactInfoLocale
+	AugustEvents RenderAugustEvents
+}
+
+type RenderAugustEvents struct {
+	Enabled bool
+	Title   string
+	Items   []EventItem
 }
 
 type RenderWebcamPage struct {
@@ -491,6 +515,11 @@ func createRenderIndex(locale string, indexData *IndexFile) RenderIndex {
 		Sections:    l.Sections,
 		Contacts:    indexData.Contacts,
 		ContactInfo: l.ContactInfo,
+		AugustEvents: RenderAugustEvents{
+			Enabled: indexData.AugustEvents.Enabled,
+			Title:   l.AugustEvents.Title,
+			Items:   l.AugustEvents.Items,
+		},
 		WebcamPage: RenderWebcamPage{
 			Live:            l.WebcamPage.Live,
 			HD:              l.WebcamPage.HD,
