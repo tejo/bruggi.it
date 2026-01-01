@@ -1,8 +1,8 @@
 [hero]
-    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuB1JKjyeXuZeZO2S7lKP4s5PjMXagz8GSw-SsvD7EAidRUbF4EnFyzDciwwCy-NguLKWrCt6bg5DRlPUu1K1Q775YcNWhKNfABVEQzHhj4ce_EYB1AvTAR7BVRkXuoxdJ8FbGwsoz7cWfOHC0q9adPqhI6qL-IC3n0vfe0TttMoX0BMvCkeHn2MBnUVOqsfQBuHttdmzaua1mi5p4ix8QuCIsq8JHFsPxZNxkP7P_t7uebkCDLYB3kZrAGBWhx61mgCOZ0D8w6HW7U"
+    image = "/static/img/hero.jpg"
 
 [welcome]
-    image = "https://lh3.googleusercontent.com/aida-public/AB6AXuCNvEUDyJoLyFQu0JtYOMNbsrndr7QBm_WvRczwuop8oToFi-UZgaaiHAPKYdWonzWBp9Fk37O9Ls67_vfNhAr2cvSSS6lyIPqfi7agAI5nYcyqmUXuog8AUbzWaeaJuSnVRylGtb9JiXxI830eVry12z3PpjyMapyk-xwCUCtnxvgbcZh4GJLSNDrNKK6YzvQIiUmpr6eXo3OuQcUeAsW5z_cj6X2UeXzRc3Qcm8ph29bQy3bsvVxfOa_kVSYuE4K70rx8S8IQ_uo"
+    image = "/static/img/welcome.jpg"
 
 [it]
     [it.nav]

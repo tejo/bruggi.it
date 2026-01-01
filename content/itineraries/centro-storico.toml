@@ -1,5 +1,5 @@
 slug = "centro-storico"
-image = "https://lh3.googleusercontent.com/aida-public/AB6AXuBVlB_ELff1-z3dWc1ziVqpLMlft22XVlVToHYwDqb_wp40xXUmWkr7D86zIlPt3dGwzQTg6mkFAwGKtWJqQ-lAmOg2yBkv-FlxSucYSTHjNj180Px0Hfu-uC1_0gggRyGA5w2dNeHy9NqhAhDBBSTU2bgph3iSmRbPDk6Z9h64dnoy5AK3qKG6jH1XZIOyj51DFP8G4f-Aa3SlSjf3nHH6Aa_YaCuR-lu8c7pfoP3pBLgqajE3WvAm4U9MaRczjKbJ_r-NxCOu0qo"
+image = "/static/img/centro-storico.jpg"
 difficulty = "easy"
 distance_km = 2.0
 duration = "1h 15m"
