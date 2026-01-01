@@ -4,7 +4,7 @@
 <div class="relative w-full bg-surface-light dark:bg-surface-dark">
       <div class="absolute inset-0 z-0">
         <div class="w-full h-full bg-cover bg-center"
-          style='background-image: linear-gradient(rgba(16, 34, 16, 0.4), rgba(16, 34, 16, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDiTrnGkUEyXKDXc7D8DAkCawK2-_d5UdMjw5JKE6xcfN4mVk1aO_WXmTLacMU0coKrNx9DdKE3oJhk_qlMcqIXVs4uQVoj1KztR4MG_S58-qEku43-16DjxDmDz4I68f1G_Oq5h7Es3La2rNtdNIEVS5jaFWPSXQy9dwOWV1l8k-uhso1eKX2MTTHLK4sg7pV8nVPJUYqs1MVlfSRtRRUGyBAHlvfj-Ow548K7QqqSlLNTUMfLYQqsZlLacuIKvo81b5sbvj-kw2I");'>
+          style='background-image: linear-gradient(rgba(16, 34, 16, 0.4), rgba(16, 34, 16, 0.7)), url("/static/img/hero.jpg");'>
         </div>
       </div>
       <div
@@ -22,7 +22,7 @@
       <div class="flex-1 flex flex-col gap-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {% for item in itineraries %}
-          <div
+          <a href="{{ base_url }}/itineraries/{{ item.Slug }}.html"
             class="group flex flex-col bg-surface-light dark:bg-surface-dark border border-[#f0f4f0] dark:border-[#2a402a] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
             <div class="relative h-48 w-full overflow-hidden">
                <!-- Difficulty Badge -->
@@ -64,13 +64,13 @@
                   <span>{{ item.ElevationGain }}m</span>
                 </div>
               </div>
-              <a href="{{ base_url }}/itineraries/{{ item.Slug }}.html"
-                class="mt-auto w-full py-2.5 rounded-lg bg-[#f0f4f0] dark:bg-[#2a402a] text-[#111811] dark:text-white font-bold text-sm hover:bg-primary hover:text-[#111811] transition-colors flex items-center justify-center gap-2">
-                <span>View Route</span>
+              <div
+                class="mt-auto w-full py-2.5 rounded-lg bg-[#f0f4f0] dark:bg-[#2a402a] text-[#111811] dark:text-white font-bold text-sm group-hover:bg-primary group-hover:text-[#111811] transition-colors flex items-center justify-center gap-2">
+                <span>{{ t.Sections.ReadMore }}</span>
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
-              </a>
+              </div>
             </div>
-          </div>
+          </a>
           {% endfor %}
         </div>
     </div>

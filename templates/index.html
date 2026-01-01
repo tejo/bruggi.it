@@ -15,11 +15,11 @@
               {{ t.Hero.Subtitle }}
             </h2>
             <div class="flex justify-center pt-4">
-              <button
+              <a href="#itinerari"
                 class="flex items-center gap-2 rounded-lg h-12 px-8 bg-primary text-[#111811] text-base font-bold hover:bg-green-500 hover:scale-105 transition-all shadow-lg">
                 {{ t.Hero.CTA }}
                 <span class="material-symbols-outlined text-sm">arrow_downward</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
                   <span class="material-symbols-outlined text-sm">history_edu</span> {{ t.Welcome.Founded }}
                 </span>
               </div>
-              <button class="mt-4 flex items-center gap-2 text-primary font-bold text-sm hover:underline w-fit">
+              <button onclick="window.location.href='{{ base_url }}/itineraries.html'" class="mt-4 flex items-center gap-2 text-primary font-bold text-sm hover:underline w-fit">
                 {{ t.Welcome.CTAHistory }}
                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
@@ -82,24 +82,28 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           {% for item in itineraries %}
-          <div class="group flex flex-col bg-background-light dark:bg-[#1a2e1a] rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+          <a href="{{ base_url }}/itineraries/{{ item.Slug }}.html" class="group flex flex-col bg-background-light dark:bg-[#1a2e1a] rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
             <div class="h-48 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
               style="background-image: url('{{ item.Image }}');">
             </div>
             <div class="p-5 flex flex-col gap-3 flex-1">
               <div class="flex justify-between items-start">
-                <h3 class="text-lg font-bold text-[#111811] dark:text-white">{{ item.Title }}</h3>
+                <h3 class="text-lg font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">{{ item.Title }}</h3>
                 <span class="bg-primary/20 text-green-700 dark:text-green-300 text-xs px-2 py-1 rounded font-bold">{{ item.Difficulty }}</span>
               </div>
               <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{{ item.Description }}</p>
-              <div class="mt-auto pt-4 flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 gap-4">
+              <div class="pt-2 flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 gap-4">
                 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">timer</span>
                   {{ item.Duration }}</span>
                 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">hiking</span>
                   {{ item.DistanceKM }}km</span>
               </div>
+              <div class="mt-auto pt-4 flex items-center gap-1 text-primary font-bold text-sm">
+                {{ t.Sections.ReadMore }}
+                <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              </div>
             </div>
-          </div>
+          </a>
           {% endfor %}
         </div>
         
