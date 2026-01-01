@@ -1,4 +1,5 @@
 slug = "sentiero-mulini"
+type = "biking"
 image = "/static/img/sentiero-mulini.jpg"
 difficulty = "easy"
 distance_km = 4.2

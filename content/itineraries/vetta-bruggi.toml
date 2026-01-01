@@ -1,4 +1,5 @@
 slug = "vetta-bruggi"
+type = "hiking"
 image = "/static/img/vetta-bruggi.jpg"
 difficulty = "hard"
 distance_km = 12.5

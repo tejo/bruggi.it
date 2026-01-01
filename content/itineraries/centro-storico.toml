@@ -1,4 +1,5 @@
 slug = "centro-storico"
+type = "hiking"
 image = "/static/img/centro-storico.jpg"
 difficulty = "easy"
 distance_km = 2.0

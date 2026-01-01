@@ -84,6 +84,7 @@ type GalleryImage struct {
 
 type ItineraryFile struct {
 	Slug          string          `toml:"slug"`
+	Type          string          `toml:"type"`
 	Image         string          `toml:"image"`
 	Difficulty    string          `toml:"difficulty"`
 	DistanceKM    float64         `toml:"distance_km"`
@@ -103,6 +104,7 @@ type ItineraryLocale struct {
 // Renderable Item for Templates
 type RenderItinerary struct {
 	Slug          string
+	Type          string
 	Image         string
 	Difficulty    string
 	DistanceKM    float64
@@ -314,6 +316,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, galleryT 
 		}
 		localItineraries = append(localItineraries, RenderItinerary{
 			Slug:          raw.Slug,
+			Type:          raw.Type,
 			Image:         raw.Image,
 			Difficulty:    raw.Difficulty,
 			DistanceKM:    raw.DistanceKM,

@@ -1,4 +1,5 @@
 slug = "forest-retreat"
+type = "hiking"
 image = "/static/img/forest-retreat.jpg"
 difficulty = "medium"
 distance_km = 6.0

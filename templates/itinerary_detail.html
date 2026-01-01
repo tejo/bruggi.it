@@ -42,6 +42,16 @@
             <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                        {% if itinerary.Type == "hiking" %}
+                          <span class="material-symbols-outlined">hiking</span> Hiking
+                        {% else %}
+                          <span class="material-symbols-outlined">directions_bike</span> Biking
+                        {% endif %}
+                    </span>
+                    <span class="font-bold dark:text-white capitalize">{{ itinerary.Type }}</span>
+                </div>
+                <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
                         <span class="material-symbols-outlined">schedule</span> Duration
                     </span>
                     <span class="font-bold dark:text-white">{{ itinerary.Duration }}</span>
