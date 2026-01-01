@@ -1,0 +1,8 @@
+module bruggi
+
+go 1.25.5
+
+require (
+	github.com/flosch/pongo2/v6 v6.0.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+)

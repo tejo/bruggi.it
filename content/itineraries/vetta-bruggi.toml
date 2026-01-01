@@ -1,0 +1,16 @@
+slug = "vetta-bruggi"
+image = "https://lh3.googleusercontent.com/aida-public/AB6AXuB8OnVA3unBhD5eEL8VjAj9cKpqREvAQeNwrJ00KUQQmKD7QwTrJQgYl6oT1fFp5Zffw7NGNB_bO4VBIpU2ipZtsX8Q0OKbpQfgHfHBKbt4hAjrxiaplYIVwj8ErbonEygSlFquJdY8gvlPrXGmrGWjhJ_8NsJaSAaYVxh5h3ob0zbLet8ZhwvjMpgIitX9LwAY-fnVQXN3qWiwhaRqvKXU06c0tz_g21AmIGycWlMH-7-3jWhbxZwzixdQvxE4VDcGzzip0n642MQ"
+difficulty = "hard"
+distance_km = 12.5
+duration = "6h 30m"
+elevation_gain = 980
+
+[it]
+title = "Vetta Bruggi"
+description = "Scalata impegnativa per escursionisti esperti che offre le migliori viste panoramiche dell'intera valle."
+tags = ["Trekking", "Vista", "Impegnativo"]
+
+[en]
+title = "Bruggi Summit"
+description = "Challenging climb for experienced hikers offering the best panoramic views of the entire valley."
+tags = ["Trekking", "View", "Challenging"]

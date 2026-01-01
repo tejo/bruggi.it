@@ -1,0 +1,18 @@
+slug = "sentiero-mulini"
+image = "https://lh3.googleusercontent.com/aida-public/AB6AXuBDKmIS9jPtnqW-zUj6kg93ieIZ19vT6rTza4xDMGcJ0cU9N_7S2jWNRU9VIPWNGQrwyEW2486NrSvkNhKgK9r44_i5AH8Xzjo5WD_U-WMKoGx-s5dhJgrTTV0fA7_1YJTWMFUlDtr4pfQ-zWYxaaQbwZ2ocuuwogCB1JHT2mKExNQ7RqXVPqiAKCqfyJlYlu53JFutR33NKZPhbOiBtFCmqlnUCFKWWDwXpkbXj6G8FOCTCX6Ens8RVSTkK2ire1iofQh4SlkCLWI"
+difficulty = "easy"
+distance_km = 4.2
+duration = "2h 00m"
+elevation_gain = 120
+
+[it]
+title = "Sentiero dei Mulini"
+description = "Una passeggiata rilassante lungo il fiume fino all'antico mulino, perfetta per famiglie e picnic."
+long_description = "Il Sentiero dei Mulini è un percorso storico che costeggia il fiume Bruggi..."
+tags = ["Famiglia", "Natura", "Storia"]
+
+[en]
+title = "Mills Trail"
+description = "A relaxing walk along the river to the ancient mill, perfect for families and picnics."
+long_description = "The Mills Trail is a historic path that runs along the Bruggi river..."
+tags = ["Family", "Nature", "History"]

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Bruggi Webcams - Bruggi</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#11d411",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102210",
+            "surface-light": "#ffffff",
+            "surface-dark": "#1a2e1a",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Noto Sans", "sans-serif"],
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <script src="/static/js/main.js" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111811] dark:text-white">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#f0f4f0] dark:bg-[#111811]/90 dark:border-gray-800"
+      id="main-header">
+      <div class="px-4 md:px-10 py-3 flex items-center justify-between mx-auto max-w-[1280px] w-full">
+        <a href="/en/" class="flex items-center gap-2 text-[#111811] dark:text-white">
+          <span class="material-symbols-outlined text-primary text-3xl">landscape</span>
+          <h2 class="text-xl font-bold tracking-tight">Bruggi</h2>
+        </a>
+        <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+          <nav class="flex items-center gap-8">
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link"
+              href="/en/itineraries.html">Itinerari</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Galleria
+              Foto</a>
+          </nav>
+          <div class="flex gap-3 items-center">
+             <!-- Locale Switcher -->
+             
+             <a href="/" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+                IT
+             </a>
+             
+            <a href="/en/contacts.html"
+              class="flex items-center justify-center rounded-lg h-9 px-5 bg-primary text-[#111811] text-sm font-bold shadow-sm hover:bg-green-500 transition-colors">
+              Contattaci
+            </a>
+          </div>
+        </div>
+        <button id="burger-btn" class="md:hidden text-[#111811] dark:text-white">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu"
+        class="hidden md:hidden bg-white/95 dark:bg-[#111811]/95 border-b border-[#f0f4f0] dark:border-gray-800 backdrop-blur-md absolute w-full left-0 top-full shadow-lg">
+        <nav class="flex flex-col p-6 gap-6 text-center">
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/itineraries.html">Itinerari</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Galleria
+            Foto</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/contacts.html">Contattaci</a>
+        </nav>
+      </div>
+    </header>
+
+    
+<div class="layout-container flex h-full grow flex-col">
+      <div class="flex flex-1 justify-center py-8 px-4 md:px-10 lg:px-20">
+        <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+          <div class="mb-8">
+            <div
+              class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
+              <div
+                class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0PDI1AEh7QIlj2FC4aaZNv5aIbbOfE7j80ot2nseBqxeo6WwIF939QzC3_ittgQJ4svrtBR49VO_nTK6kEFZTN0dGsof8X_lIFRrpd9dkxJXAX8wmsBtUvXBSYeu8A0HRp6o5_GWer6znifJpFVKuIp49XH6fxybGAeh4P-V5c6PRwHvCsLHif9ho-ojJa7c1-uFY2Hro9TbreGQEFFJeBeAwVi_aLSSC-qda6h3a9kxqyXSR0DSzXFZiByJeyrnGpF77b-i7fF0");'>
+              </div>
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
+              </div>
+              <div class="absolute top-4 left-4 md:top-6 md:left-6 flex items-center gap-3 z-10">
+                <div
+                  class="bg-[#11d411] text-[#102210] text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-2 animate-pulse shadow-[0_0_10px_rgba(17,212,17,0.5)]">
+                  <span class="block w-2 h-2 rounded-full bg-[#102210]"></span> LIVE
+                </div>
+                <div
+                  class="hidden sm:flex bg-black/40 backdrop-blur-md text-white text-xs font-medium px-3 py-1.5 rounded-full border border-white/10">
+                  <span class="material-symbols-outlined text-sm align-middle mr-1">visibility</span> 1,240 viewing
+                </div>
+              </div>
+              <div class="absolute top-4 right-4 md:top-6 md:right-6 z-10">
+                <div
+                  class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm">schedule</span>
+                  <span id="timestamp">11:42:35</span>
+                </div>
+              </div>
+              <div
+                class="absolute bottom-0 left-0 w-full p-4 md:p-8 flex flex-col md:flex-row justify-between items-end gap-4 z-10">
+                <div class="text-white w-full">
+                  <div class="flex items-center gap-2 mb-2">
+                    <h1 class="text-2xl md:text-5xl font-black tracking-tight text-shadow-lg drop-shadow-md">Bruggi
+                      Panorama</h1>
+                    <span
+                      class="bg-white/20 text-white text-[10px] md:text-xs font-bold px-2 py-0.5 rounded backdrop-blur-sm border border-white/20">HD</span>
+                  </div>
+                  <p
+                    class="text-gray-200 text-sm md:text-lg font-medium flex items-center gap-2 drop-shadow-md max-w-2xl">
+                    <span class="material-symbols-outlined text-base">location_on</span>
+                    Summit Station (2450m) — Overlooking the Dolomite Valley
+                  </p>
+                </div>
+                <div class="flex gap-3 pointer-events-auto shrink-0">
+                  <button
+                    class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 transition-all"
+                    title="Share">
+                    <span class="material-symbols-outlined">share</span>
+                  </button>
+                  <button
+                    class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 transition-all"
+                    title="Snapshot">
+                    <span class="material-symbols-outlined">photo_camera</span>
+                  </button>
+                  <button
+                    class="flex items-center justify-center h-10 md:h-12 px-4 md:px-6 rounded-full bg-primary hover:bg-[#0eb80e] text-[#102210] transition-all font-bold gap-2 shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined">play_circle</span>
+                    <span class="hidden sm:inline">Time-lapse</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 flex flex-wrap items-center justify-between gap-4 px-2">
+              <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
+                Camera Status: <span class="font-bold text-[#111811] dark:text-white">Online</span>
+                <span class="mx-2 text-gray-300">|</span>
+                Next update in <span class="font-bold text-[#111811] dark:text-white">15s</span>
+              </div>
+              <div class="flex gap-4 text-sm font-medium text-primary cursor-pointer hover:underline">
+                Report Issue
+              </div>
+            </div>
+          </div>
+          <div class="mb-12">
+            <div class="flex items-center justify-between px-2 mb-4">
+              <h2 class="text-[#111811] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">
+                Conditions at Summit</h2>
+              <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm">update</span> Updated 5m ago
+              </span>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div
+                class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#1a2e1a] border border-[#dbe6db] dark:border-[#2a402a] shadow-sm">
+                <div class="flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined">thermostat</span>
+                  <p class="text-[#111811] dark:text-[#e0e6e0] text-sm font-bold">Temperature</p>
+                </div>
+                <p class="text-[#111811] dark:text-white text-3xl font-bold leading-tight">-4°C</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Feels like -8°C</p>
+              </div>
+              <div
+                class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#1a2e1a] border border-[#dbe6db] dark:border-[#2a402a] shadow-sm">
+                <div class="flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined">air</span>
+                  <p class="text-[#111811] dark:text-[#e0e6e0] text-sm font-bold">Wind</p>
+                </div>
+                <p class="text-[#111811] dark:text-white text-3xl font-bold leading-tight">18 <span
+                    class="text-lg font-medium">km/h</span></p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Direction: NW</p>
+              </div>
+              <div
+                class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#1a2e1a] border border-[#dbe6db] dark:border-[#2a402a] shadow-sm">
+                <div class="flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined">ac_unit</span>
+                  <p class="text-[#111811] dark:text-[#e0e6e0] text-sm font-bold">Snow Depth</p>
+                </div>
+                <p class="text-[#111811] dark:text-white text-3xl font-bold leading-tight">125 <span
+                    class="text-lg font-medium">cm</span></p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Last 24h: +10cm</p>
+              </div>
+              <div
+                class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#1a2e1a] border border-[#dbe6db] dark:border-[#2a402a] shadow-sm">
+                <div class="flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined">visibility</span>
+                  <p class="text-[#111811] dark:text-[#e0e6e0] text-sm font-bold">Visibility</p>
+                </div>
+                <p class="text-[#111811] dark:text-white text-3xl font-bold leading-tight">Good</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">15km range</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-12 rounded-xl overflow-hidden bg-[#e8efe8] dark:bg-[#152015] border border-[#dbe6db] dark:border-[#2a402a]">
+            <div class="p-6 border-b border-[#dbe6db] dark:border-[#2a402a] flex justify-between items-center">
+              <h2 class="text-[#111811] dark:text-white text-[22px] font-bold leading-tight">Location Context</h2>
+              <button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                Open Interactive Map <span class="material-symbols-outlined text-sm">open_in_new</span>
+              </button>
+            </div>
+            <div class="relative w-full h-[300px] md:h-[400px] bg-gray-200">
+              <img alt="Map view of Bruggi valley"
+                class="w-full h-full object-cover opacity-80 mix-blend-multiply dark:opacity-60"
+                data-location="Bruggi, Italy"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJOAQHRsniW-5mtw60s0Spx0Emol_fZ0BFrQUCbuLhW-ttCQWRK9t1nnf2wNHy7dGknVPEkbEbjNv_Pv2Mn7-CCD6Rt5yejQ-yOPbGuZSA0WNbPxfNcWLCtkwL_csiMX83Z3pImjrnKOP2p5LTMS634_dloCpzqf91c7BmNnv0pW4aOHo0fs-YRDG5Js5qXqPdmh0qnowBd06BZaPDV6ZcvD_ikW3d8fIjgAww0dMmsX3lPv7fp6yEne_rb-RsdYFoeL8uLtnUSEI" />
+              <div class="absolute top-[20%] left-[30%] transform cursor-pointer group z-10">
+                <div class="relative">
+                  <div class="w-4 h-4 bg-primary rounded-full border-2 border-white shadow-lg relative z-10"></div>
+                  <div class="absolute inset-0 bg-primary rounded-full animate-ping opacity-75"></div>
+                </div>
+                <div
+                  class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-black text-[#111811] dark:text-white text-xs font-bold px-3 py-1.5 rounded shadow-lg whitespace-nowrap">
+                  Top Station (Live)
+                  <div
+                    class="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-white dark:bg-black rotate-45">
+                  </div>
+                </div>
+              </div>
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform opacity-60">
+                <div class="w-3 h-3 bg-gray-500 rounded-full border-2 border-white shadow-sm"></div>
+                <div
+                  class="absolute top-4 left-1/2 -translate-x-1/2 text-gray-700 dark:text-gray-300 text-[10px] font-bold whitespace-nowrap text-shadow-sm">
+                  Village Center
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="bg-[#111811] text-white py-12 px-4 md:px-40 border-t border-gray-800" id="main-footer">
+      <div class="max-w-[960px] mx-auto flex flex-col md:flex-row justify-between gap-10">
+        <div class="flex flex-col gap-4 max-w-xs">
+          <div class="flex items-center gap-2 text-white">
+            <span class="material-symbols-outlined text-primary text-2xl">landscape</span>
+            <h2 class="text-xl font-bold">Bruggi</h2>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Un villaggio incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l'esperienza della
+            vera montagna italiana.
+          </p>
+          <div class="flex gap-4 mt-2">
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">public</span></a>
+            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                class="material-symbols-outlined">photo_camera</span></a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Esplora</h3>
+          <div class="flex flex-col gap-2 text-sm text-gray-400">
+            <a class="hover:text-primary transition-colors" href="/en/">Home</a>
+            <a class="hover:text-primary transition-colors" href="/en/itineraries.html">Itinerari e Guide</a>
+            <a class="hover:text-primary transition-colors" href="/en/galleries.html">Galleria</a>
+            <a class="hover:text-primary transition-colors" href="/en/contacts.html">Contattaci</a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Contatti</h3>
+          <div class="flex flex-col gap-3 text-sm text-gray-400">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+              <span>Via Roma 1, 12345 Bruggi (IT)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">mail</span>
+              <span>info@bruggi.it</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">call</span>
+              <span>+39 0123 456789</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-[960px] mx-auto pt-8 mt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-500">
+        <p>© 2023 Comune di Bruggi. Tutti i diritti riservati.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
