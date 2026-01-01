@@ -6,6 +6,9 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Rifugio nella Foresta - Bruggi</title>
   <link href="/static/css/fonts.css" rel="stylesheet" />
+  <link href="/static/css/leaflet.css" rel="stylesheet" />
+  <script src="/static/js/leaflet.js"></script>
+  <script src="/static/js/leaflet-gpx.js"></script>
   <script src="/static/js/tailwindcss.js"></script>
   <script id="tailwind-config">
     tailwind.config = {
@@ -115,6 +118,8 @@
 
 <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
     <div class="lg:col-span-2 flex flex-col gap-8">
+        
+
         <div class="prose dark:prose-invert max-w-none">
             <h2 class="text-2xl font-bold mb-4">Description</h2>
             <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
@@ -155,9 +160,11 @@
                     <span class="font-bold dark:text-white">350m</span>
                 </div>
             </div>
-            <button class="w-full mt-8 bg-primary text-[#111811] font-bold py-3 rounded-xl hover:bg-green-500 transition-colors shadow-lg shadow-green-900/10">
-                Download GPX
+            
+            <button disabled class="w-full mt-8 bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-3 rounded-xl cursor-not-allowed">
+                GPX Not Available
             </button>
+            
         </div>
     </div>
 </div>
