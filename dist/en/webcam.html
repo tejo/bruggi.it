@@ -289,6 +289,14 @@
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
 
+    // Preload images
+    const preloaded = [];
+    timelapseImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        preloaded.push(img);
+    });
+
     timelapseBtn.addEventListener("click", () => {
       if (isPlaying) {
         // Stop
@@ -301,9 +309,11 @@
         if (timelapseImages.length === 0) return;
         isPlaying = true;
         timelapseIcon.textContent = "stop_circle";
+        
+        // Use preloaded images src to ensure cache hit
         timelapseInterval = setInterval(() => {
-          webcamImgDiv.style.backgroundImage = `url("${timelapseImages[imgIndex]}")`;
-          imgIndex = (imgIndex + 1) % timelapseImages.length;
+          webcamImgDiv.style.backgroundImage = `url("${preloaded[imgIndex].src}")`;
+          imgIndex = (imgIndex + 1) % preloaded.length;
         }, 500); // 500ms per frame
       }
     });
