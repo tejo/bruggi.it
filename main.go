@@ -164,6 +164,7 @@ type GalleryData struct {
 type GalleryImage struct {
 	Url       string `toml:"url"`
 	Alt       string `toml:"alt"`
+	Author    string `toml:"author"` // Instagram handle
 	Thumbnail string // Populated during load
 }
 
@@ -179,6 +180,7 @@ type ItineraryFile struct {
 	DistanceKM       float64         `toml:"distance_km"`
 	Duration         string          `toml:"duration"`
 	ElevationGain    int             `toml:"elevation_gain"`
+	Author           string          `toml:"author"` // Instagram handle
 	It               ItineraryLocale `toml:"it"`
 	En               ItineraryLocale `toml:"en"`
 }
@@ -202,6 +204,7 @@ type RenderItinerary struct {
 	DistanceKM     float64
 	Duration       string
 	ElevationGain  int
+	Author         string
 	Title          string
 	Description    string
 	LongDesc       string
@@ -600,6 +603,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 			DistanceKM:     raw.DistanceKM,
 			Duration:       raw.Duration,
 			ElevationGain:  raw.ElevationGain,
+			Author:         raw.Author,
 			Title:          l.Title,
 			Description:    l.Description,
 			LongDesc:       l.LongDesc,

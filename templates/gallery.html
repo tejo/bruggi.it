@@ -14,6 +14,16 @@
                 style="background-image: url('{{ img.Thumbnail }}');">
               </div>
               <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              {% if img.Author %}
+              <div class="absolute bottom-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity" onclick="event.stopPropagation()">
+                  <object>
+                      <a href="https://instagram.com/{{ img.Author }}" target="_blank" rel="noopener noreferrer" class="bg-white/80 dark:bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold hover:bg-white text-black dark:text-white flex items-center gap-1">
+                          @{{ img.Author }}
+                      </a>
+                  </object>
+              </div>
+              {% endif %}
             </a>
           {% endfor %}
         </div>

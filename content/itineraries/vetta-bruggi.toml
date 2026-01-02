@@ -5,6 +5,7 @@ difficulty = "hard"
 distance_km = 12.5
 duration = "6h 30m"
 elevation_gain = 980
+author = "hiking_guide_marco"
 
 [it]
 title = "Vetta Bruggi"
