@@ -118,19 +118,16 @@
         <div class="flex flex-col gap-4">
           <h3 class="font-bold text-lg">{{ t.Footer.ExploreTitle }}</h3>
           <div class="flex flex-col gap-2 text-sm text-gray-400">
-            <a class="hover:text-primary transition-colors" href="{{ base_url }}/">Home</a>
-            <a class="hover:text-primary transition-colors" href="{{ base_url }}/itineraries.html">Itinerari e Guide</a>
-            <a class="hover:text-primary transition-colors" href="{{ base_url }}/galleries.html">Galleria</a>
-            <a class="hover:text-primary transition-colors" href="{{ base_url }}/contacts.html">Contattaci</a>
+            <a class="hover:text-primary transition-colors" href="{{ base_url }}/">{{ t.Nav.Home }}</a>
+            <a class="hover:text-primary transition-colors" href="{{ base_url }}/itineraries.html">{{ t.Nav.Itineraries }}</a>
+            <a class="hover:text-primary transition-colors" href="{{ base_url }}/webcam.html">{{ t.Nav.Webcam }}</a>
+            <a class="hover:text-primary transition-colors" href="{{ base_url }}/galleries.html">{{ t.Nav.Gallery }}</a>
+            <a class="hover:text-primary transition-colors" href="{{ base_url }}/contacts.html">{{ t.Nav.Contact }}</a>
           </div>
         </div>
         <div class="flex flex-col gap-4">
           <h3 class="font-bold text-lg">{{ t.Footer.ContactsTitle }}</h3>
           <div class="flex flex-col gap-3 text-sm text-gray-400">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-primary text-sm">location_on</span>
-              <span>{{ t.Contacts.Address }}</span>
-            </div>
             <div class="flex items-center gap-2">
               <span class="material-symbols-outlined text-primary text-sm">mail</span>
               <span>{{ t.Contacts.Email }}</span>
