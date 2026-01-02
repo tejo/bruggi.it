@@ -79,6 +79,12 @@ vis_good = "Buona"
 vis_poor = "Scarsa"
 vis_moderate = "Discreta"
 
+[it.footer]
+motto = "Un villaggio incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l'esperienza della vera montagna italiana."
+explore_title = "Esplora"
+contacts_title = "Contatti"
+copyright = "© {year} Comune di Bruggi. Tutti i diritti riservati."
+
 [en]
 [en.nav]
 home = "Home"
@@ -148,3 +154,9 @@ vis_range = "range"
 vis_good = "Good"
 vis_poor = "Poor"
 vis_moderate = "Moderate"
+
+[en.footer]
+motto = "An enchanted village where nature embraces tradition. Come visit us and experience the true Italian mountain."
+explore_title = "Explore"
+contacts_title = "Contacts"
+copyright = "© {year} Municipality of Bruggi. All rights reserved."

@@ -21,11 +21,12 @@ import (
 // Data Structures
 
 type IndexFile struct {
-	Hero     SharedHeroSection    `toml:"hero"`
-	Welcome  SharedWelcomeSection `toml:"welcome"`
-	Contacts SharedContacts       `toml:"contacts"`
-	It       IndexLocale          `toml:"it"`
-	En       IndexLocale          `toml:"en"`
+	Hero         SharedHeroSection    `toml:"hero"`
+	Welcome      SharedWelcomeSection `toml:"welcome"`
+	Contacts     SharedContacts       `toml:"contacts"`
+	AugustEvents SharedAugustEvents   `toml:"august_events"`
+	It           IndexLocale          `toml:"it"`
+	En           IndexLocale          `toml:"en"`
 }
 
 type EventsFile struct {
@@ -53,12 +54,14 @@ type SharedContacts struct {
 }
 
 type IndexLocale struct {
-	Nav         NavLocale         `toml:"nav"`
-	Hero        HeroLocale        `toml:"hero"`
-	Welcome     WelcomeLocale     `toml:"welcome"`
-	Sections    SectionTitles     `toml:"sections"`
-	WebcamPage  WebcamPageLocale  `toml:"webcam_page"`
-	ContactInfo ContactInfoLocale `toml:"contact_info"`
+	Nav          NavLocale          `toml:"nav"`
+	Hero         HeroLocale         `toml:"hero"`
+	Welcome      WelcomeLocale      `toml:"welcome"`
+	Sections     SectionTitles      `toml:"sections"`
+	WebcamPage   WebcamPageLocale   `toml:"webcam_page"`
+	ContactInfo  ContactInfoLocale  `toml:"contact_info"`
+	AugustEvents AugustEventsLocale `toml:"august_events"`
+	Footer       FooterLocale       `toml:"footer"`
 }
 
 type AugustEventsLocale struct {
@@ -147,6 +150,13 @@ type SectionTitles struct {
 	SeeAllGallery       string `toml:"see_all_gallery"`
 }
 
+type FooterLocale struct {
+	Motto         string `toml:"motto"`
+	ExploreTitle  string `toml:"explore_title"`
+	ContactsTitle string `toml:"contacts_title"`
+	Copyright     string `toml:"copyright"`
+}
+
 type GalleryData struct {
 	Images []GalleryImage `toml:"images"`
 }
@@ -208,6 +218,7 @@ type RenderIndex struct {
 	Contacts     SharedContacts
 	ContactInfo  ContactInfoLocale
 	AugustEvents RenderAugustEvents
+	Footer       FooterLocale
 }
 
 type RenderAugustEvents struct {
@@ -557,6 +568,12 @@ func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFi
 			VisGood:         l.WebcamPage.VisGood,
 			VisPoor:         l.WebcamPage.VisPoor,
 			VisModerate:     l.WebcamPage.VisModerate,
+		},
+		Footer: FooterLocale{
+			Motto:         l.Footer.Motto,
+			ExploreTitle:  l.Footer.ExploreTitle,
+			ContactsTitle: l.Footer.ContactsTitle,
+			Copyright:     strings.ReplaceAll(l.Footer.Copyright, "{year}", fmt.Sprintf("%d", time.Now().Year())),
 		},
 	}
 }
