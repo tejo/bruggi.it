@@ -45,3 +45,43 @@
 .lightbox-close:hover {
     color: #ccc;
 }
+
+.lightbox-info {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    z-index: 10000;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.lightbox-caption {
+    font-size: 1.1rem;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.lightbox-author {
+    pointer-events: auto;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #11d411; /* Primary color */
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    padding: 4px 12px;
+    border-radius: 99px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.lightbox-author:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #111811;
+}

@@ -154,7 +154,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
           {% for img in gallery_images %}
             {% if forloop.First %}
-            <div class="col-span-2 row-span-2 rounded-xl overflow-hidden relative group">
+            <div class="col-span-2 row-span-2 rounded-xl overflow-hidden relative group lightbox-trigger cursor-pointer" data-src="{{ img.Url }}" data-alt="{{ img.Alt }}" {% if img.Author %}data-author="{{ img.Author }}"{% endif %}>
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style="background-image: url('{{ img.Url }}');">
               </div>
@@ -170,7 +170,7 @@
               {% endif %}
             </div>
             {% else %}
-            <div class="rounded-xl overflow-hidden relative group">
+            <div class="rounded-xl overflow-hidden relative group lightbox-trigger cursor-pointer" data-src="{{ img.Url }}" data-alt="{{ img.Alt }}" {% if img.Author %}data-author="{{ img.Author }}"{% endif %}>
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style="background-image: url('{{ img.Url }}');">
               </div>

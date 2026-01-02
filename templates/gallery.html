@@ -9,7 +9,7 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[250px]">
           {% for img in gallery_images %}
-            <a href="{{ img.Url }}" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="{{ img.Alt }}">
+            <a href="{{ img.Url }}" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="{{ img.Alt }}" {% if img.Author %}data-author="{{ img.Author }}"{% endif %}>
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style="background-image: url('{{ img.Thumbnail }}');">
               </div>
