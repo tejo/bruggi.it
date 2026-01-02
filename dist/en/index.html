@@ -97,10 +97,12 @@
     <section class="relative w-full">
       <div class="w-full px-4 py-6 md:px-40 md:py-10 flex justify-center bg-white dark:bg-background-dark">
         <div
+          id="hero-slideshow"
           class="max-w-[1280px] flex-1 rounded-2xl overflow-hidden relative min-h-[560px] flex flex-col items-center justify-center text-center p-8 bg-cover bg-center"
           data-alt="Panoramic view of Italian Alps"
+          data-slides='["/static/img/hero.jpg", "/static/img/welcome.jpg", "/static/img/vetta-bruggi.jpg"]'
           style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/static/img/hero.jpg');">
-          <div class="max-w-2xl flex flex-col gap-6 animate-fade-in-up">
+          <div class="max-w-2xl flex flex-col gap-6 animate-fade-in-up relative z-10">
             <h1 class="text-white text-5xl md:text-7xl font-black leading-tight tracking-tight drop-shadow-md">
               Discover the magic of Bruggi
             </h1>
@@ -117,6 +119,7 @@
           </div>
         </div>
       </div>
+      <script src="/static/js/slideshow.js" defer></script>
     </section>
 
     
