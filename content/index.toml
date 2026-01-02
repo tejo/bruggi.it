@@ -1,5 +1,5 @@
 [hero]
-    image = "img/hero.jpg"
+    images = ["img/hero.jpg", "img/welcome.jpg", "img/vetta-bruggi.jpg"]
 
 [welcome]
     image = "img/welcome.jpg"

@@ -36,7 +36,7 @@ type EventsFile struct {
 }
 
 type SharedHeroSection struct {
-	Image string `toml:"image"`
+	Images []string `toml:"images"`
 }
 
 type SharedWelcomeSection struct {
@@ -269,7 +269,7 @@ type RenderHero struct {
 	Title    string
 	Subtitle string
 	CTA      string
-	Image    string
+	Images   []string
 }
 
 type RenderWelcome struct {
@@ -528,7 +528,7 @@ func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFi
 			Title:    l.Hero.Title,
 			Subtitle: l.Hero.Subtitle,
 			CTA:      l.Hero.CTA,
-			Image:    indexData.Hero.Image,
+			Images:   indexData.Hero.Images,
 		},
 		Welcome: RenderWelcome{
 			Title:       l.Welcome.Title,
@@ -801,7 +801,9 @@ func loadIndex(path string) (*IndexFile, error) {
 	if err := toml.Unmarshal(b, &data); err != nil {
 		return nil, err
 	}
-	data.Hero.Image = "/static/" + data.Hero.Image
+	for i := range data.Hero.Images {
+		data.Hero.Images[i] = "/static/" + data.Hero.Images[i]
+	}
 	data.Welcome.Image = "/static/" + data.Welcome.Image
 	return &data, nil
 }
@@ -939,7 +941,9 @@ func collectUsedImages(index *IndexFile, gallery *GalleryData, itineraries []Iti
 		used[clean] = true
 	}
 
-	add(index.Hero.Image)
+	for _, img := range index.Hero.Images {
+		add(img)
+	}
 	add(index.Welcome.Image)
 
 	for _, img := range gallery.Images {
