@@ -114,23 +114,12 @@
           </div>
           <div
             class="bg-white dark:bg-[#1a2e1a] p-2 rounded-2xl shadow-sm border border-[#dbe6db] dark:border-[#2a3e2a]">
-            <div class="w-full aspect-[2/1] bg-gray-200 dark:bg-gray-800 rounded-xl overflow-hidden relative">
-              <div class="w-full h-full bg-center bg-cover opacity-80"
-                data-alt="Map showing the location of Bruggi in the mountains" data-location="Bruggi, Italy"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWOp9d4DnGa_dxqAeqUMf0_sZtK-y9OhK_YbQBozh0jaCcoLIwsZGuSINvQJB8MEcy3m88A4itucykJoO1rWZQNoReLZFkLm00Nay5gStITOeQmOa5FlOsOLciekWWCpUppFOqGE3PWPTP8qben-N-12Ugk91_wjob2J5UlbOxsqqesz8ZYfgr-1IJGI9kveFSp7FbL14UC303Ouj6VF4nJKLOTisZQLPmCXFx4kQpAdqy2fAPFtNjeIdDyKctjkDx3LXAuav6_CA");'>
-              </div>
-              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div
-                  class="bg-white/90 dark:bg-black/80 backdrop-blur-sm p-3 rounded-full shadow-lg flex items-center gap-2">
-                  <span class="material-symbols-outlined text-primary">near_me</span>
-                  <span class="font-bold text-xs text-slate-900 dark:text-white">{{ t.Contacts.Address }}</span>
-                </div>
-              </div>
+            <div id="contact-map" class="w-full aspect-[2/1] bg-gray-200 dark:bg-gray-800 rounded-xl overflow-hidden relative z-0">
             </div>
-            <div class="p-3 flex justify-between items-center">
-              <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Come raggiungerci</p>
-              <a class="text-sm font-bold text-primary flex items-center gap-1 hover:underline" href="#">
-                Apri in Maps
+            <div class="p-3 flex justify-end items-center">
+              <a class="text-sm font-bold text-primary flex items-center gap-1 hover:underline"
+                 href="https://www.google.com/maps/search/?api=1&query=44.71143,9.18697" target="_blank">
+                Google Maps
                 <span class="material-symbols-outlined text-base">open_in_new</span>
               </a>
             </div>
@@ -139,4 +128,28 @@
       </div>
     </div>
   </main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const lat = 44.71143;
+    const lon = 9.18697;
+    const map = L.map('contact-map', {
+      scrollWheelZoom: false
+    }).setView([lat, lon], 13);
+
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+    }).addTo(map);
+
+    const marker = L.marker([lat, lon], {
+      icon: L.icon({
+        iconUrl: '/static/css/images/marker-icon.png',
+        shadowUrl: '/static/css/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41]
+      })
+    }).addTo(map);
+  });
+</script>
 {% endblock %}
