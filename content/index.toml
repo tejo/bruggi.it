@@ -40,19 +40,19 @@ form_submit = "Invia"
 [it.hero]
 title = "Scopri la magia di Bruggi"
 subtitle = "Un rifugio autentico nel cuore delle montagne italiane, dove natura e tradizione si incontrano."
-cta = "Esplora il villaggio"
+cta = "Esplora Bruggi"
 
 [it.welcome]
 title = "Benvenuti a Bruggi"
 subtitle = "Storia e Natura"
-description = "Immerso nel verde a 1200m di altitudine, Bruggi è un luogo dove il tempo sembra essersi fermato. Scopri la nostra storia antica, le tradizioni culinarie e i paesaggi mozzafiato che circondano il nostro piccolo borgo. Un'esperienza unica per chi cerca pace e bellezza."
-altitude = "1200m Altitudine"
-founded = "Fondato nel 1400"
-cta_history = "Leggi la storia completa"
+description = "Immerso nel verde a 1000m di altitudine, Bruggi è un luogo dove il tempo sembra essersi fermato. Scopri la nostra storia antica, le tradizioni culinarie e i paesaggi mozzafiato che circondano il nostro piccolo borgo. Un'esperienza unica per chi cerca pace e bellezza."
+altitude = "1100m Altitudine"
+founded = "Fondato nel 1700"
+# cta_history = "Leggi la storia completa"
 
 [it.sections]
 itineraries_title = "I Nostri Itinerari"
-itineraries_subtitle = "Esplora i sentieri più belli attorno al villaggio"
+itineraries_subtitle = "Esplora i sentieri più belli attorno a Bruggi"
 see_all_itineraries = "Vedi tutti"
 read_more = "Scopri di più"
 filter_all = "Tutti"
@@ -105,7 +105,7 @@ vis_poor = "Scarsa"
 vis_moderate = "Discreta"
 
 [it.footer]
-motto = "Un villaggio incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l'esperienza della vera montagna italiana."
+motto = "Un paeseino incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l'esperienza della vera montagna italiana."
 explore_title = "Esplora"
 contacts_title = "Contatti"
 copyright = "© {year} Comune di Bruggi. Tutti i diritti riservati."
