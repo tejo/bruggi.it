@@ -306,7 +306,7 @@ func handleWebcamUpdate(srcPath string) {
 	}
 
 	distWebcamDir := "dist/static/webcam"
-	// Ensure dist exists (if not, we might be running this without a previous build, 
+	// Ensure dist exists (if not, we might be running this without a previous build,
 	// but we try to support it)
 	if err := os.MkdirAll(distWebcamDir, 0755); err != nil {
 		log.Fatalf("Error creating dist webcam dir: %v", err)
@@ -314,7 +314,7 @@ func handleWebcamUpdate(srcPath string) {
 
 	// 2. Generate Filenames
 	currentName := "current.jpg"
-	
+
 	now := time.Now()
 	timestampName := fmt.Sprintf("%s.jpg", now.Format("2006-01-02_15-04-05"))
 
@@ -350,7 +350,7 @@ func handleWebcamUpdate(srcPath string) {
 
 func updateWebcamPages(indexData *IndexFile, eventsData *EventsFile) {
 	// Re-render ONLY webcam.html for IT and EN
-	
+
 	webcamImages, err := loadWebcamImages("static/webcam")
 	if err != nil {
 		log.Printf("Error loading webcam images: %v", err)
@@ -367,7 +367,7 @@ func updateWebcamPages(indexData *IndexFile, eventsData *EventsFile) {
 			"page_title":    "Bruggi Webcams",
 			"t":             renderIndex,
 		}
-		
+
 		// Ensure output dir exists
 		if err := os.MkdirAll(filepath.Dir(outPath), 0755); err != nil {
 			log.Panic(err)
@@ -439,11 +439,11 @@ func buildSite() {
 	// 4. Render Pages for EN
 	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries)
 
-	// 5. Cleanup Unused Images
-	usedImages := collectUsedImages(indexData, galleryData, itineraries)
-	if err := cleanupImages(usedImages); err != nil {
-		log.Printf("Error cleaning up images: %v", err)
-	}
+	// // 5. Cleanup Unused Images
+	// usedImages := collectUsedImages(indexData, galleryData, itineraries)
+	// if err := cleanupImages(usedImages); err != nil {
+	// 	log.Printf("Error cleaning up images: %v", err)
+	// }
 
 	fmt.Printf("Build complete in %v\n", time.Since(start))
 }
@@ -501,8 +501,7 @@ func watchAndServe() {
 		log.Fatal(http.ListenAndServe(":8080", nil))
 	}()
 
-	<-
-done
+	<-done
 }
 
 func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFile) RenderIndex {
