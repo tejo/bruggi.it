@@ -1,18 +1,20 @@
 slug = "pineta"
 type = "hiking"
-image = "/static/img/centro-storico.jpg"
+image = "/static/img/pineta.jpg"
 gpx_file = "/static/gpx/jo/Pineta.gpx"
 youtube_video_id = "dQw4w9WgXcQ"
-gallery = [
-    "/static/img/gallery-peaks.jpg",
-    "/static/img/gallery-dish.jpg",
-    "/static/img/gallery-hiker.jpg",
-]
+# gallery = [
+#     "/static/img/gallery-peaks.jpg",
+#     "/static/img/gallery-dish.jpg",
+#     "/static/img/gallery-hiker.jpg",
+# ]
 difficulty = "easy"
 duration = "1h 15m"
+author = "jonathan_n78"
+
 
 [it]
-title = "Passeggiata ad anello della pineta"
+title = "Anello della pineta bassa"
 description = "Scopri l'architettura antica, le chiese e i vicoli nascosti del centro città."
 tags = ["Cultura", "Architettura", "Relax"]
 

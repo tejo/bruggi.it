@@ -130,7 +130,7 @@
                 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">timer</span>
                   {{ item.Duration }}</span>
                 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">straighten</span>
-                  {{ item.DistanceKM }}km</span>
+                  {{ item.DistanceKM|floatformat:"-2" }}km</span>
               </div>
               <div class="mt-auto pt-4 flex items-center gap-1 text-primary font-bold text-sm">
                 {{ t.Sections.ReadMore }}

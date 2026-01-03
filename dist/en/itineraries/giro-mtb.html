@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="light" lang="it">
+<html class="light" lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Passeggiata Centro Storico - Bruggi</title>
+  <title>Bruggi Summit - Bruggi</title>
   <link href="/static/css/fonts.css" rel="stylesheet" />
   <link href="/static/css/leaflet.css" rel="stylesheet" />
   <link href="/static/css/lightbox.css" rel="stylesheet" />
@@ -43,36 +43,36 @@
       class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#f0f4f0] dark:bg-[#111811]/90 dark:border-gray-800"
       id="main-header">
       <div class="px-4 md:px-10 py-3 flex items-center justify-between mx-auto max-w-[1280px] w-full">
-        <a href="/" class="flex items-center gap-2 text-[#111811] dark:text-white">
+        <a href="/en/" class="flex items-center gap-2 text-[#111811] dark:text-white">
           <span class="material-symbols-outlined text-primary text-3xl">landscape</span>
           <h2 class="text-xl font-bold tracking-tight">Bruggi</h2>
         </a>
         <div class="hidden md:flex flex-1 justify-end items-center gap-8">
           <nav class="flex items-center gap-8">
-            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
             <a class="text-sm font-medium hover:text-primary transition-colors nav-link"
-              href="/itineraries.html">Itinerari</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/webcam.html">Webcam</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/galleries.html">Galleria Foto</a>
+              href="/en/itineraries.html">Itineraries</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Photo Gallery</a>
           </nav>
           <div class="flex gap-3 items-center">
              <!-- Locale Switcher -->
              
-             <a href="/en/itineraries/centro-storico.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
-                EN
+             <a href="/itineraries/giro-mtb.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+                IT
              </a>
              
-            <a href="/contacts.html"
+            <a href="/en/contacts.html"
               class="flex items-center justify-center rounded-lg h-9 px-5 bg-primary text-[#111811] text-sm font-bold shadow-sm hover:bg-green-500 transition-colors">
-              Contattaci
+              Contact Us
             </a>
           </div>
         </div>
         <div class="flex md:hidden items-center gap-3">
           <!-- Mobile Locale Switcher -->
           
-          <a href="/en/itineraries/centro-storico.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
-             EN
+          <a href="/itineraries/giro-mtb.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             IT
           </a>
           
           <button id="burger-btn" class="text-[#111811] dark:text-white">
@@ -84,11 +84,11 @@
       <div id="mobile-menu"
         class="hidden md:hidden bg-white/95 dark:bg-[#111811]/95 border-b border-[#f0f4f0] dark:border-gray-800 backdrop-blur-md absolute w-full left-0 top-full shadow-lg">
         <nav class="flex flex-col p-6 gap-6 text-center">
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/">Home</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/itineraries.html">Itinerari</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/webcam.html">Webcam</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/galleries.html">Galleria Foto</a>
-          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/contacts.html">Contattaci</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/itineraries.html">Itineraries</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Photo Gallery</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/contacts.html">Contact Us</a>
         </nav>
       </div>
     </header>
@@ -97,23 +97,23 @@
 <div class="relative w-full h-[60vh] bg-gray-900">
     <div class="absolute inset-0 z-0">
         <div class="w-full h-full bg-cover bg-center"
-             style='background-image: url("/static/img/centro-storico.jpg");'>
+             style='background-image: url("/static/img/chiappo.jpg");'>
         </div>
         <div class="absolute inset-0 bg-black/40"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto h-full px-6 flex flex-col justify-end pb-12">
         <div class="flex flex-col gap-4">
              <div class="flex items-center gap-3">
-                 <span class="px-3 py-1 rounded-full bg-primary text-[#111811] text-xs font-bold uppercase">easy</span>
+                 <span class="px-3 py-1 rounded-full bg-primary text-[#111811] text-xs font-bold uppercase">hard</span>
                  
-                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">Cultura</span>
+                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">Trekking</span>
                  
-                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">Architettura</span>
+                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">View</span>
                  
-                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">Relax</span>
+                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">Challenging</span>
                  
              </div>
-             <h1 class="text-4xl md:text-6xl font-black text-white shadow-sm">Passeggiata Centro Storico</h1>
+             <h1 class="text-4xl md:text-6xl font-black text-white shadow-sm">Bruggi Summit</h1>
         </div>
     </div>
 </div>
@@ -121,9 +121,9 @@
 <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
     <div class="lg:col-span-2 flex flex-col gap-8">
         <div class="prose dark:prose-invert max-w-none">
-            <h2 class="text-2xl font-bold mb-4">Descrizione</h2>
+            <h2 class="text-2xl font-bold mb-4">Description</h2>
             <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
-                Scopri l&#39;architettura antica, le chiese e i vicoli nascosti del centro città.
+                Challenging climb for experienced hikers offering the best panoramic views of the entire valley.
             </p>
             
         </div>
@@ -142,7 +142,7 @@
               attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
             }).addTo(map);
 
-            var gpxLayer = new L.GPX("/static/gpx/sample.gpx", {
+            var gpxLayer = new L.GPX("/static/gpx/jo/Giro in MTB.gpx", {
               async: true,
                marker_options: {
                 startIconUrl: '/static/css/images/marker-icon.png',
@@ -224,67 +224,54 @@
         
 
         
-        <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-sm">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        
 
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            
-            <a href="/static/img/gallery-peaks.jpg" class="aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 lightbox-trigger" >
-                <img src="/static/thumbs/img/gallery-peaks.jpg" alt="Itinerary image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </a>
-            
-            <a href="/static/img/gallery-dish.jpg" class="aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 lightbox-trigger" >
-                <img src="/static/thumbs/img/gallery-dish.jpg" alt="Itinerary image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </a>
-            
-            <a href="/static/img/gallery-hiker.jpg" class="aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 lightbox-trigger" >
-                <img src="/static/thumbs/img/gallery-hiker.jpg" alt="Itinerary image" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-            </a>
-            
-        </div>
         
     </div>
 
     <div class="lg:col-span-1">
         <div class="bg-surface-light dark:bg-surface-dark border border-[#f0f4f0] dark:border-gray-800 rounded-2xl p-6 shadow-sm sticky top-24">
-            <h3 class="text-xl font-bold mb-6 dark:text-white">Dettagli Percorso</h3>
+            <h3 class="text-xl font-bold mb-6 dark:text-white">Trail Details</h3>
             <div class="flex flex-col gap-4">
                 
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">route</span> Tipo
+                        <span class="material-symbols-outlined">person</span> Author
+                    </span>
+                    <a href="https://instagram.com/jonathan_n78" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">@jonathan_n78</a>
+                </div>
+                
+                <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined">route</span> Type
                     </span>
                     <span class="font-bold dark:text-white capitalize flex items-center gap-2">
                         
-                          <span class="material-symbols-outlined text-lg">hiking</span> Trekking
+                          <span class="material-symbols-outlined text-lg">directions_bike</span> Biking
                         
                     </span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">schedule</span> Durata
+                        <span class="material-symbols-outlined">schedule</span> Duration
                     </span>
-                    <span class="font-bold dark:text-white">1h 15m</span>
+                    <span class="font-bold dark:text-white">6h 30m</span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">straighten</span> Distanza
+                        <span class="material-symbols-outlined">straighten</span> Distance
                     </span>
-                    <span class="font-bold dark:text-white">0.660000 km</span>
+                    <span class="font-bold dark:text-white">15.70 km</span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">vertical_align_top</span> Dislivello
+                        <span class="material-symbols-outlined">vertical_align_top</span> Elevation Gain
                     </span>
-                    <span class="font-bold dark:text-white">100m</span>
+                    <span class="font-bold dark:text-white">750m</span>
                 </div>
             </div>
             
-            <a href="/static/gpx/sample.gpx" download class="flex justify-center w-full mt-8 bg-primary text-[#111811] font-bold py-3 rounded-xl hover:bg-green-500 transition-colors shadow-lg shadow-green-900/10">
-                Scarica GPX
+            <a href="/static/gpx/jo/Giro in MTB.gpx" download class="flex justify-center w-full mt-8 bg-primary text-[#111811] font-bold py-3 rounded-xl hover:bg-green-500 transition-colors shadow-lg shadow-green-900/10">
+                Download GPX
             </a>
             
         </div>
@@ -301,21 +288,21 @@
             <h2 class="text-xl font-bold">Bruggi</h2>
           </div>
           <p class="text-gray-400 text-sm leading-relaxed">
-            Un villaggio incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l&#39;esperienza della vera montagna italiana.
+            An enchanted village where nature embraces tradition. Come visit us and experience the true Italian mountain.
           </p>
         </div>
         <div class="flex flex-col gap-4">
-          <h3 class="font-bold text-lg">Esplora</h3>
+          <h3 class="font-bold text-lg">Explore</h3>
           <div class="flex flex-col gap-2 text-sm text-gray-400">
-            <a class="hover:text-primary transition-colors" href="/">Home</a>
-            <a class="hover:text-primary transition-colors" href="/itineraries.html">Itinerari</a>
-            <a class="hover:text-primary transition-colors" href="/webcam.html">Webcam</a>
-            <a class="hover:text-primary transition-colors" href="/galleries.html">Galleria Foto</a>
-            <a class="hover:text-primary transition-colors" href="/contacts.html">Contattaci</a>
+            <a class="hover:text-primary transition-colors" href="/en/">Home</a>
+            <a class="hover:text-primary transition-colors" href="/en/itineraries.html">Itineraries</a>
+            <a class="hover:text-primary transition-colors" href="/en/webcam.html">Webcam</a>
+            <a class="hover:text-primary transition-colors" href="/en/galleries.html">Photo Gallery</a>
+            <a class="hover:text-primary transition-colors" href="/en/contacts.html">Contact Us</a>
           </div>
         </div>
         <div class="flex flex-col gap-4">
-          <h3 class="font-bold text-lg">Contatti</h3>
+          <h3 class="font-bold text-lg">Contacts</h3>
           <div class="flex flex-col gap-3 text-sm text-gray-400">
             <div class="flex items-center gap-2">
               <span class="material-symbols-outlined text-primary text-sm">mail</span>
@@ -329,7 +316,7 @@
         </div>
       </div>
       <div class="max-w-[960px] mx-auto pt-8 mt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-500">
-        <p>© 2026 Comune di Bruggi. Tutti i diritti riservati.</p>
+        <p>© 2026 Municipality of Bruggi. All rights reserved.</p>
       </div>
     </footer>
   </div>

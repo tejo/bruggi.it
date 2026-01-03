@@ -1,11 +1,12 @@
-slug = "vetta-bruggi"
-type = "hiking"
-image = "/static/img/vetta-bruggi.jpg"
+slug = "giro-mtb"
+type = "biking"
+image = "/static/img/chiappo.jpg"
 difficulty = "hard"
 distance_km = 12.5
 duration = "6h 30m"
 elevation_gain = 980
-author = "hiking_guide_marco"
+author = "jonathan_n78"
+gpx_file = "/static/gpx/jo/Giro in MTB.gpx"
 
 [it]
 title = "Vetta Bruggi"
