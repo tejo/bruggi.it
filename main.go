@@ -439,11 +439,11 @@ func buildSite() {
 	// 4. Render Pages for EN
 	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries)
 
-	// // 5. Cleanup Unused Images
-	// usedImages := collectUsedImages(indexData, galleryData, itineraries)
-	// if err := cleanupImages(usedImages); err != nil {
-	// 	log.Printf("Error cleaning up images: %v", err)
-	// }
+	// 5. Cleanup Unused Images
+	usedImages := collectUsedImages(indexData, galleryData, itineraries)
+	if err := cleanupImages(usedImages); err != nil {
+		log.Printf("Error cleaning up images: %v", err)
+	}
 
 	fmt.Printf("Build complete in %v\n", time.Since(start))
 }
@@ -615,6 +615,12 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		log.Printf("Error loading webcam images: %v", err)
 	}
 
+	// Limit gallery images for the index page to 8
+	indexGalleryImages := galleryT.Images
+	if len(indexGalleryImages) > 8 {
+		indexGalleryImages = indexGalleryImages[:8]
+	}
+
 	// Render Index
 	ctx := pongo2.Context{
 		"locale":         locale,
@@ -622,7 +628,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		"alternate_url":  computeAlternateUrl(locale, "/"),
 		"page_title":     renderIndex.Hero.Title,
 		"t":              renderIndex, // We pass our flattened struct as 't'
-		"gallery_images": galleryT.Images,
+		"gallery_images": indexGalleryImages,
 		"itineraries":    localItineraries,
 	}
 
