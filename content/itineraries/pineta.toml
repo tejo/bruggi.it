@@ -1,12 +1,12 @@
 slug = "pineta"
 type = "hiking"
-image = "img/centro-storico.jpg"
-gpx_file = "gpx/jo/Pineta.gpx"
+image = "/static/img/centro-storico.jpg"
+gpx_file = "/static/gpx/jo/Pineta.gpx"
 youtube_video_id = "dQw4w9WgXcQ"
 gallery = [
-    "img/gallery-peaks.jpg",
-    "img/gallery-dish.jpg",
-    "img/gallery-hiker.jpg",
+    "/static/img/gallery-peaks.jpg",
+    "/static/img/gallery-dish.jpg",
+    "/static/img/gallery-hiker.jpg",
 ]
 difficulty = "easy"
 duration = "1h 15m"

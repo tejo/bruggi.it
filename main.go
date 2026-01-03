@@ -841,13 +841,12 @@ func loadIndex(path string) (*IndexFile, error) {
 	if err := toml.Unmarshal(b, &data); err != nil {
 		return nil, err
 	}
-	for i := range data.Hero.Images {
-		data.Hero.Images[i] = "/static/" + data.Hero.Images[i]
+	for _, img := range data.Hero.Images {
+		validatePath(img)
 	}
-	data.Welcome.Image = "/static/" + data.Welcome.Image
-	if data.Itineraries.HeroImage != "" {
-		data.Itineraries.HeroImage = "/static/" + data.Itineraries.HeroImage
-	}
+	validatePath(data.Welcome.Image)
+	validatePath(data.Itineraries.HeroImage)
+
 	return &data, nil
 }
 
@@ -873,10 +872,10 @@ func loadGallery(path string) (*GalleryData, error) {
 		return nil, err
 	}
 	for i := range data.Images {
+		validatePath(data.Images[i].Url)
 		url, thumb, err := processImage(data.Images[i].Url)
 		if err != nil {
 			log.Printf("Warning: processing image %s failed: %v", data.Images[i].Url, err)
-			data.Images[i].Url = "/static/" + data.Images[i].Url
 			data.Images[i].Thumbnail = data.Images[i].Url // Fallback
 		} else {
 			data.Images[i].Url = url
@@ -901,7 +900,10 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 			if err := toml.Unmarshal(b, &it); err != nil {
 				return err
 			}
-			it.Image = "/static/" + it.Image
+
+			validatePath(it.Image)
+			validatePath(it.GpxFile)
+
 			if it.GpxFile != "" {
 				// Calculate Elevation Gain
 				// Handle both relative path from content/itineraries or absolute-ish path
@@ -921,17 +923,16 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 					it.ElevationGain = gain
 					it.DistanceKM = dist
 				}
-
-				it.GpxFile = "/static/" + cleanPath
 			}
 
 			// Process Gallery
 			it.ProcessedGallery = make([]GalleryImage, len(it.Gallery))
 			for i, rawPath := range it.Gallery {
+				validatePath(rawPath)
 				url, thumb, err := processImage(rawPath)
 				if err != nil {
 					log.Printf("Warning: processing itinerary image %s failed: %v", rawPath, err)
-					it.ProcessedGallery[i] = GalleryImage{Url: "/static/" + rawPath, Thumbnail: "/static/" + rawPath}
+					it.ProcessedGallery[i] = GalleryImage{Url: rawPath, Thumbnail: rawPath}
 				} else {
 					it.ProcessedGallery[i] = GalleryImage{Url: url, Thumbnail: thumb}
 				}
@@ -1237,4 +1238,16 @@ func haversine(lat1, lon1, lat2, lon2 float64) float64 {
 	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
 
 	return R * c
+}
+
+func validatePath(path string) {
+	if path == "" {
+		return
+	}
+	// path is like "/static/img/foo.jpg"
+	// fs path is "static/img/foo.jpg" (relative to project root)
+	clean := strings.TrimPrefix(path, "/")
+	if _, err := os.Stat(clean); os.IsNotExist(err) {
+		log.Printf("WARNING: Referenced file does not exist: %s", path)
+	}
 }

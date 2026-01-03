@@ -1,16 +1,16 @@
 [hero]
 images = [
-    "img/jo/WhatsApp Image 2026-01-02 at 15.22.54-6.jpeg",
-    "img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg",
-    "img/jo/WhatsApp Image 2026-01-02 at 15.22.54-4.jpeg",
-    "img/michi/WhatsApp Image 2026-01-02 at 15.21.13-1.jpeg",
+    "/static/img/jo/WhatsApp Image 2026-01-02 at 15.22.54-6.jpeg",
+    "/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg",
+    "/static/img/jo/WhatsApp Image 2026-01-02 at 15.22.54-4.jpeg",
+    "/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-1.jpeg",
 ]
 
 [welcome]
-image = "img/welcome.jpg"
+image = "/static/img/centro-storico.jpg"
 
 [itineraries]
-hero_image = "img/photo_2026-01-03_14-27-45.jpg"
+hero_image = "/static/img/photo_2026-01-03_14-27-45.jpg"
 
 [contacts]
 email = "info@bruggi.it"
