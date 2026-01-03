@@ -23,8 +23,24 @@
 
 <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
     <div class="lg:col-span-2 flex flex-col gap-8">
+        <div class="prose dark:prose-invert max-w-none">
+            <h2 class="text-2xl font-bold mb-4">{{ t.ItineraryPage.Description }}</h2>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                {{ itinerary.Description }}
+            </p>
+            {% if itinerary.LongDesc %}
+             <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
+                {{ itinerary.LongDesc }}
+            </p>
+            {% endif %}
+        </div>
+
         {% if itinerary.GpxFile %}
         <div id="map" class="w-full h-[400px] rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 z-0"></div>
+        <div class="w-full h-[250px] mt-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-[#1a2e1a]">
+            <canvas id="elevation-chart"></canvas>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
           document.addEventListener("DOMContentLoaded", function() {
             var map = L.map('map');
@@ -33,7 +49,7 @@
               attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
             }).addTo(map);
 
-            new L.GPX("{{ itinerary.GpxFile }}", {
+            var gpxLayer = new L.GPX("{{ itinerary.GpxFile }}", {
               async: true,
                marker_options: {
                 startIconUrl: '/static/css/images/marker-icon.png',
@@ -42,6 +58,73 @@
               }
             }).on('loaded', function(e) {
               map.fitBounds(e.target.getBounds(), { maxZoom: 15 });
+              
+              // Generate Elevation Chart
+              var elevationData = e.target.get_elevation_data();
+              // elevationData is array of [distance, elevation, tooltip] or similar. 
+              // leaflet-gpx returns: [dist_km, elev_m, point_obj]
+              
+              var labels = elevationData.map(function(pt) { return pt[0].toFixed(2); }); // Distance in km
+              var data = elevationData.map(function(pt) { return pt[1]; }); // Elevation in m
+              
+              var ctx = document.getElementById('elevation-chart').getContext('2d');
+              new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Elevation (m)',
+                    data: data,
+                    borderColor: '#16a34a', // Primary green
+                    backgroundColor: 'rgba(22, 163, 74, 0.2)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true,
+                    tension: 0.4
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  interaction: {
+                    intersect: false,
+                    mode: 'index',
+                  },
+                  plugins: {
+                    legend: {
+                      display: false
+                    },
+                    tooltip: {
+                      callbacks: {
+                        title: function(context) {
+                          return context[0].label + ' km';
+                        }
+                      }
+                    }
+                  },
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'Distance (km)'
+                      },
+                      ticks: {
+                        maxTicksLimit: 10
+                      },
+                      grid: {
+                        display: false
+                      }
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: 'Elevation (m)'
+                      }
+                    }
+                  }
+                }
+              });
+              
             }).addTo(map);
           });
         </script>
@@ -62,68 +145,58 @@
             {% endfor %}
         </div>
         {% endif %}
-
-        <div class="prose dark:prose-invert max-w-none">
-            <h2 class="text-2xl font-bold mb-4">Description</h2>
-            <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
-                {{ itinerary.Description }}
-            </p>
-            {% if itinerary.LongDesc %}
-             <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
-                {{ itinerary.LongDesc }}
-            </p>
-            {% endif %}
-        </div>
     </div>
 
     <div class="lg:col-span-1">
         <div class="bg-surface-light dark:bg-surface-dark border border-[#f0f4f0] dark:border-gray-800 rounded-2xl p-6 shadow-sm sticky top-24">
-            <h3 class="text-xl font-bold mb-6 dark:text-white">Trail Details</h3>
+            <h3 class="text-xl font-bold mb-6 dark:text-white">{{ t.ItineraryPage.TrailDetails }}</h3>
             <div class="flex flex-col gap-4">
                 {% if itinerary.Author %}
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">person</span> Author
+                        <span class="material-symbols-outlined">person</span> {{ t.ItineraryPage.Author }}
                     </span>
                     <a href="https://instagram.com/{{ itinerary.Author }}" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">@{{ itinerary.Author }}</a>
                 </div>
                 {% endif %}
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined">route</span> {{ t.ItineraryPage.Type }}
+                    </span>
+                    <span class="font-bold dark:text-white capitalize flex items-center gap-2">
                         {% if itinerary.Type == "hiking" %}
-                          <span class="material-symbols-outlined">hiking</span> Hiking
+                          <span class="material-symbols-outlined text-lg">hiking</span> {{ t.ItineraryPage.TypeHiking }}
                         {% else %}
-                          <span class="material-symbols-outlined">directions_bike</span> Biking
+                          <span class="material-symbols-outlined text-lg">directions_bike</span> {{ t.ItineraryPage.TypeBiking }}
                         {% endif %}
                     </span>
-                    <span class="font-bold dark:text-white capitalize">{{ itinerary.Type }}</span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">schedule</span> Duration
+                        <span class="material-symbols-outlined">schedule</span> {{ t.ItineraryPage.Duration }}
                     </span>
                     <span class="font-bold dark:text-white">{{ itinerary.Duration }}</span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">straighten</span> Distance
+                        <span class="material-symbols-outlined">straighten</span> {{ t.ItineraryPage.Distance }}
                     </span>
                     <span class="font-bold dark:text-white">{{ itinerary.DistanceKM }} km</span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-800">
                     <span class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <span class="material-symbols-outlined">vertical_align_top</span> Elevation Gain
+                        <span class="material-symbols-outlined">vertical_align_top</span> {{ t.ItineraryPage.ElevationGain }}
                     </span>
                     <span class="font-bold dark:text-white">{{ itinerary.ElevationGain }}m</span>
                 </div>
             </div>
             {% if itinerary.GpxFile %}
             <a href="{{ itinerary.GpxFile }}" download class="flex justify-center w-full mt-8 bg-primary text-[#111811] font-bold py-3 rounded-xl hover:bg-green-500 transition-colors shadow-lg shadow-green-900/10">
-                Download GPX
+                {{ t.ItineraryPage.DownloadGPX }}
             </a>
             {% else %}
             <button disabled class="w-full mt-8 bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-3 rounded-xl cursor-not-allowed">
-                GPX Not Available
+                {{ t.ItineraryPage.GPXNotAvailable }}
             </button>
             {% endif %}
         </div>

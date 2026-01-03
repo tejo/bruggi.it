@@ -1,0 +1,22 @@
+slug = "pineta"
+type = "hiking"
+image = "img/centro-storico.jpg"
+gpx_file = "gpx/jo/Pineta.gpx"
+youtube_video_id = "dQw4w9WgXcQ"
+gallery = [
+    "img/gallery-peaks.jpg",
+    "img/gallery-dish.jpg",
+    "img/gallery-hiker.jpg",
+]
+difficulty = "easy"
+duration = "1h 15m"
+
+[it]
+title = "Passeggiata ad anello della pineta"
+description = "Scopri l'architettura antica, le chiese e i vicoli nascosti del centro città."
+tags = ["Cultura", "Architettura", "Relax"]
+
+[en]
+title = "Pineta walk"
+description = "Discover the ancient architecture, churches, and hidden alleys of the town center."
+tags = ["Culture", "Architecture", "Relax"]

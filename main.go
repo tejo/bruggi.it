@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/xml"
 	"flag"
 	"fmt"
 	"io"
 	"io/fs"
 	"log"
+	"math"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -21,12 +23,13 @@ import (
 // Data Structures
 
 type IndexFile struct {
-	Hero         SharedHeroSection    `toml:"hero"`
-	Welcome      SharedWelcomeSection `toml:"welcome"`
-	Contacts     SharedContacts       `toml:"contacts"`
-	AugustEvents SharedAugustEvents   `toml:"august_events"`
-	It           IndexLocale          `toml:"it"`
-	En           IndexLocale          `toml:"en"`
+	Hero         SharedHeroSection        `toml:"hero"`
+	Welcome      SharedWelcomeSection     `toml:"welcome"`
+	Itineraries  SharedItinerariesSection `toml:"itineraries"`
+	Contacts     SharedContacts           `toml:"contacts"`
+	AugustEvents SharedAugustEvents       `toml:"august_events"`
+	It           IndexLocale              `toml:"it"`
+	En           IndexLocale              `toml:"en"`
 }
 
 type EventsFile struct {
@@ -47,6 +50,10 @@ type SharedAugustEvents struct {
 	Enabled bool `toml:"enabled"`
 }
 
+type SharedItinerariesSection struct {
+	HeroImage string `toml:"hero_image"`
+}
+
 type SharedContacts struct {
 	Email   string `toml:"email"`
 	Phone   string `toml:"phone"`
@@ -54,14 +61,15 @@ type SharedContacts struct {
 }
 
 type IndexLocale struct {
-	Nav          NavLocale          `toml:"nav"`
-	Hero         HeroLocale         `toml:"hero"`
-	Welcome      WelcomeLocale      `toml:"welcome"`
-	Sections     SectionTitles      `toml:"sections"`
-	WebcamPage   WebcamPageLocale   `toml:"webcam_page"`
-	ContactInfo  ContactInfoLocale  `toml:"contact_info"`
-	AugustEvents AugustEventsLocale `toml:"august_events"`
-	Footer       FooterLocale       `toml:"footer"`
+	Nav           NavLocale           `toml:"nav"`
+	Hero          HeroLocale          `toml:"hero"`
+	Welcome       WelcomeLocale       `toml:"welcome"`
+	Sections      SectionTitles       `toml:"sections"`
+	ItineraryPage ItineraryPageLocale `toml:"itinerary_page"`
+	WebcamPage    WebcamPageLocale    `toml:"webcam_page"`
+	ContactInfo   ContactInfoLocale   `toml:"contact_info"`
+	AugustEvents  AugustEventsLocale  `toml:"august_events"`
+	Footer        FooterLocale        `toml:"footer"`
 }
 
 type AugustEventsLocale struct {
@@ -73,6 +81,24 @@ type EventItem struct {
 	Name string `toml:"name"`
 	Date string `toml:"date"`
 	Time string `toml:"time"`
+}
+
+type ItineraryPageLocale struct {
+	TrailDetails     string `toml:"trail_details"`
+	Author           string `toml:"author"`
+	Type             string `toml:"type"`
+	TypeHiking       string `toml:"type_hiking"`
+	TypeBiking       string `toml:"type_biking"`
+	Duration         string `toml:"duration"`
+	Distance         string `toml:"distance"`
+	ElevationGain    string `toml:"elevation_gain"`
+	DownloadGPX      string `toml:"download_gpx"`
+	GPXNotAvailable  string `toml:"gpx_not_available"`
+	Description      string `toml:"description"`
+	Difficulty       string `toml:"difficulty"`
+	DifficultyEasy   string `toml:"difficulty_easy"`
+	DifficultyMedium string `toml:"difficulty_medium"`
+	DifficultyHard   string `toml:"difficulty_hard"`
 }
 
 type ContactInfoLocale struct {
@@ -213,15 +239,17 @@ type RenderItinerary struct {
 
 // Helper struct to pass to templates, flattening the structure
 type RenderIndex struct {
-	Nav          RenderNav
-	Hero         RenderHero
-	Welcome      RenderWelcome
-	Sections     SectionTitles
-	WebcamPage   RenderWebcamPage
-	Contacts     SharedContacts
-	ContactInfo  ContactInfoLocale
-	AugustEvents RenderAugustEvents
-	Footer       FooterLocale
+	Nav           RenderNav
+	Hero          RenderHero
+	Welcome       RenderWelcome
+	Itineraries   SharedItinerariesSection
+	Sections      SectionTitles
+	ItineraryPage ItineraryPageLocale
+	WebcamPage    RenderWebcamPage
+	Contacts      SharedContacts
+	ContactInfo   ContactInfoLocale
+	AugustEvents  RenderAugustEvents
+	Footer        FooterLocale
 }
 
 type RenderAugustEvents struct {
@@ -440,10 +468,10 @@ func buildSite() {
 	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries)
 
 	// 5. Cleanup Unused Images
-	usedImages := collectUsedImages(indexData, galleryData, itineraries)
-	if err := cleanupImages(usedImages); err != nil {
-		log.Printf("Error cleaning up images: %v", err)
-	}
+	// usedImages := collectUsedImages(indexData, galleryData, itineraries)
+	// if err := cleanupImages(usedImages); err != nil {
+	// 	log.Printf("Error cleaning up images: %v", err)
+	// }
 
 	fmt.Printf("Build complete in %v\n", time.Since(start))
 }
@@ -538,9 +566,11 @@ func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFi
 			CTAHistory:  l.Welcome.CTAHistory,
 			Image:       indexData.Welcome.Image,
 		},
-		Sections:    l.Sections,
-		Contacts:    indexData.Contacts,
-		ContactInfo: l.ContactInfo,
+		Itineraries:   indexData.Itineraries,
+		Sections:      l.Sections,
+		ItineraryPage: l.ItineraryPage,
+		Contacts:      indexData.Contacts,
+		ContactInfo:   l.ContactInfo,
 		AugustEvents: RenderAugustEvents{
 			Enabled: eventsData.Enabled,
 			Title:   el.Title,
@@ -587,6 +617,11 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 	// Prepare Itineraries for this locale
 	var localItineraries []RenderItinerary
 	for _, raw := range rawItineraries {
+		// Filter: Only include itineraries with a GPX file
+		if raw.GpxFile == "" {
+			continue
+		}
+
 		l := raw.It
 		if locale == "en" {
 			l = raw.En
@@ -810,6 +845,9 @@ func loadIndex(path string) (*IndexFile, error) {
 		data.Hero.Images[i] = "/static/" + data.Hero.Images[i]
 	}
 	data.Welcome.Image = "/static/" + data.Welcome.Image
+	if data.Itineraries.HeroImage != "" {
+		data.Itineraries.HeroImage = "/static/" + data.Itineraries.HeroImage
+	}
 	return &data, nil
 }
 
@@ -865,7 +903,26 @@ func loadItineraries(dir string) ([]ItineraryFile, error) {
 			}
 			it.Image = "/static/" + it.Image
 			if it.GpxFile != "" {
-				it.GpxFile = "/static/" + it.GpxFile
+				// Calculate Elevation Gain
+				// Handle both relative path from content/itineraries or absolute-ish path
+				// The GpxFile string usually comes as "gpx/foo.gpx" or "/static/gpx/foo.gpx"
+				// We need the filesystem path: "static/gpx/foo.gpx"
+
+				cleanPath := it.GpxFile
+				if strings.HasPrefix(cleanPath, "/static/") {
+					cleanPath = strings.TrimPrefix(cleanPath, "/static/")
+				}
+				fsPath := filepath.Join("static", cleanPath)
+
+				gain, dist, err := processGpx(fsPath)
+				if err != nil {
+					log.Printf("Warning: failed to process GPX %s: %v", fsPath, err)
+				} else {
+					it.ElevationGain = gain
+					it.DistanceKM = dist
+				}
+
+				it.GpxFile = "/static/" + cleanPath
 			}
 
 			// Process Gallery
@@ -1098,4 +1155,86 @@ func copyFile(src, dst string) error {
 		return err
 	}
 	return out.Sync()
+}
+
+// GPX Parsing Structures
+
+type Gpx struct {
+	Trk []Trk `xml:"trk"`
+}
+
+type Trk struct {
+	TrkSeg []TrkSeg `xml:"trkseg"`
+}
+
+type TrkSeg struct {
+	TrkPt []TrkPt `xml:"trkpt"`
+}
+
+type TrkPt struct {
+	Lat float64 `xml:"lat,attr"`
+	Lon float64 `xml:"lon,attr"`
+	Ele float64 `xml:"ele"`
+}
+
+func processGpx(path string) (elevationGain int, distanceKm float64, err error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return 0, 0, err
+	}
+	defer f.Close()
+
+	var gpx Gpx
+	if err := xml.NewDecoder(f).Decode(&gpx); err != nil {
+		return 0, 0, err
+	}
+
+	var gain float64
+	var dist float64
+	var prevEle float64
+	var prevLat, prevLon float64
+	first := true
+
+	for _, trk := range gpx.Trk {
+		for _, seg := range trk.TrkSeg {
+			for _, pt := range seg.TrkPt {
+				if first {
+					prevEle = pt.Ele
+					prevLat = pt.Lat
+					prevLon = pt.Lon
+					first = false
+					continue
+				}
+
+				// Elevation Gain
+				diff := pt.Ele - prevEle
+				if diff > 0 {
+					gain += diff
+				}
+				prevEle = pt.Ele
+
+				// Distance
+				dist += haversine(prevLat, prevLon, pt.Lat, pt.Lon)
+				prevLat = pt.Lat
+				prevLon = pt.Lon
+			}
+		}
+	}
+
+	return int(math.Round(gain)), math.Round((dist/1000)*100) / 100, nil
+}
+
+func haversine(lat1, lon1, lat2, lon2 float64) float64 {
+	const R = 6371000 // Earth radius in meters
+	phi1 := lat1 * math.Pi / 180
+	phi2 := lat2 * math.Pi / 180
+	deltaPhi := (lat2 - lat1) * math.Pi / 180
+	deltaLambda := (lon2 - lon1) * math.Pi / 180
+
+	a := math.Sin(deltaPhi/2)*math.Sin(deltaPhi/2) +
+		math.Cos(phi1)*math.Cos(phi2)*
+			math.Sin(deltaLambda/2)*math.Sin(deltaLambda/2)
+	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
+
+	return R * c
 }
