@@ -1,9 +1,9 @@
 [hero]
     images = [
+    "img/jo/WhatsApp Image 2026-01-02 at 15.22.54-6.jpeg",
+    "img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg",
+    "img/jo/WhatsApp Image 2026-01-02 at 15.22.54-4.jpeg",
     "img/michi/WhatsApp Image 2026-01-02 at 15.21.13-1.jpeg",
-    "img/hero.jpg",
-    "img/welcome.jpg",
-    "img/vetta-bruggi.jpg"
     ]
 
 [welcome]
