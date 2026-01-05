@@ -300,6 +300,11 @@ type RenderAugustEvents struct {
 	Items   []EventItem
 }
 
+type WebcamImage struct {
+	Url       string
+	Timestamp string
+}
+
 type RenderWebcamPage struct {
 	Live            string
 	HD              string
@@ -324,7 +329,7 @@ type RenderWebcamPage struct {
 	VisGood         string
 	VisPoor         string
 	VisModerate     string
-	Images          []string
+	Images          []WebcamImage
 	Timestamp       string
 }
 
@@ -404,6 +409,10 @@ func handleWebcamUpdate(srcPath string) {
 	if err := copyFile(srcPath, filepath.Join(distWebcamDir, timestampName)); err != nil {
 		log.Fatalf("Error adding timestamped image in dist: %v", err)
 	}
+
+	// 4a. Cleanup Old Images (Keep last 20)
+	cleanupOldWebcamImages(webcamDir, 20)
+	cleanupOldWebcamImages(distWebcamDir, 20)
 
 	// 5. Update Pages
 	indexData, err := loadIndex("content/index.toml")
@@ -1327,8 +1336,8 @@ func processImage(rawPath string) (originalWeb string, thumbWeb string, err erro
 	return "/static/" + cleanPath, "/static/thumbs/" + cleanPath, nil
 }
 
-func loadWebcamImages(dir string) ([]string, error) {
-	var images []string
+func loadWebcamImages(dir string) ([]WebcamImage, error) {
+	var images []WebcamImage
 	entries, err := os.ReadDir(dir)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -1340,7 +1349,21 @@ func loadWebcamImages(dir string) ([]string, error) {
 	for _, entry := range entries {
 		if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".jpg") {
 			if entry.Name() != "current.jpg" {
-				images = append(images, "/static/webcam/"+entry.Name())
+				// Parse timestamp from filename: 2006-01-02_15-04-05.jpg
+				name := strings.TrimSuffix(entry.Name(), ".jpg")
+				t, err := time.Parse("2006-01-02_15-04-05", name)
+				var timestamp string
+				if err != nil {
+					log.Printf("Warning: could not parse timestamp from webcam image %s: %v", entry.Name(), err)
+					timestamp = "--:--:--"
+				} else {
+					timestamp = t.Format("02/01/2006 15:04:05")
+				}
+
+				images = append(images, WebcamImage{
+					Url:       "/static/webcam/" + entry.Name(),
+					Timestamp: timestamp,
+				})
 			}
 		}
 	}
@@ -1454,6 +1477,35 @@ func getWebcamTimestamp() (string, error) {
 		return "", err
 	}
 	return info.ModTime().Format("02/01/2006 15:04:05"), nil
+}
+
+func cleanupOldWebcamImages(dir string, keep int) {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		log.Printf("Error reading webcam dir for cleanup: %v", err)
+		return
+	}
+
+	var snapshots []fs.DirEntry
+	for _, e := range entries {
+		if !e.IsDir() && strings.HasSuffix(e.Name(), ".jpg") && e.Name() != "current.jpg" {
+			snapshots = append(snapshots, e)
+		}
+	}
+
+	// snapshots are sorted oldest to newest (by filename YYYY-MM-DD...)
+	if len(snapshots) > keep {
+		removeCount := len(snapshots) - keep
+		toRemove := snapshots[:removeCount]
+		for _, e := range toRemove {
+			err := os.Remove(filepath.Join(dir, e.Name()))
+			if err != nil {
+				log.Printf("Error removing old webcam image %s: %v", e.Name(), err)
+			} else {
+				fmt.Printf("Removed old webcam image: %s\n", e.Name())
+			}
+		}
+	}
 }
 
 func validatePath(path string) {
