@@ -325,6 +325,7 @@ type RenderWebcamPage struct {
 	VisPoor         string
 	VisModerate     string
 	Images          []string
+	Timestamp       string
 }
 
 type RenderNav struct {
@@ -426,9 +427,16 @@ func updateWebcamPages(indexData *IndexFile, eventsData *EventsFile) {
 		log.Printf("Error loading webcam images: %v", err)
 	}
 
+	timestamp, err := getWebcamTimestamp()
+	if err != nil {
+		log.Printf("Error getting webcam timestamp: %v", err)
+		timestamp = "--:--:--"
+	}
+
 	render := func(locale string, baseUrl string, outPath string) {
 		renderIndex := createRenderIndex(locale, indexData, eventsData)
 		renderIndex.WebcamPage.Images = webcamImages
+		renderIndex.WebcamPage.Timestamp = timestamp
 
 		ctx := pongo2.Context{
 			"locale":        locale,
@@ -698,6 +706,12 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		log.Printf("Error loading webcam images: %v", err)
 	}
 
+	webcamTimestamp, err := getWebcamTimestamp()
+	if err != nil {
+		log.Printf("Error getting webcam timestamp: %v", err)
+		webcamTimestamp = "--:--:--"
+	}
+
 	// Prepare Galleries for this locale
 	var localGalleries []RenderGallery
 	var mainGalleryImages []GalleryImage
@@ -746,6 +760,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 
 	// Update WebcamPage with loaded images
 	renderIndex.WebcamPage.Images = webcamImages
+	renderIndex.WebcamPage.Timestamp = webcamTimestamp
 
 	tpl := pongo2.Must(pongo2.FromFile("templates/index.html"))
 	outPath := "dist/index.html"
@@ -1431,6 +1446,14 @@ func haversine(lat1, lon1, lat2, lon2 float64) float64 {
 	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
 
 	return R * c
+}
+
+func getWebcamTimestamp() (string, error) {
+	info, err := os.Stat("static/webcam/current.jpg")
+	if err != nil {
+		return "", err
+	}
+	return info.ModTime().Format("02/01/2006 15:04:05"), nil
 }
 
 func validatePath(path string) {
