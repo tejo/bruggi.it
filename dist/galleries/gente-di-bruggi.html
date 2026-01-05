@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html class="light" lang="it">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Gente di Bruggi - Bruggi</title>
+  <link href="/static/css/fonts.css" rel="stylesheet" />
+  <link href="/static/css/leaflet.css" rel="stylesheet" />
+  <link href="/static/css/lightbox.css" rel="stylesheet" />
+  <script src="/static/js/leaflet.js"></script>
+  <script src="/static/js/leaflet-gpx.js"></script>
+  <script src="/static/js/tailwindcss.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#11d411",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102210",
+            "surface-light": "#ffffff",
+            "surface-dark": "#1a2e1a",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Noto Sans", "sans-serif"],
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <script src="/static/js/main.js" defer></script>
+  <script src="/static/js/lightbox.js" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111811] dark:text-white">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#f0f4f0] dark:bg-[#111811]/90 dark:border-gray-800"
+      id="main-header">
+      <div class="px-4 md:px-10 py-3 flex items-center justify-between mx-auto max-w-[1280px] w-full">
+        <a href="/" class="flex items-center gap-2 text-[#111811] dark:text-white">
+          <span class="material-symbols-outlined text-primary text-3xl">landscape</span>
+          <h2 class="text-xl font-bold tracking-tight">Bruggi</h2>
+        </a>
+        <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+          <nav class="flex items-center gap-8">
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link"
+              href="/itineraries.html">Itinerari</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/webcam.html">Webcam</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/galleries.html">Galleria Foto</a>
+          </nav>
+          <div class="flex gap-3 items-center">
+             <!-- Locale Switcher -->
+             
+             <a href="/en/galleries/gente-di-bruggi.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+                EN
+             </a>
+             
+            <a href="/contacts.html"
+              class="flex items-center justify-center rounded-lg h-9 px-5 bg-primary text-[#111811] text-sm font-bold shadow-sm hover:bg-green-500 transition-colors">
+              Contattaci
+            </a>
+          </div>
+        </div>
+        <div class="flex md:hidden items-center gap-3">
+          <!-- Mobile Locale Switcher -->
+          
+          <a href="/en/galleries/gente-di-bruggi.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             EN
+          </a>
+          
+          <button id="burger-btn" class="text-[#111811] dark:text-white">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu"
+        class="hidden md:hidden bg-white/95 dark:bg-[#111811]/95 border-b border-[#f0f4f0] dark:border-gray-800 backdrop-blur-md absolute w-full left-0 top-full shadow-lg">
+        <nav class="flex flex-col p-6 gap-6 text-center">
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/">Home</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/itineraries.html">Itinerari</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/webcam.html">Webcam</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/galleries.html">Galleria Foto</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/contacts.html">Contattaci</a>
+        </nav>
+      </div>
+    </header>
+
+    
+<section class="py-16 px-4 md:px-40 bg-background-light dark:bg-background-dark">
+      <div class="max-w-[960px] mx-auto flex flex-col gap-8">
+        <div class="text-center md:text-left">
+          <div class="mb-4">
+              <a href="/galleries.html" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                  Galleria Foto
+              </a>
+          </div>
+          <h2 class="text-[#111811] dark:text-white text-3xl font-bold leading-tight tracking-tight">Gente di Bruggi</h2>
+          <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg">Volti e ricordi degli abitanti di Bruggi nel corso degli anni.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[250px]">
+          
+            <a href="/static/img/gente_di_bruggi/Andrea-Giuseppe-Martino-Elio-1972.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Andrea Giuseppe Martino Elio 1972" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Andrea-Giuseppe-Martino-Elio-1972.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Antonietta-e-Giuseppina-(Lucia).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Antonietta e Giuseppina (Lucia)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Antonietta-e-Giuseppina-(Lucia).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Classe-1899-1900-1920-ca.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Classe 1899 1900 1920 ca" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Classe-1899-1900-1920-ca.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Gigio-1972.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gigio 1972" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Gigio-1972.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Ottavia-Tamburelli.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Ottavia Tamburelli" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Ottavia-Tamburelli.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Ginota-e-amica.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Ginota e amica" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Ginota-e-amica.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Gruppo-di-famiglia-(1928).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gruppo di famiglia (1928)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Gruppo-di-famiglia-(1928).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Gruppo-di-famiglia-(Primi-Novecento).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gruppo di famiglia (Primi Novecento)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Gruppo-di-famiglia-(Primi-Novecento).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Pelle-Andrea-(du-Gian).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Pelle Andrea (du Gian)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Pelle-Andrea-(du-Gian).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Pelle Antonietta (1946).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Pelle Antonietta (1946)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Pelle Antonietta (1946).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Pelle-Antonietta-e-cognata.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Pelle Antonietta e cognata" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Pelle-Antonietta-e-cognata.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Pelle-Giovanni-(Pumtto).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Pelle Giovanni (Pumtto)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Pelle-Giovanni-(Pumtto).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/PL_Pelle-Vitale-e-Antonino.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Pelle Vitale e Antonino" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/PL_Pelle-Vitale-e-Antonino.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Scapolla-Luigi(Bufiggia).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Scapolla Luigi(Bufiggia)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Scapolla-Luigi(Bufiggia).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Scapolla-Pietro-Giuseppe-Luigi-Terenzio.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Scapolla Pietro Giuseppe Luigi Terenzio" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Scapolla-Pietro-Giuseppe-Luigi-Terenzio.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Scapolla-Pietro.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Scapolla Pietro" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Scapolla-Pietro.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/senzatitolo.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="senzatitolo" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/senzatitolo.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-bersagliere.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="bersagliere" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-bersagliere.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-Gigio.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gigio" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-Gigio.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-Gruppo1.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gruppo1" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-Gruppo1.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-gruppo.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="gruppo" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-gruppo.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-Nonni-di-Gino.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Nonni di Gino" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-Nonni-di-Gino.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-nonno-di-Gino.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="nonno di Gino" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-nonno-di-Gino.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-Scapolla-Pietro-(Dei).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Scapolla Pietro (Dei)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-Scapolla-Pietro-(Dei).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-soldati.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="soldati" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-soldati.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-soldato.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="soldato" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-soldato.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SG-Trebbiatura.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Trebbiatura" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SG-Trebbiatura.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SL-gruppo-di-lavoro.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="gruppo di lavoro" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SL-gruppo-di-lavoro.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SL-mulattieri1.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="mulattieri1" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SL-mulattieri1.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/SL-mulattieri.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="mulattieri" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/SL-mulattieri.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Tamburelli-Antonio-1876-fatta-in-prussia-a-Metz.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Antonio 1876 fatta in prussia a Metz" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Tamburelli-Antonio-1876-fatta-in-prussia-a-Metz.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Tamburelli-Bernardo-ca-1930.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Bernardo ca 1930" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Tamburelli-Bernardo-ca-1930.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Tamburelli-Cesare-ca-1935.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Cesare ca 1935" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Tamburelli-Cesare-ca-1935.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Tamburelli-Cesarina-ca-1925.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Cesarina ca 1925" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Tamburelli-Cesarina-ca-1925.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Tamburelli-Giuseppina-e-figlia-1937.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Giuseppina e figlia 1937" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Tamburelli-Giuseppina-e-figlia-1937.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-figlia.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="figlia" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-figlia.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-foto-del-22-6-33.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="foto del 22 6 33" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-foto-del-22-6-33.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Geppo-(zio)1.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Geppo (zio)1" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Geppo-(zio)1.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Gita-del-1954.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gita del 1954" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Gita-del-1954.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Gita.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gita" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Gita.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Guarco-(nonna-di-Lucia).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Guarco (nonna di Lucia)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Guarco-(nonna-di-Lucia).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Moluggi-(Pietro).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Moluggi (Pietro)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Moluggi-(Pietro).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-ragazze-di-bruggi.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="ragazze di bruggi" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-ragazze-di-bruggi.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-soldato.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="soldato" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-soldato.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Tamburelli-Carlo.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Carlo" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Tamburelli-Carlo.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Tamburelli-Francesca.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Francesca" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Tamburelli-Francesca.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Tamburelli-Giovanni.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Giovanni" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Tamburelli-Giovanni.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Tamburelli-Lucia.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Lucia" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Tamburelli-Lucia.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/TL-Tamburelli-Pietro.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Pietro" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/TL-Tamburelli-Pietro.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Barde.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Barde" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Barde.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Don-Goglino.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Don Goglino" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Don-Goglino.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Ferassa-Antonio(Buciou)-Tamburelli-Minchina.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Ferassa Antonio(Buciou) Tamburelli Minchina" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Ferassa-Antonio(Buciou)-Tamburelli-Minchina.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Gruppo1.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Gruppo1" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Gruppo1.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Nabucco-e-Virginio.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Nabucco e Virginio" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Nabucco-e-Virginio.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/Vanoli-Agnese-Scapolla-Domenica.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Vanoli Agnese Scapolla Domenica" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/Vanoli-Agnese-Scapolla-Domenica.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tamburelli-Carlo-(Bertei).jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Carlo (Bertei)" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tamburelli-Carlo-(Bertei).jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tamburelli-Carlo-e- Agostina.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Carlo e Agostina" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tamburelli-Carlo-e- Agostina.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tamburelli-Carlo-e-Ferazza-Agostina.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Carlo e Ferazza Agostina" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tamburelli-Carlo-e-Ferazza-Agostina.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tamburelli-Giacomo.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Giacomo" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tamburelli-Giacomo.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tamburelli-Seconda.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Seconda" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tamburelli-Seconda.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tamburelli-Tina.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tamburelli Tina" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tamburelli-Tina.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Tawina-e-la-madre-Maddalena.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Tawina e la madre Maddalena" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Tawina-e-la-madre-Maddalena.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/gente_di_bruggi/VA-Virginio-Rosa-Tawina-Maddalena.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Virginio Rosa Tawina Maddalena" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/gente_di_bruggi/VA-Virginio-Rosa-Tawina-Maddalena.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+        </div>
+      </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer class="bg-[#111811] text-white py-12 px-4 md:px-40 border-t border-gray-800" id="main-footer">
+      <div class="max-w-[960px] mx-auto flex flex-col md:flex-row justify-between gap-10">
+        <div class="flex flex-col gap-4 max-w-xs">
+          <div class="flex items-center gap-2 text-white">
+            <span class="material-symbols-outlined text-primary text-2xl">landscape</span>
+            <h2 class="text-xl font-bold">Bruggi</h2>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Un paeseino incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l&#39;esperienza della vera montagna italiana.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Esplora</h3>
+          <div class="flex flex-col gap-2 text-sm text-gray-400">
+            <a class="hover:text-primary transition-colors" href="/">Home</a>
+            <a class="hover:text-primary transition-colors" href="/itineraries.html">Itinerari</a>
+            <a class="hover:text-primary transition-colors" href="/webcam.html">Webcam</a>
+            <a class="hover:text-primary transition-colors" href="/galleries.html">Galleria Foto</a>
+            <a class="hover:text-primary transition-colors" href="/contacts.html">Contattaci</a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Contatti</h3>
+          <div class="flex flex-col gap-3 text-sm text-gray-400">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">mail</span>
+              <span>info@bruggi.it</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">call</span>
+              <span>+39 0123 456789</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-[960px] mx-auto pt-8 mt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-500">
+        <p>© 2026 Comune di Bruggi. Tutti i diritti riservati.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

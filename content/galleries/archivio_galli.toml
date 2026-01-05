@@ -1,0 +1,43 @@
+slug = "archivio-galli"
+cover_image = "/static/img/archivio_galli/archivio-galli-01.jpg"
+
+[it]
+title = "Archivio Galli"
+description = "Una collezione storica dall'Archivio Galli."
+
+[en]
+title = "Galli Archive"
+description = "A historical collection from the Galli Archive."
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-01.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-02.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-03.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-04.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-05.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-06.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-07.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-09.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-10.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio galli 11.jpg"
+
+[[images]]
+url = "/static/img/archivio_galli/archivio-galli-12.jpg"

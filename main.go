@@ -745,6 +745,21 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		}
 	}
 
+	// Sort galleries: 'main' first, others alphabetically or as loaded
+	var sortedGalleries []RenderGallery
+	var otherGalleries []RenderGallery
+
+	for _, g := range localGalleries {
+		if g.Slug == "main" {
+			sortedGalleries = append(sortedGalleries, g)
+		} else {
+			otherGalleries = append(otherGalleries, g)
+		}
+	}
+	// Append others
+	sortedGalleries = append(sortedGalleries, otherGalleries...)
+	localGalleries = sortedGalleries
+
 	// Fallback for homepage images if main gallery not found
 	if len(mainGalleryImages) == 0 && len(galleries) > 0 {
 		mainGalleryImages = galleries[0].Images
