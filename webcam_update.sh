@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Add this to the top of your webcam_update.sh
+trap "echo 'Shutdown signal received! Exiting cleanly.'; exit" SIGTERM SIGINT
+
 # Configuration
 REPO_DIR="/home/teo/bruggi.it"
 MAX_RETRIES=5
@@ -45,3 +48,4 @@ run_with_retry git push origin main
 
 # 7. remove image
 rm -f capture.jpg
+sync
