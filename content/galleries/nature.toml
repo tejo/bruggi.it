@@ -1,0 +1,30 @@
+slug = "nature"
+cover_image = "/static/img/forest-retreat.jpg"
+
+[it]
+title = "Natura Incontaminata"
+description = "Paesaggi mozzafiato e angoli di pace nei dintorni di Bruggi."
+
+[en]
+title = "Untouched Nature"
+description = "Breathtaking landscapes and peaceful corners around Bruggi."
+
+[[images]]
+url = "/static/img/pineta.jpg"
+alt = "Pineta di Bruggi"
+
+[[images]]
+url = "/static/img/cascata.jpg"
+alt = "Cascata"
+
+[[images]]
+url = "/static/img/chiappo.jpg"
+alt = "Monte Chiappo"
+
+[[images]]
+url = "/static/img/vetta-bruggi.jpg"
+alt = "Vetta panoramica"
+
+[[images]]
+url = "/static/img/forest-retreat.jpg"
+alt = "Forest Retreat"

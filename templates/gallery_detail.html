@@ -4,11 +4,17 @@
 <section class="py-16 px-4 md:px-40 bg-background-light dark:bg-background-dark">
       <div class="max-w-[960px] mx-auto flex flex-col gap-8">
         <div class="text-center md:text-left">
-          <h2 class="text-[#111811] dark:text-white text-3xl font-bold leading-tight tracking-tight">{{ t.Sections.GalleryTitle }}</h2>
-          <p class="text-gray-500 dark:text-gray-400 mt-2">{{ t.Sections.GallerySubtitle }}</p>
+          <div class="mb-4">
+              <a href="{{ base_url }}/galleries.html" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                  {{ t.Sections.GalleryTitle }}
+              </a>
+          </div>
+          <h2 class="text-[#111811] dark:text-white text-3xl font-bold leading-tight tracking-tight">{{ gallery.Title }}</h2>
+          <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg">{{ gallery.Description }}</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[250px]">
-          {% for img in gallery_images %}
+          {% for img in gallery.Images %}
             <a href="{{ img.Url }}" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="{{ img.Alt }}" {% if img.Author %}data-author="{{ img.Author }}"{% endif %}>
               <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                 style="background-image: url('{{ img.Thumbnail }}');">

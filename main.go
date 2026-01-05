@@ -208,8 +208,17 @@ type FooterLocale struct {
 	Copyright     string `toml:"copyright"`
 }
 
-type GalleryData struct {
-	Images []GalleryImage `toml:"images"`
+type GalleryFile struct {
+	Slug       string         `toml:"slug"`
+	CoverImage string         `toml:"cover_image"`
+	It         GalleryLocale  `toml:"it"`
+	En         GalleryLocale  `toml:"en"`
+	Images     []GalleryImage `toml:"images"`
+}
+
+type GalleryLocale struct {
+	Title       string `toml:"title"`
+	Description string `toml:"description"`
 }
 
 type GalleryImage struct {
@@ -217,6 +226,14 @@ type GalleryImage struct {
 	Alt       string `toml:"alt"`
 	Author    string `toml:"author"` // Instagram handle
 	Thumbnail string // Populated during load
+}
+
+type RenderGallery struct {
+	Slug        string
+	CoverImage  string
+	Title       string
+	Description string
+	Images      []GalleryImage
 }
 
 type ItineraryFile struct {
@@ -453,9 +470,9 @@ func buildSite() {
 		return
 	}
 
-	galleryData, err := loadGallery("content/galleries.toml")
+	galleries, err := loadGalleries("content/galleries")
 	if err != nil {
-		log.Printf("Error loading gallery: %v", err)
+		log.Printf("Error loading galleries: %v", err)
 		return
 	}
 
@@ -493,10 +510,10 @@ func buildSite() {
 	copyDir("static", "dist/static")
 
 	// 3. Render Pages for IT (Default)
-	renderLocale("it", "", indexData, eventsData, *galleryData, itineraries, historyData)
+	renderLocale("it", "", indexData, eventsData, galleries, itineraries, historyData)
 
 	// 4. Render Pages for EN
-	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries, historyData)
+	renderLocale("en", "/en", indexData, eventsData, galleries, itineraries, historyData)
 
 	// 5. Cleanup Unused Images
 	// usedImages := collectUsedImages(indexData, galleryData, itineraries)
@@ -641,7 +658,7 @@ func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFi
 	}
 }
 
-func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsData *EventsFile, galleryT GalleryData, rawItineraries []ItineraryFile, historyData *HistoryFile) {
+func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsData *EventsFile, galleries []GalleryFile, rawItineraries []ItineraryFile, historyData *HistoryFile) {
 	// Merge shared and localized
 	renderIndex := createRenderIndex(locale, indexData, eventsData)
 
@@ -681,8 +698,37 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		log.Printf("Error loading webcam images: %v", err)
 	}
 
+	// Prepare Galleries for this locale
+	var localGalleries []RenderGallery
+	var mainGalleryImages []GalleryImage
+
+	for _, raw := range galleries {
+		l := raw.It
+		if locale == "en" {
+			l = raw.En
+		}
+		
+		g := RenderGallery{
+			Slug:        raw.Slug,
+			CoverImage:  raw.CoverImage,
+			Title:       l.Title,
+			Description: l.Description,
+			Images:      raw.Images,
+		}
+		localGalleries = append(localGalleries, g)
+
+		if raw.Slug == "main" {
+			mainGalleryImages = raw.Images
+		}
+	}
+
+	// Fallback for homepage images if main gallery not found
+	if len(mainGalleryImages) == 0 && len(galleries) > 0 {
+		mainGalleryImages = galleries[0].Images
+	}
+
 	// Limit gallery images for the index page to 8
-	indexGalleryImages := galleryT.Images
+	indexGalleryImages := mainGalleryImages
 	if len(indexGalleryImages) > 8 {
 		indexGalleryImages = indexGalleryImages[:8]
 	}
@@ -724,28 +770,10 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		"base_url":      baseUrl,
 		"alternate_url": computeAlternateUrl(locale, "/history.html"),
 		"page_title":    historyT.Title,
-		"t":             historyT,
+		"t":             renderIndex,
+		"page_data":     historyT,
 		"hero_image":    historyData.Meta.HeroImage,
-		"main_t":        renderIndex, // For header/footer if needed, but template might expect 't' as RenderIndex. 
-		// Wait, base.html expects 't.Nav', 't.Footer'. 
-		// If I pass historyT as 't', base.html will fail.
-		// I should pass renderIndex as 't', and history content as 'history'.
-		// BUT my template history.html uses 't.Title', 't.Items'.
-		// I should probably pass renderIndex as 't' and historyT as 'page_data' or similar.
-		// Or merge them.
-		// Let's look at history.html: it extends base.html. base.html needs 't.Nav', 't.Footer'.
-		// So 't' MUST be RenderIndex.
-		// I will change history.html to use 'page_data' instead of 't' for content.
 	}
-	// Let's re-read base.html or just assume standard pattern.
-	// index.html uses 't' as RenderIndex.
-	// history.html uses 't' for its content. This conflicts with base.html requirements if base.html uses 't'.
-	// I'll check base.html in a moment.
-	// For now, I'll pass 't' as RenderIndex (renderIndex) AND 'page_data' as historyT.
-	// I will update history.html to use 'page_data' instead of 't'.
-
-	historyCtx["t"] = renderIndex
-	historyCtx["page_data"] = historyT
 
 	histTpl := pongo2.Must(pongo2.FromFile("templates/history.html"))
 	histOutPath := "dist/history.html"
@@ -757,22 +785,50 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 	}
 
 
-	// Render Galleries
+	// Render Galleries List
 	galleryCtx := pongo2.Context{
 		"locale":         locale,
 		"base_url":       baseUrl,
 		"alternate_url":  computeAlternateUrl(locale, "/galleries.html"),
 		"page_title":     renderIndex.Sections.GalleryTitle,
 		"t":              renderIndex,
-		"gallery_images": galleryT.Images,
+		"galleries":      localGalleries,
 	}
-	galTpl := pongo2.Must(pongo2.FromFile("templates/gallery.html"))
+	galTpl := pongo2.Must(pongo2.FromFile("templates/gallery_list.html"))
 	galOutPath := "dist/galleries.html"
 	if locale == "en" {
 		galOutPath = "dist/en/galleries.html"
 	}
 	if err := renderToFile(galTpl, galleryCtx, galOutPath); err != nil {
 		log.Panic(err)
+	}
+
+	// Render Individual Gallery Pages
+	detailGalTpl := pongo2.Must(pongo2.FromFile("templates/gallery_detail.html"))
+	
+	// Ensure galleries dir exists
+	galDir := "dist/galleries"
+	if locale == "en" {
+		galDir = "dist/en/galleries"
+	}
+	if err := os.MkdirAll(galDir, 0755); err != nil {
+		log.Panic(err)
+	}
+
+	for _, g := range localGalleries {
+		relativePath := "/galleries/" + g.Slug + ".html"
+		detailCtx := pongo2.Context{
+			"locale":        locale,
+			"base_url":      baseUrl,
+			"alternate_url": computeAlternateUrl(locale, relativePath),
+			"page_title":    g.Title,
+			"t":             renderIndex,
+			"gallery":       g,
+		}
+		detailOutPath := filepath.Join(galDir, g.Slug+".html")
+		if err := renderToFile(detailGalTpl, detailCtx, detailOutPath); err != nil {
+			log.Panic(err)
+		}
 	}
 
 	// Render Webcam
@@ -973,27 +1029,41 @@ func loadHistory(path string) (*HistoryFile, error) {
 	return &data, nil
 }
 
-func loadGallery(path string) (*GalleryData, error) {
-	b, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-	var data GalleryData
-	if err := toml.Unmarshal(b, &data); err != nil {
-		return nil, err
-	}
-	for i := range data.Images {
-		validatePath(data.Images[i].Url)
-		url, thumb, err := processImage(data.Images[i].Url)
+func loadGalleries(dir string) ([]GalleryFile, error) {
+	var galleries []GalleryFile
+	err := filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			log.Printf("Warning: processing image %s failed: %v", data.Images[i].Url, err)
-			data.Images[i].Thumbnail = data.Images[i].Url // Fallback
-		} else {
-			data.Images[i].Url = url
-			data.Images[i].Thumbnail = thumb
+			return err
 		}
-	}
-	return &data, nil
+		if !d.IsDir() && strings.HasSuffix(path, ".toml") {
+			b, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			var g GalleryFile
+			if err := toml.Unmarshal(b, &g); err != nil {
+				return err
+			}
+			validatePath(g.CoverImage)
+			// Ensure thumbnail for cover image too? Maybe not strictly required but good.
+			// Ideally cover image should be separate, but let's just validate it.
+
+			for i := range g.Images {
+				validatePath(g.Images[i].Url)
+				url, thumb, err := processImage(g.Images[i].Url)
+				if err != nil {
+					log.Printf("Warning: processing image %s failed: %v", g.Images[i].Url, err)
+					g.Images[i].Thumbnail = g.Images[i].Url // Fallback
+				} else {
+					g.Images[i].Url = url
+					g.Images[i].Thumbnail = thumb
+				}
+			}
+			galleries = append(galleries, g)
+		}
+		return nil
+	})
+	return galleries, err
 }
 
 func loadItineraries(dir string) ([]ItineraryFile, error) {
@@ -1100,7 +1170,7 @@ func computeAlternateUrl(currentLocale string, relativePath string) string {
 	}
 }
 
-func collectUsedImages(index *IndexFile, gallery *GalleryData, itineraries []ItineraryFile) map[string]bool {
+func collectUsedImages(index *IndexFile, galleries []GalleryFile, itineraries []ItineraryFile) map[string]bool {
 	used := make(map[string]bool)
 
 	// Helper to add path
@@ -1126,9 +1196,12 @@ func collectUsedImages(index *IndexFile, gallery *GalleryData, itineraries []Iti
 	}
 	add(index.Welcome.Image)
 
-	for _, img := range gallery.Images {
-		add(img.Url)
-		add(img.Thumbnail)
+	for _, g := range galleries {
+		add(g.CoverImage)
+		for _, img := range g.Images {
+			add(img.Url)
+			add(img.Thumbnail)
+		}
 	}
 
 	for _, it := range itineraries {

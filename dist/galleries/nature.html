@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Galleria Foto - Bruggi</title>
+  <title>Natura Incontaminata - Bruggi</title>
   <link href="/static/css/fonts.css" rel="stylesheet" />
   <link href="/static/css/leaflet.css" rel="stylesheet" />
   <link href="/static/css/lightbox.css" rel="stylesheet" />
@@ -58,7 +58,7 @@
           <div class="flex gap-3 items-center">
              <!-- Locale Switcher -->
              
-             <a href="/en/galleries.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             <a href="/en/galleries/nature.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
                 EN
              </a>
              
@@ -71,7 +71,7 @@
         <div class="flex md:hidden items-center gap-3">
           <!-- Mobile Locale Switcher -->
           
-          <a href="/en/galleries.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+          <a href="/en/galleries/nature.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
              EN
           </a>
           
@@ -95,44 +95,66 @@
 
     
 <section class="py-16 px-4 md:px-40 bg-background-light dark:bg-background-dark">
-    <div class="max-w-[960px] mx-auto flex flex-col gap-8">
+      <div class="max-w-[960px] mx-auto flex flex-col gap-8">
         <div class="text-center md:text-left">
-            <h1 class="text-[#111811] dark:text-white text-4xl font-bold leading-tight tracking-tight">Galleria Foto</h1>
-            <p class="text-gray-500 dark:text-gray-400 mt-2 text-xl">I momenti più belli catturati dai nostri visitatori</p>
+          <div class="mb-4">
+              <a href="/galleries.html" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                  Galleria Foto
+              </a>
+          </div>
+          <h2 class="text-[#111811] dark:text-white text-3xl font-bold leading-tight tracking-tight">Natura Incontaminata</h2>
+          <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg">Paesaggi mozzafiato e angoli di pace nei dintorni di Bruggi.</p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <a href="/galleries/main.html" class="block group">
-                <div class="rounded-2xl overflow-hidden aspect-video relative shadow-md transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                         style="background-image: url('/static/img/cascata.jpg');">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                    
-                    <div class="absolute bottom-0 left-0 p-6 w-full">
-                        <h3 class="text-white text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Galleria Principale</h3>
-                        <p class="text-white/80 line-clamp-2">Una raccolta dei momenti migliori a Bruggi.</p>
-                    </div>
-                </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[250px]">
+          
+            <a href="/static/img/pineta.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Pineta di Bruggi" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/pineta.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
             </a>
-            
-            <a href="/galleries/nature.html" class="block group">
-                <div class="rounded-2xl overflow-hidden aspect-video relative shadow-md transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                         style="background-image: url('/static/img/forest-retreat.jpg');">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
-                    
-                    <div class="absolute bottom-0 left-0 p-6 w-full">
-                        <h3 class="text-white text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Natura Incontaminata</h3>
-                        <p class="text-white/80 line-clamp-2">Paesaggi mozzafiato e angoli di pace nei dintorni di Bruggi.</p>
-                    </div>
-                </div>
+          
+            <a href="/static/img/cascata.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Cascata" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/cascata.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
             </a>
-            
+          
+            <a href="/static/img/chiappo.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Monte Chiappo" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/chiappo.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/vetta-bruggi.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Vetta panoramica" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/vetta-bruggi.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
+            <a href="/static/img/forest-retreat.jpg" class="rounded-xl overflow-hidden relative group lightbox-trigger" title="Forest Retreat" >
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style="background-image: url('/static/thumbs/img/forest-retreat.jpg');">
+              </div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+              
+              
+            </a>
+          
         </div>
-    </div>
+      </div>
 </section>
 
 

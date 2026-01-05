@@ -13,6 +13,7 @@
 *   **Styling:** Tailwind CSS (via local script in `static/js/tailwindcss.js`) and custom CSS.
 *   **Maps:** Leaflet.js with OpenTopoMap tiles.
 *   **Weather:** Real-time data via Open-Meteo API.
+*   **CI/CD:** GitHub Actions for automated builds and deployment to the repository.
 *   **Output:** Static HTML files generated in `dist/`.
 *   **Watcher:** `fsnotify` for auto-rebuilding during development.
 
@@ -22,11 +23,14 @@
 *   `Makefile`: Build automation commands.
 *   `content/`: TOML data files defining the site's content.
     *   `index.toml`: Homepage content, navigation, and webcam localization.
+    *   `history.toml`: Localized content for the history and legends page.
+    *   `august_events.toml`: List of events for the village festival.
     *   `galleries.toml`: Photo collection.
     *   `itineraries/*.toml`: Individual itinerary definitions.
 *   `templates/`: Pongo2 HTML templates.
     *   `base.html`: Shared layout (Header/Footer).
     *   `index.html`: Homepage template.
+    *   `history.html`: History and legends page.
     *   `itinerary_list.html`: List of itineraries.
     *   `itinerary_detail.html`: Detail view for a single itinerary.
     *   `gallery.html`: Photo gallery page.
@@ -38,24 +42,35 @@
     *   `img/`: High-resolution images for the site.
     *   `thumbs/`: Auto-generated thumbnails (do not edit manually).
     *   `webcam/`: Webcam history images.
-    *   `js/`: Client-side scripts (`main.js`, `leaflet.js`, `lightbox.js`, etc.).
-*   `dist/`: The generated output directory (Git ignored).
+    *   `js/`: Client-side scripts (`main.js`, `leaflet.js`, `lightbox.js`, `slideshow.js`, etc.).
+*   `dist/`: The generated output directory (tracked in Git for deployment).
 
 ## Key Features
 
 ### Image Management
 *   **Auto-Thumbnails:** The generator automatically creates optimized thumbnails for images referenced in TOML files, storing them in `static/thumbs/`.
+*   **Slideshow:** A hero slideshow on the homepage (via `slideshow.js`) cycles through multiple images with crossfade effects.
 *   **Lightbox:** A custom JS/CSS lightbox allows users to view high-resolution images by clicking on thumbnails in galleries and itineraries.
-*   **Cleanup:** The build process automatically removes unused images and thumbnails from the `static` folder to keep the project clean.
+*   **Cleanup:** The build process includes logic to remove unused images and thumbnails (currently optional).
+
+### History & Legends
+*   **Content:** Dedicated page showcasing the village's history and folk stories, managed via `history.toml`.
+*   **Formatting:** Supports basic Markdown-like syntax (bold and italics) within TOML strings, processed during generation.
+*   **UX:** Uses an accordion-style interface (HTML `<details>`) for better readability.
+
+### Events
+*   **Dynamic Visibility:** Events for August can be enabled or disabled globally via `august_events.toml`.
+*   **Integration:** When enabled, events are automatically displayed on the homepage.
 
 ### Webcam & Weather
 *   **Live View:** Displays the latest image from `static/webcam/current.jpg`.
 *   **Time-lapse:** A client-side player cycles through historical images stored in `static/webcam/`.
 *   **Real-time Weather:** Fetches live temperature, wind, and visibility data for Bruggi (lat/lon: 44.71143, 9.18697) using the Open-Meteo API.
-*   **Update Tool:** A dedicated flag `-update-webcam` allows easy updating of the current view and history without a full site rebuild.
+*   **Update Tool:** A dedicated flag `-update-webcam` updates images and triggers a re-render of relevant HTML pages.
 
 ### Itineraries
 *   **Filtering:** Static pages generated for `hiking` and `biking` types.
+*   **Automatic Stats:** The generator automatically parses GPX files to calculate elevation gain and distance.
 *   **Details:** Includes interactive Leaflet maps (GPX tracks), elevation profiles, YouTube embeds, and photo galleries.
 
 ### Localization
@@ -93,3 +108,6 @@
     # OR using the binary
     ./bin/bruggi -update-webcam /path/to/new/image.jpg
     ```
+
+5.  **Deployment:**
+    The project uses GitHub Actions to automatically rebuild and commit the `dist/` folder whenever changes are pushed to `main`.

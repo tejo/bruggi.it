@@ -1,3 +1,14 @@
+slug = "main"
+cover_image = "/static/img/cascata.jpg"
+
+[it]
+title = "Galleria Principale"
+description = "Una raccolta dei momenti migliori a Bruggi."
+
+[en]
+title = "Main Gallery"
+description = "A collection of the best moments in Bruggi."
+
 [[images]]
 url = "/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-1.jpeg"
 author = "michigiudici"
