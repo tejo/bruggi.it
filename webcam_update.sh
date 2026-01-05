@@ -68,3 +68,6 @@ fi
 rm -f capture.jpg
 sync
 echo "Successfully pushed $TIMESTAMP.jpg and pruned old files."
+echo "Workflow complete. Shutting down to save power."
+# This tells the Witty Pi to prepare for power-off
+sudo shutdown -h now
