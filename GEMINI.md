@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-"Bruggi - Villaggio di Montagna" is a static website for a fictional or real mountain village named Bruggi. It showcases the village's attractions, itineraries, galleries, webcams, and contact information.
+"Bruggi - Villaggio di Montagna" is a static website for a mountain village named Bruggi. It showcases the village's attractions, itineraries, galleries, webcams, and contact information.
 
 **Key Technologies:**
 *   **Language:** Go (Golang)
@@ -25,7 +25,7 @@
     *   `index.toml`: Homepage content, navigation, and webcam localization.
     *   `history.toml`: Localized content for the history and legends page.
     *   `august_events.toml`: List of events for the village festival.
-    *   `galleries.toml`: Photo collection.
+    *   `galleries/`: Multiple gallery definitions (e.g., `main.toml`, `nature.toml`).
     *   `itineraries/*.toml`: Individual itinerary definitions.
 *   `templates/`: Pongo2 HTML templates.
     *   `base.html`: Shared layout (Header/Footer).
@@ -33,7 +33,7 @@
     *   `history.html`: History and legends page.
     *   `itinerary_list.html`: List of itineraries.
     *   `itinerary_detail.html`: Detail view for a single itinerary.
-    *   `gallery.html`: Photo gallery page.
+    *   `gallery_list.html`, `gallery_detail.html`: Multi-gallery templates.
     *   `webcam.html`, `contacts.html`: Other page templates.
 *   `static/`: Static assets copied to `dist/` during build.
     *   `css/`: Stylesheets (`fonts.css`, `leaflet.css`, `lightbox.css`).
@@ -51,7 +51,7 @@
 *   **Auto-Thumbnails:** The generator automatically creates optimized thumbnails for images referenced in TOML files, storing them in `static/thumbs/`.
 *   **Slideshow:** A hero slideshow on the homepage (via `slideshow.js`) cycles through multiple images with crossfade effects.
 *   **Lightbox:** A custom JS/CSS lightbox allows users to view high-resolution images by clicking on thumbnails in galleries and itineraries.
-*   **Cleanup:** The build process includes logic to remove unused images and thumbnails (currently optional).
+*   **Cleanup:** The build process automatically removes unused images and thumbnails while strictly preserving all referenced assets (including history hero images and contact photos).
 
 ### History & Legends
 *   **Content:** Dedicated page showcasing the village's history and folk stories, managed via `history.toml`.
@@ -64,9 +64,13 @@
 
 ### Webcam & Weather
 *   **Live View:** Displays the latest image from `static/webcam/current.jpg`.
-*   **Time-lapse:** A client-side player cycles through historical images stored in `static/webcam/`.
-*   **Real-time Weather:** Fetches live temperature, wind, and visibility data for Bruggi (lat/lon: 44.71143, 9.18697) using the Open-Meteo API.
-*   **Update Tool:** A dedicated flag `-update-webcam` updates images and triggers a re-render of relevant HTML pages.
+*   **Static Timestamps:** The webcam clock is firm and displays the exact date and time the picture was taken (based on file modification time).
+*   **Improved Time-lapse:** 
+    *   Plays in reverse (Newest -> Oldest) starting from the current image.
+    *   On-demand preloading with a visual loader inside the button.
+    *   Synchronized timestamps that update for each frame during playback.
+*   **Real-time Weather:** Fetches live temperature, wind, and visibility data for Bruggi using the Open-Meteo API.
+*   **Update Tool:** A dedicated flag `-update-webcam` updates images, keeps only the last 20 snapshots, and triggers a re-render.
 
 ### Itineraries
 *   **Filtering:** Static pages generated for `hiking` and `biking` types.
@@ -88,7 +92,7 @@
     ```
 
 2.  **Build Static Site:**
-    Generate the `dist/` folder.
+    Generate the `dist/` folder and perform image cleanup.
     ```bash
     make build
     # OR
@@ -102,7 +106,7 @@
     ```
 
 4.  **Update Webcam:**
-    Add a new webcam image (updates `current.jpg`, adds a timestamped copy, and refreshes the webcam page).
+    Add a new webcam image (updates `current.jpg`, keeps last 20 snapshots, and refreshes pages).
     ```bash
     go run main.go -update-webcam /path/to/new/image.jpg
     # OR using the binary
