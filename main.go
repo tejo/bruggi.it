@@ -516,10 +516,10 @@ func buildSite() {
 	renderLocale("en", "/en", indexData, eventsData, galleries, itineraries, historyData)
 
 	// 5. Cleanup Unused Images
-	// usedImages := collectUsedImages(indexData, galleryData, itineraries)
-	// if err := cleanupImages(usedImages); err != nil {
-	// 	log.Printf("Error cleaning up images: %v", err)
-	// }
+	usedImages := collectUsedImages(indexData, galleries, itineraries, historyData)
+	if err := cleanupImages(usedImages); err != nil {
+		log.Printf("Error cleaning up images: %v", err)
+	}
 
 	fmt.Printf("Build complete in %v\n", time.Since(start))
 }
@@ -707,7 +707,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		if locale == "en" {
 			l = raw.En
 		}
-		
+
 		g := RenderGallery{
 			Slug:        raw.Slug,
 			CoverImage:  raw.CoverImage,
@@ -784,15 +784,14 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		log.Panic(err)
 	}
 
-
 	// Render Galleries List
 	galleryCtx := pongo2.Context{
-		"locale":         locale,
-		"base_url":       baseUrl,
-		"alternate_url":  computeAlternateUrl(locale, "/galleries.html"),
-		"page_title":     renderIndex.Sections.GalleryTitle,
-		"t":              renderIndex,
-		"galleries":      localGalleries,
+		"locale":        locale,
+		"base_url":      baseUrl,
+		"alternate_url": computeAlternateUrl(locale, "/galleries.html"),
+		"page_title":    renderIndex.Sections.GalleryTitle,
+		"t":             renderIndex,
+		"galleries":     localGalleries,
 	}
 	galTpl := pongo2.Must(pongo2.FromFile("templates/gallery_list.html"))
 	galOutPath := "dist/galleries.html"
@@ -805,7 +804,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 
 	// Render Individual Gallery Pages
 	detailGalTpl := pongo2.Must(pongo2.FromFile("templates/gallery_detail.html"))
-	
+
 	// Ensure galleries dir exists
 	galDir := "dist/galleries"
 	if locale == "en" {
@@ -1170,7 +1169,7 @@ func computeAlternateUrl(currentLocale string, relativePath string) string {
 	}
 }
 
-func collectUsedImages(index *IndexFile, galleries []GalleryFile, itineraries []ItineraryFile) map[string]bool {
+func collectUsedImages(index *IndexFile, galleries []GalleryFile, itineraries []ItineraryFile, history *HistoryFile) map[string]bool {
 	used := make(map[string]bool)
 
 	// Helper to add path
@@ -1195,6 +1194,10 @@ func collectUsedImages(index *IndexFile, galleries []GalleryFile, itineraries []
 		add(img)
 	}
 	add(index.Welcome.Image)
+	add(index.Itineraries.HeroImage)
+	add(index.Contacts.Image)
+
+	add(history.Meta.HeroImage)
 
 	for _, g := range galleries {
 		add(g.CoverImage)
