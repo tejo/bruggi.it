@@ -1,0 +1,183 @@
+[meta]
+hero_image = "/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg"
+
+[it]
+title = "Bruggi: Storia e Leggende"
+subtitle = "Un viaggio tra memoria e mito nel cuore della Val Curone"
+back_home = "Torna alla Home"
+
+[[it.items]]
+title = "Benvenuti a Bruggi"
+reading_time = "1 min"
+content = """
+Se durante le nostre peregrinazioni estive, stanchi dell'afa e della città, o d'inverno, quando la nebbia nasconde ogni cosa, ci addentrassimo in uno di quei piccoli paesi di montagna che si aggrappano sui pendii, potremmo notare come lontane siano quelle case dalle nostre e come diversa sia l'aria di quei posti, come ricchi siano i colori e le parole.
+Le abitudini, i volti, i suoni sono gli stessi di tanto tempo fa e noi potremo ritrovare sui volti ormai rugosi degli abitanti le storie e le leggende del passato.
+
+C'è sempre in ogni paese l'uomo anziano, il vecchio saggio della fantasia popolare, che racconta, che sa, che ricorda: e c'è in quel suo modo di rievocare le gioie e le paure del passato il piacere unico di chi si sente addosso la responsabilità, grave, di passare il testimone del tempo, di chi con la sua voce evoca i fantasmi e le leggende, le disgrazie e i momenti di felicità. Si apre negli occhi di quei pochi anziani la porta ormai chiusa dei ricordi e la voce dell'uomo sembra divenire coro di tutti gli altri che non ci sono più.
+Le sue mani che si muovono sono quelle, antiche, del contadino, del pastore, del fabbro, del mugnaio, del prete, delle donne e dei bambini.
+E man mano che i ricordi riaffiorano, il paese, ormai quasi deserto, prende vita.
+Il testimone è passato: anche per Bruggi la storia continua.
+
+*Maria Rita Marchesotti*"""
+
+[[it.items]]
+title = "Cenni Storici"
+reading_time = "3 min"
+content = """
+Sui morbidi dossi degli Appennini, nell'estrema punta della provincia di Alessandria che si incunea fra Emilia, Liguria, e Lombardia, sorge il comune di Fabbrica Curone. In questo comune, a 1100 m. in una verde gola circondata dai monti Ebro Chiappo e Carmo, troviamo Bruggi ridente frazione ricca di storia e tradizioni contadine.
+
+Il suo nome si pensa derivi da «Brolium» che significa parco o zona verde; notizie storiche fanno risalire le origini di «Brugio», così anticamente era chiamata, circa al 1200.
+Il comune ha ben sette Parrocchie nella frazione di Bruggi la Chiesa è dedicata a San Rocco; la festa del Santo cade il 16 agosto e per l'occasione la statua di San Rocco viene portata in processione per la via principale del paese.
+
+Nel passato le vicende della Parrocchia e della Frazione sono state strettamente legate l'una all'altra. Nel 1866 il paese fu completamente distrutto dal fuoco per disgrazia, prima una metà e nel giro di pochi giorni l'altra e precisamente nel giorno di Natale. A quel tempo i tetti erano di paglia di segala e questo favorì senz'altro il propagarsi del fuoco.
+
+Fino al 1700 sui monti circostanti vi erano ancora i lupi, dei quali si sono avute tracce fino al 1750. Molto di recente alcuni esemplari sono stati avvistati, non si sa se reintrodotti o provenienti da altre zone; anche il cinghiale, molto raro fino agli anni 80 è tornato a popolare la zona."""
+
+[[it.items]]
+title = "Ricordo di Don Goglino"
+reading_time = "3 min"
+content = """
+"Facciamogli trascorrere in serenità gli ultimi anni della sua breve vita".
+Probabilmente sarà stato questo l'intimo pensiero del Vescovo Igino Bandi quando destinò il giovane Don Natale Goglino a reggere la parrocchia di Bruggi. Il Presule non fu buon profeta. Infatti il giovane prete, giunto malfermo di salute nella sperduta parrocchia dell'alta VaI Curone, vi rimase ad esercitare il suo ministero ininterrottamente per ben 55 anni, fino alla sua morte nel 1952, all'età di 80 anni.
+
+Egli fu per gli abitanti di Bruggi una guida carismatica, in periodo travagliato della storia d'ltalia: le due guerre mondiali, l'avvento del Fascismo, la lotta partigiana, lo spopolamento della montagna.
+Don Natale si preoccupò di curare i suoi parrocchiani durante le epidemie di tifo e di "spagnola". Istituì la scuola elementare gratuita e fece della canonica una delle prime aule. Per queste sue attività ebbe la nomina di Cavaliere dell'Ordine della Corona d'Italia.
+
+Un episodio curioso è quello dell'**oro di Bruggi**. Don Goglino si convinse, su segnalazione di un rabdomante, che in un terreno ci fosse l'oro. L'episodio si concluse in un nulla di fatto, ma rimane il simbolo di un'epoca di speranze."""
+
+[[it.items]]
+title = "La Leggenda del Passo della Mula"
+reading_time = "2 min"
+content = """
+Antonio, Giuseppe ed Ernesto, tre contadini di Bruggi, erano soliti tornare dai pascoli al suono dell'Ave Maria, ringraziando con un "Deo gratias".
+Una sera, in ritardo e stanchi per via di una mucca ribelle, udirono le campane mentre erano ancora lontani.
+Uno di loro, irritato, invece di pregare esclamò: "**Ma sprofondassi, Ave Maria!**".
+
+Immediatamente sotto i suoi piedi si aprì una voragine che lo inghiottì con la mula.
+Gli altri due scapparono terrorizzati. Tornati con i compaesani, trovarono solo un grosso buco.
+Ancora oggi, si dice si possa trovare quella particolare fossa in uno dei campi della costa che portano al Pian dell'Armà.
+
+*Maria Rita Marchesotti*"""
+
+[[it.items]]
+title = "Il Bosco per Bruggi (I due gobbi)"
+reading_time = "2 min"
+content = """
+Pietro, il gobbo del paese, tornò una mattina senza più la sua gobba. Raccontò di aver visto delle streghe danzare cantando "Sabato, domenica...". Lui aveva concluso il canto con "...e lunedì!", e le streghe, grate, lo avevano guarito.
+
+Giovanni, l'altro gobbo, invidioso, andò alla radura la notte seguente. Sentì le streghe cantare "Sabato, domenica e lunedì" e si intromise gridando "**E martedì!**".
+Le streghe, disturbate e arrabbiate per la cacofonia, presero la gobba di Pietro che avevano appeso a un albero e la scagliarono contro Giovanni, che tornò in paese con due gobbe, una davanti e una dietro.
+
+*Maria Rita Marchesotti*"""
+
+[[it.items]]
+title = "L'Ombrello"
+reading_time = "1 min"
+content = """
+Marien e Censino desideravano figli, ma i neonati morivano sempre. La Marien andò da una maga che le disse: "Per una settimana non prestare nulla a nessuno, e il tuo bambino guarirà".
+Giorni dopo, durante un temporale, una donna bussò chiedendo un ombrello. La Marien, generosa, glielo prestò, dimenticando la promessa.
+Poco dopo, si accorse che il suo bambino, nella culla, non respirava più.
+
+*Maria Rita Marchesotti*"""
+
+[[it.items]]
+title = "Nella Tasca"
+reading_time = "1 min"
+content = """
+Una vecchia donna, sospettata di essere una strega, accarezzò un bambino biondo dicendo "Che bel bambino!".
+Appena se ne andò, il viso del bimbo si deformò in una maschera grottesca.
+La madre, capito chi fosse la colpevole, prese un falcetto ("amsurien"), si mise il rosario in tasca e corse dalla vecchia, minacciandola.
+"Fallo tornare come prima!", gridò.
+La strega rispose calma: "Via a casa, il tuo bambino è guarito... **Ringrazia quello che hai in tasca...**"
+
+*Maria Rita Marchesotti*"""
+
+
+[en]
+title = "Bruggi: History and Legends"
+subtitle = "A journey through memory and myth in the heart of Val Curone"
+back_home = "Back to Home"
+
+[[en.items]]
+title = "Welcome to Bruggi"
+reading_time = "1 min"
+content = """
+If during our summer wanderings, tired of the heat and the city, or in winter, when fog hides everything, we were to venture into one of those small mountain villages clinging to the slopes, we might notice how distant those houses are from ours and how different the air of those places is, how rich the colors and words are.
+The habits, faces, and sounds are the same as long ago, and we can find the stories and legends of the past on the wrinkled faces of the inhabitants.
+
+There is always in every village the old man, the wise elder of popular imagination, who tells, who knows, who remembers: and in his way of evoking the joys and fears of the past, there is the unique pleasure of one who feels the heavy responsibility of passing the baton of time, of one whose voice evokes ghosts and legends, misfortunes and moments of happiness. In the eyes of those few elders, the closed door of memories opens, and the man's voice seems to become a chorus of all those who are no longer here.
+The baton is passed: for Bruggi, too, history continues.
+
+*Maria Rita Marchesotti*"""
+
+[[en.items]]
+title = "Historical Notes"
+reading_time = "3 min"
+content = """
+On the soft ridges of the Apennines, at the extreme tip of the province of Alessandria, lies the municipality of Fabbrica Curone. Here, at 1100m in a green gorge surrounded by Mounts Ebro, Chiappo, and Carmo, we find Bruggi, a charming hamlet rich in history and rural traditions.
+
+Its name is thought to derive from "Brolium," meaning park or green area; historical records date the origins of "Brugio" to around 1200.
+The local church is dedicated to San Rocco; the Saint's feast day falls on August 16th, when his statue is carried in procession through the main street.
+
+In the past, the village was closely tied to the parish. In 1866, the village was almost completely destroyed by fire, first one half and then the other within a few days, precisely on Christmas Day. At that time, roofs were made of rye straw, which favored the spread of the fire.
+
+Until the 1700s, wolves still roamed the surrounding mountains, with traces found until 1750. Recently, some specimens have been sighted again. Wild boars, very rare until the 80s, have also returned to populate the area."""
+
+[[en.items]]
+title = "Remembrance of Don Goglino"
+reading_time = "3 min"
+content = """
+"Let's let him spend the last years of his short life in serenity."
+This was likely the Bishop's thought when he assigned the young Don Natale Goglino to the parish of Bruggi. The Bishop was not a good prophet. The young priest, though in poor health, remained to exercise his ministry for 55 years, until his death in 1952 at the age of 80.
+
+He was a charismatic guide for the people of Bruggi during a troubled period of Italian history: two world wars, Fascism, the partisan struggle, and the depopulation of the mountains.
+Don Natale cared for his parishioners during typhus and Spanish flu epidemics. He established a free elementary school, using the rectory as one of the first classrooms. For his activities, he was named Knight of the Order of the Crown of Italy.
+
+A curious episode is that of the **Gold of Bruggi**. Don Goglino became convinced, based on a dowser's report, that there was gold in a certain field. The episode ended in nothing, but remains a symbol of an era of hope."""
+
+[[en.items]]
+title = "The Legend of the Mule's Pass"
+reading_time = "2 min"
+content = """
+Antonio, Giuseppe, and Ernesto, three farmers from Bruggi, used to return from the pastures at the sound of the Ave Maria bell, giving thanks with a "Deo gratias".
+One evening, late and tired because of a rebellious cow, they heard the bells while still far away.
+One of them, irritated, instead of praying exclaimed: "**May you sink, Ave Maria!**".
+
+Immediately, a chasm opened beneath his feet, swallowing him and his mule.
+The other two fled in terror. Returning with the villagers, they found only a large hole.
+Even today, it is said one can find that particular pit in one of the fields leading to Pian dell'Armà.
+
+*Maria Rita Marchesotti*"""
+
+[[en.items]]
+title = "The Woods for Bruggi (The Two Hunchbacks)"
+reading_time = "2 min"
+content = """
+Pietro, the village hunchback, returned one morning without his hump. He said he had seen witches dancing and singing "Saturday, Sunday...". He had finished the song with "...and Monday!", and the witches, grateful, had healed him.
+
+Giovanni, the other hunchback, envious, went to the clearing the next night. He heard the witches singing "Saturday, Sunday, and Monday" and intruded by shouting "**And Tuesday!**".
+The witches, disturbed and angry at the cacophony, took Pietro's hump which they had hung on a tree and hurled it at Giovanni, who returned to the village with two humps, one in front and one in back.
+
+*Maria Rita Marchesotti*"""
+
+[[en.items]]
+title = "The Umbrella"
+reading_time = "1 min"
+content = """
+Marien and Censino wanted children, but their babies always died. Marien went to a witch who told her: "For a week, do not lend anything to anyone, and your child will heal."
+Days later, during a storm, a woman knocked asking for an umbrella. Marien, generous, lent it to her, forgetting the promise.
+Shortly after, she realized her child in the cradle was no longer breathing.
+
+*Maria Rita Marchesotti*"""
+
+[[en.items]]
+title = "In the Pocket"
+reading_time = "1 min"
+content = """
+An old woman, suspected of being a witch, caressed a blond child saying "What a beautiful child!".
+As soon as she left, the child's face deformed into a grotesque mask.
+The mother, realizing who was to blame, took a sickle ("amsurien"), put her rosary in her pocket, and ran to the old woman, threatening her.
+"Make him back the way he was!", she shouted.
+The witch replied calmly: "Go home, your child is healed... **Thank what you have in your pocket...**"
+
+*Maria Rita Marchesotti*"""

@@ -7,7 +7,7 @@ images = [
 ]
 
 [welcome]
-image = "/static/img/centro-storico.jpg"
+image = "/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg"
 
 [itineraries]
 hero_image = "/static/img/photo_2026-01-03_14-27-45.jpg"
@@ -16,6 +16,7 @@ hero_image = "/static/img/photo_2026-01-03_14-27-45.jpg"
 email = "info@bruggi.it"
 phone = "+39 0123 456789"
 address = "Via Roma 1, 12345 Bruggi (IT)"
+image = "/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg"
 
 [it]
 [it.nav]
@@ -39,16 +40,22 @@ form_submit = "Invia"
 
 [it.hero]
 title = "Scopri la magia di Bruggi"
-subtitle = "Un rifugio autentico nel cuore delle montagne italiane, dove natura e tradizione si incontrano."
+subtitle = """
+Un rifugio autentico nel cuore delle montagne italiane, \
+dove natura e tradizione si incontrano."""
 cta = "Esplora Bruggi"
 
 [it.welcome]
 title = "Benvenuti a Bruggi"
 subtitle = "Storia e Natura"
-description = "Immerso nel verde a 1000m di altitudine, Bruggi è un luogo dove il tempo sembra essersi fermato. Scopri la nostra storia antica, le tradizioni culinarie e i paesaggi mozzafiato che circondano il nostro piccolo borgo. Un'esperienza unica per chi cerca pace e bellezza."
+description = """
+Bruggi è una ridente frazione del comune di Fabbrica Curone, situata a 1100 metri di altitudine \
+nell'estrema punta della provincia di Alessandria, dove si incontrano Emilia, Liguria e Lombardia. \
+Immersa in una verde gola circondata dai monti Ebro, Chiappo e Carmo, Bruggi è un luogo ricco di \
+storia e tradizioni contadine, dove l'aria è diversa e i colori sono intensi."""
 altitude = "1100m Altitudine"
 founded = "Fondato nel 1700"
-# cta_history = "Leggi la storia completa"
+cta_history = "Leggi di più"
 
 [it.sections]
 itineraries_title = "I Nostri Itinerari"
@@ -105,7 +112,9 @@ vis_poor = "Scarsa"
 vis_moderate = "Discreta"
 
 [it.footer]
-motto = "Un paeseino incantato dove la natura abbraccia la tradizione. Vieni a trovarci e vivi l'esperienza della vera montagna italiana."
+motto = """
+Un paeseino incantato dove la natura abbraccia la tradizione. \
+Vieni a trovarci e vivi l'esperienza della vera montagna italiana."""
 explore_title = "Esplora"
 contacts_title = "Contatti"
 copyright = "© {year} Comune di Bruggi. Tutti i diritti riservati."
@@ -132,16 +141,22 @@ form_submit = "Send"
 
 [en.hero]
 title = "Discover the magic of Bruggi"
-subtitle = "An authentic retreat in the heart of the Italian mountains, where nature and tradition meet."
-cta = "Explore the village"
+subtitle = """
+An authentic retreat in the heart of the Italian mountains, \
+where nature and tradition meet."""
+cta = "Explore BruggiExplore the villageExplore the village"
 
 [en.welcome]
 title = "Welcome to Bruggi"
 subtitle = "History and Nature"
-description = "Immersed in greenery at 1200m altitude, Bruggi is a place where time seems to have stopped. Discover our ancient history, culinary traditions, and breathtaking landscapes surrounding our small village. A unique experience for those seeking peace and beauty."
-altitude = "1200m Altitude"
-founded = "Founded in 1400"
-cta_history = "Read full history"
+description = """
+Bruggi is a charming hamlet of the municipality of Fabbrica Curone, located at 1100 meters above sea level \
+at the extreme tip of the province of Alessandria, where Emilia, Liguria, and Lombardy meet. \
+Immersed in a green gorge surrounded by Mounts Ebro, Chiappo, and Carmo, Bruggi is a place rich in \
+history and rural traditions, where the air is different and the colors are intense."""
+altitude = "1100m Altitude"
+founded = "Founded in 1700"
+cta_history = "Read more"
 
 [en.sections]
 itineraries_title = "Our Itineraries"
@@ -198,7 +213,9 @@ vis_poor = "Poor"
 vis_moderate = "Moderate"
 
 [en.footer]
-motto = "An enchanted village where nature embraces tradition. Come visit us and experience the true Italian mountain."
+motto = """
+An enchanted village where nature embraces tradition. \
+Come visit us and experience the true Italian mountain."""
 explore_title = "Explore"
 contacts_title = "Contacts"
 copyright = "© {year} Municipality of Bruggi. All rights reserved."

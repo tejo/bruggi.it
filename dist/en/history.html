@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Bruggi: History and Legends - Bruggi</title>
+  <link href="/static/css/fonts.css" rel="stylesheet" />
+  <link href="/static/css/leaflet.css" rel="stylesheet" />
+  <link href="/static/css/lightbox.css" rel="stylesheet" />
+  <script src="/static/js/leaflet.js"></script>
+  <script src="/static/js/leaflet-gpx.js"></script>
+  <script src="/static/js/tailwindcss.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#11d411",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102210",
+            "surface-light": "#ffffff",
+            "surface-dark": "#1a2e1a",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Noto Sans", "sans-serif"],
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <script src="/static/js/main.js" defer></script>
+  <script src="/static/js/lightbox.js" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111811] dark:text-white">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#f0f4f0] dark:bg-[#111811]/90 dark:border-gray-800"
+      id="main-header">
+      <div class="px-4 md:px-10 py-3 flex items-center justify-between mx-auto max-w-[1280px] w-full">
+        <a href="/en/" class="flex items-center gap-2 text-[#111811] dark:text-white">
+          <span class="material-symbols-outlined text-primary text-3xl">landscape</span>
+          <h2 class="text-xl font-bold tracking-tight">Bruggi</h2>
+        </a>
+        <div class="hidden md:flex flex-1 justify-end items-center gap-8">
+          <nav class="flex items-center gap-8">
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link"
+              href="/en/itineraries.html">Itineraries</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Photo Gallery</a>
+          </nav>
+          <div class="flex gap-3 items-center">
+             <!-- Locale Switcher -->
+             
+             <a href="/history.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+                IT
+             </a>
+             
+            <a href="/en/contacts.html"
+              class="flex items-center justify-center rounded-lg h-9 px-5 bg-primary text-[#111811] text-sm font-bold shadow-sm hover:bg-green-500 transition-colors">
+              Contact Us
+            </a>
+          </div>
+        </div>
+        <div class="flex md:hidden items-center gap-3">
+          <!-- Mobile Locale Switcher -->
+          
+          <a href="/history.html" class="flex items-center justify-center rounded-lg h-9 px-4 bg-[#f0f4f0] text-[#111811] text-xs font-bold tracking-wide hover:bg-gray-200 transition-colors">
+             IT
+          </a>
+          
+          <button id="burger-btn" class="text-[#111811] dark:text-white">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu"
+        class="hidden md:hidden bg-white/95 dark:bg-[#111811]/95 border-b border-[#f0f4f0] dark:border-gray-800 backdrop-blur-md absolute w-full left-0 top-full shadow-lg">
+        <nav class="flex flex-col p-6 gap-6 text-center">
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/">Home</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/itineraries.html">Itineraries</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/webcam.html">Webcam</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/galleries.html">Photo Gallery</a>
+          <a class="text-lg font-medium hover:text-primary transition-colors nav-link" href="/en/contacts.html">Contact Us</a>
+        </nav>
+      </div>
+    </header>
+
+    
+<div class="relative w-full h-[400px] flex items-center justify-center bg-cover bg-center"
+    style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('/static/img/michi/WhatsApp Image 2026-01-02 at 15.21.13-2.jpeg');">
+    <div class="text-center px-4 animate-fade-in-up">
+        <h1 class="text-white text-4xl md:text-6xl font-black drop-shadow-lg mb-2">Bruggi: History and Legends</h1>
+        <p class="text-white text-lg md:text-xl font-medium opacity-90">A journey through memory and myth in the heart of Val Curone</p>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 py-12 md:py-20">
+    <div class="flex flex-col gap-6">
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">Welcome to Bruggi</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 1 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>If during our summer wanderings, tired of the heat and the city, or in winter, when fog hides everything, we were to venture into one of those small mountain villages clinging to the slopes, we might notice how distant those houses are from ours and how different the air of those places is, how rich the colors and words are.<br />The habits, faces, and sounds are the same as long ago, and we can find the stories and legends of the past on the wrinkled faces of the inhabitants.</p><p>There is always in every village the old man, the wise elder of popular imagination, who tells, who knows, who remembers: and in his way of evoking the joys and fears of the past, there is the unique pleasure of one who feels the heavy responsibility of passing the baton of time, of one whose voice evokes ghosts and legends, misfortunes and moments of happiness. In the eyes of those few elders, the closed door of memories opens, and the man's voice seems to become a chorus of all those who are no longer here.<br />The baton is passed: for Bruggi, too, history continues.</p><p><em>Maria Rita Marchesotti</em></p>
+            </div>
+        </details>
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">Historical Notes</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 3 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>On the soft ridges of the Apennines, at the extreme tip of the province of Alessandria, lies the municipality of Fabbrica Curone. Here, at 1100m in a green gorge surrounded by Mounts Ebro, Chiappo, and Carmo, we find Bruggi, a charming hamlet rich in history and rural traditions.</p><p>Its name is thought to derive from "Brolium," meaning park or green area; historical records date the origins of "Brugio" to around 1200.<br />The local church is dedicated to San Rocco; the Saint's feast day falls on August 16th, when his statue is carried in procession through the main street.</p><p>In the past, the village was closely tied to the parish. In 1866, the village was almost completely destroyed by fire, first one half and then the other within a few days, precisely on Christmas Day. At that time, roofs were made of rye straw, which favored the spread of the fire.</p><p>Until the 1700s, wolves still roamed the surrounding mountains, with traces found until 1750. Recently, some specimens have been sighted again. Wild boars, very rare until the 80s, have also returned to populate the area.</p>
+            </div>
+        </details>
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">Remembrance of Don Goglino</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 3 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>"Let's let him spend the last years of his short life in serenity."<br />This was likely the Bishop's thought when he assigned the young Don Natale Goglino to the parish of Bruggi. The Bishop was not a good prophet. The young priest, though in poor health, remained to exercise his ministry for 55 years, until his death in 1952 at the age of 80.</p><p>He was a charismatic guide for the people of Bruggi during a troubled period of Italian history: two world wars, Fascism, the partisan struggle, and the depopulation of the mountains.<br />Don Natale cared for his parishioners during typhus and Spanish flu epidemics. He established a free elementary school, using the rectory as one of the first classrooms. For his activities, he was named Knight of the Order of the Crown of Italy.</p><p>A curious episode is that of the <strong>Gold of Bruggi</strong>. Don Goglino became convinced, based on a dowser's report, that there was gold in a certain field. The episode ended in nothing, but remains a symbol of an era of hope.</p>
+            </div>
+        </details>
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">The Legend of the Mule&#39;s Pass</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 2 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>Antonio, Giuseppe, and Ernesto, three farmers from Bruggi, used to return from the pastures at the sound of the Ave Maria bell, giving thanks with a "Deo gratias".<br />One evening, late and tired because of a rebellious cow, they heard the bells while still far away.<br />One of them, irritated, instead of praying exclaimed: "<strong>May you sink, Ave Maria!</strong>".</p><p>Immediately, a chasm opened beneath his feet, swallowing him and his mule.<br />The other two fled in terror. Returning with the villagers, they found only a large hole.<br />Even today, it is said one can find that particular pit in one of the fields leading to Pian dell'Armà.</p><p><em>Maria Rita Marchesotti</em></p>
+            </div>
+        </details>
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">The Woods for Bruggi (The Two Hunchbacks)</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 2 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>Pietro, the village hunchback, returned one morning without his hump. He said he had seen witches dancing and singing "Saturday, Sunday...". He had finished the song with "...and Monday!", and the witches, grateful, had healed him.</p><p>Giovanni, the other hunchback, envious, went to the clearing the next night. He heard the witches singing "Saturday, Sunday, and Monday" and intruded by shouting "<strong>And Tuesday!</strong>".<br />The witches, disturbed and angry at the cacophony, took Pietro's hump which they had hung on a tree and hurled it at Giovanni, who returned to the village with two humps, one in front and one in back.</p><p><em>Maria Rita Marchesotti</em></p>
+            </div>
+        </details>
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">The Umbrella</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 1 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>Marien and Censino wanted children, but their babies always died. Marien went to a witch who told her: "For a week, do not lend anything to anyone, and your child will heal."<br />Days later, during a storm, a woman knocked asking for an umbrella. Marien, generous, lent it to her, forgetting the promise.<br />Shortly after, she realized her child in the cradle was no longer breathing.</p><p><em>Maria Rita Marchesotti</em></p>
+            </div>
+        </details>
+        
+        <details class="group bg-white dark:bg-[#1a2e1a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all duration-300 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none bg-gray-50 dark:bg-[#0c1a0c] hover:bg-gray-100 dark:hover:bg-[#112211] transition-colors">
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-xl font-bold text-[#111811] dark:text-white group-hover:text-primary transition-colors">In the Pocket</h3>
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">schedule</span> 1 min
+                    </span>
+                </div>
+                <span class="material-symbols-outlined text-2xl text-gray-400 group-open:rotate-180 transition-transform duration-300">expand_more</span>
+            </summary>
+            <div class="p-6 md:p-8 text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 border-t border-gray-100 dark:border-gray-800 animate-fade-in prose dark:prose-invert max-w-none">
+                <p>An old woman, suspected of being a witch, caressed a blond child saying "What a beautiful child!".<br />As soon as she left, the child's face deformed into a grotesque mask.<br />The mother, realizing who was to blame, took a sickle ("amsurien"), put her rosary in her pocket, and ran to the old woman, threatening her.<br />"Make him back the way he was!", she shouted.<br />The witch replied calmly: "Go home, your child is healed... <strong>Thank what you have in your pocket...</strong>"</p><p><em>Maria Rita Marchesotti</em></p>
+            </div>
+        </details>
+        
+    </div>
+
+    <div class="mt-12 flex justify-center">
+        <a href="/en/" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-[#111811] font-bold hover:bg-green-500 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform duration-200">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Back to Home
+        </a>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="bg-[#111811] text-white py-12 px-4 md:px-40 border-t border-gray-800" id="main-footer">
+      <div class="max-w-[960px] mx-auto flex flex-col md:flex-row justify-between gap-10">
+        <div class="flex flex-col gap-4 max-w-xs">
+          <div class="flex items-center gap-2 text-white">
+            <span class="material-symbols-outlined text-primary text-2xl">landscape</span>
+            <h2 class="text-xl font-bold">Bruggi</h2>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            An enchanted village where nature embraces tradition. Come visit us and experience the true Italian mountain.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Explore</h3>
+          <div class="flex flex-col gap-2 text-sm text-gray-400">
+            <a class="hover:text-primary transition-colors" href="/en/">Home</a>
+            <a class="hover:text-primary transition-colors" href="/en/itineraries.html">Itineraries</a>
+            <a class="hover:text-primary transition-colors" href="/en/webcam.html">Webcam</a>
+            <a class="hover:text-primary transition-colors" href="/en/galleries.html">Photo Gallery</a>
+            <a class="hover:text-primary transition-colors" href="/en/contacts.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h3 class="font-bold text-lg">Contacts</h3>
+          <div class="flex flex-col gap-3 text-sm text-gray-400">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">mail</span>
+              <span>info@bruggi.it</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-sm">call</span>
+              <span>+39 0123 456789</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-[960px] mx-auto pt-8 mt-8 border-t border-gray-800 text-center md:text-left text-xs text-gray-500">
+        <p>© 2026 Municipality of Bruggi. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

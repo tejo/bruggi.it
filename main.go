@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -38,6 +39,29 @@ type EventsFile struct {
 	En      AugustEventsLocale `toml:"en"`
 }
 
+type HistoryFile struct {
+	Meta HistoryMeta   `toml:"meta"`
+	It   HistoryLocale `toml:"it"`
+	En   HistoryLocale `toml:"en"`
+}
+
+type HistoryMeta struct {
+	HeroImage string `toml:"hero_image"`
+}
+
+type HistoryLocale struct {
+	Title    string        `toml:"title"`
+	Subtitle string        `toml:"subtitle"`
+	BackHome string        `toml:"back_home"`
+	Items    []HistoryItem `toml:"items"`
+}
+
+type HistoryItem struct {
+	Title       string `toml:"title"`
+	ReadingTime string `toml:"reading_time"`
+	Content     string `toml:"content"`
+}
+
 type SharedHeroSection struct {
 	Images []string `toml:"images"`
 }
@@ -58,6 +82,7 @@ type SharedContacts struct {
 	Email   string `toml:"email"`
 	Phone   string `toml:"phone"`
 	Address string `toml:"address"`
+	Image   string `toml:"image"`
 }
 
 type IndexLocale struct {
@@ -440,6 +465,12 @@ func buildSite() {
 		return
 	}
 
+	historyData, err := loadHistory("content/history.toml")
+	if err != nil {
+		log.Printf("Error loading history: %v", err)
+		return
+	}
+
 	// 2. Prepare Output Directory
 	if err := os.RemoveAll("dist"); err != nil {
 		log.Printf("Error clearing dist: %v", err)
@@ -462,10 +493,10 @@ func buildSite() {
 	copyDir("static", "dist/static")
 
 	// 3. Render Pages for IT (Default)
-	renderLocale("it", "", indexData, eventsData, *galleryData, itineraries)
+	renderLocale("it", "", indexData, eventsData, *galleryData, itineraries, historyData)
 
 	// 4. Render Pages for EN
-	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries)
+	renderLocale("en", "/en", indexData, eventsData, *galleryData, itineraries, historyData)
 
 	// 5. Cleanup Unused Images
 	// usedImages := collectUsedImages(indexData, galleryData, itineraries)
@@ -610,7 +641,7 @@ func createRenderIndex(locale string, indexData *IndexFile, eventsData *EventsFi
 	}
 }
 
-func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsData *EventsFile, galleryT GalleryData, rawItineraries []ItineraryFile) {
+func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsData *EventsFile, galleryT GalleryData, rawItineraries []ItineraryFile, historyData *HistoryFile) {
 	// Merge shared and localized
 	renderIndex := createRenderIndex(locale, indexData, eventsData)
 
@@ -680,6 +711,51 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 	if err != nil {
 		log.Panic(err)
 	}
+
+	// Render History
+	var historyT HistoryLocale
+	if locale == "it" {
+		historyT = historyData.It
+	} else {
+		historyT = historyData.En
+	}
+	historyCtx := pongo2.Context{
+		"locale":        locale,
+		"base_url":      baseUrl,
+		"alternate_url": computeAlternateUrl(locale, "/history.html"),
+		"page_title":    historyT.Title,
+		"t":             historyT,
+		"hero_image":    historyData.Meta.HeroImage,
+		"main_t":        renderIndex, // For header/footer if needed, but template might expect 't' as RenderIndex. 
+		// Wait, base.html expects 't.Nav', 't.Footer'. 
+		// If I pass historyT as 't', base.html will fail.
+		// I should pass renderIndex as 't', and history content as 'history'.
+		// BUT my template history.html uses 't.Title', 't.Items'.
+		// I should probably pass renderIndex as 't' and historyT as 'page_data' or similar.
+		// Or merge them.
+		// Let's look at history.html: it extends base.html. base.html needs 't.Nav', 't.Footer'.
+		// So 't' MUST be RenderIndex.
+		// I will change history.html to use 'page_data' instead of 't' for content.
+	}
+	// Let's re-read base.html or just assume standard pattern.
+	// index.html uses 't' as RenderIndex.
+	// history.html uses 't' for its content. This conflicts with base.html requirements if base.html uses 't'.
+	// I'll check base.html in a moment.
+	// For now, I'll pass 't' as RenderIndex (renderIndex) AND 'page_data' as historyT.
+	// I will update history.html to use 'page_data' instead of 't'.
+
+	historyCtx["t"] = renderIndex
+	historyCtx["page_data"] = historyT
+
+	histTpl := pongo2.Must(pongo2.FromFile("templates/history.html"))
+	histOutPath := "dist/history.html"
+	if locale == "en" {
+		histOutPath = "dist/en/history.html"
+	}
+	if err := renderToFile(histTpl, historyCtx, histOutPath); err != nil {
+		log.Panic(err)
+	}
+
 
 	// Render Galleries
 	galleryCtx := pongo2.Context{
@@ -846,6 +922,7 @@ func loadIndex(path string) (*IndexFile, error) {
 	}
 	validatePath(data.Welcome.Image)
 	validatePath(data.Itineraries.HeroImage)
+	validatePath(data.Contacts.Image)
 
 	return &data, nil
 }
@@ -859,6 +936,40 @@ func loadEvents(path string) (*EventsFile, error) {
 	if err := toml.Unmarshal(b, &data); err != nil {
 		return nil, err
 	}
+	return &data, nil
+}
+
+func loadHistory(path string) (*HistoryFile, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var data HistoryFile
+	if err := toml.Unmarshal(b, &data); err != nil {
+		return nil, err
+	}
+	validatePath(data.Meta.HeroImage)
+
+	// Simple Markdown Parser
+	reBold := regexp.MustCompile(`\*\*(.*?)\*\*`)
+	// Match *text* but avoid matching within **text** if possible,
+	// or rely on bold being processed first (which leaves <strong>...</strong>).
+	// Since <strong> doesn't contain *, subsequent * match is safe.
+	reItalic := regexp.MustCompile(`\*(.*?)\*`)
+
+	process := func(items []HistoryItem) []HistoryItem {
+		for i := range items {
+			// Process Bold
+			items[i].Content = reBold.ReplaceAllString(items[i].Content, "<strong>$1</strong>")
+			// Process Italic
+			items[i].Content = reItalic.ReplaceAllString(items[i].Content, "<em>$1</em>")
+		}
+		return items
+	}
+
+	data.It.Items = process(data.It.Items)
+	data.En.Items = process(data.En.Items)
+
 	return &data, nil
 }
 
@@ -973,11 +1084,17 @@ func computeAlternateUrl(currentLocale string, relativePath string) string {
 		if relativePath == "/" {
 			return "/en/"
 		}
+		if relativePath == "/history.html" {
+			return "/en/history.html"
+		}
 		return "/en" + relativePath
 	} else {
 		// current is en
 		if relativePath == "/" {
 			return "/"
+		}
+		if relativePath == "/history.html" {
+			return "/history.html"
 		}
 		return relativePath
 	}
