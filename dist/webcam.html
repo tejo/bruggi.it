@@ -117,7 +117,7 @@
                 <div
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">05/01/2026 16:23:11</span>
+                  <span id="timestamp">05/01/2026 16:24:00</span>
                 </div>
               </div>
               <div
@@ -246,6 +246,8 @@
       
         { url: "/static/webcam/2026-01-05_16-22-53.jpg", timestamp: "05/01/2026 16:22:53" },
       
+        { url: "/static/webcam/2026-01-05_16-24-00.jpg", timestamp: "05/01/2026 16:24:00" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -259,7 +261,7 @@
     const timestampEl = document.getElementById("timestamp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
-    const currentTimestamp = "05/01/2026 16:23:11"; // Store initial timestamp
+    const currentTimestamp = "05/01/2026 16:24:00"; // Store initial timestamp
 
     // We will preload only on demand
     let preloaded = [];
