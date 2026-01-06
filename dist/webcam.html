@@ -102,7 +102,7 @@
               class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
               <div id="webcam-image"
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
-                style='background-image: url("/static/webcam/2026-01-06_23-01-04.jpg");'>
+                style='background-image: url("/static/webcam/2026-01-07_00-00-59.jpg");'>
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
@@ -117,7 +117,7 @@
                 <div
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">06/01/2026 23:01:04</span>
+                  <span id="timestamp">07/01/2026 00:00:59</span>
                 </div>
               </div>
               <div
@@ -272,8 +272,6 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-01-06_14-53-13.jpg", timestamp: "06/01/2026 14:53:13" },
-      
         { url: "/static/webcam/2026-01-06_17-29-47.jpg", timestamp: "06/01/2026 17:29:47" },
       
         { url: "/static/webcam/2026-01-06_17-35-49.jpg", timestamp: "06/01/2026 17:35:49" },
@@ -312,6 +310,8 @@
       
         { url: "/static/webcam/2026-01-06_23-01-04.jpg", timestamp: "06/01/2026 23:01:04" },
       
+        { url: "/static/webcam/2026-01-07_00-00-59.jpg", timestamp: "07/01/2026 00:00:59" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -325,7 +325,7 @@
     const timestampEl = document.getElementById("timestamp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
-    const currentTimestamp = "06/01/2026 23:01:04"; // Store initial timestamp
+    const currentTimestamp = "07/01/2026 00:00:59"; // Store initial timestamp
 
     // We will preload only on demand
     let preloaded = [];
@@ -340,7 +340,7 @@
         timelapseIcon.textContent = "play_circle";
         timelapseIcon.classList.remove("animate-spin-custom"); // Ensure spin is off
         // Reset to current live view
-        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-06_23-01-04.jpg")';
+        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-07_00-00-59.jpg")';
         timestampEl.textContent = currentTimestamp;
       } else {
         // Start Request
