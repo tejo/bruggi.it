@@ -117,7 +117,7 @@
                 <div
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">06/01/2026 07:08:34</span>
+                  <span id="timestamp">06/01/2026 07:12:47</span>
                 </div>
               </div>
               <div
@@ -272,8 +272,6 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-01-05_14-50-29.jpg", timestamp: "05/01/2026 14:50:29" },
-      
         { url: "/static/webcam/2026-01-05_14-52-43.jpg", timestamp: "05/01/2026 14:52:43" },
       
         { url: "/static/webcam/2026-01-05_15-19-17.jpg", timestamp: "05/01/2026 15:19:17" },
@@ -312,6 +310,8 @@
       
         { url: "/static/webcam/2026-01-06_08-08-08.jpg", timestamp: "06/01/2026 08:08:08" },
       
+        { url: "/static/webcam/2026-01-06_08-12-23.jpg", timestamp: "06/01/2026 08:12:23" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -325,7 +325,7 @@
     const timestampEl = document.getElementById("timestamp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
-    const currentTimestamp = "06/01/2026 07:08:34"; // Store initial timestamp
+    const currentTimestamp = "06/01/2026 07:12:47"; // Store initial timestamp
 
     // We will preload only on demand
     let preloaded = [];
