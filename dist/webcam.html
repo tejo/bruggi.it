@@ -102,7 +102,7 @@
               class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
               <div id="webcam-image"
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
-                style='background-image: url("/static/webcam/2026-01-06_14-53-13.jpg");'>
+                style='background-image: url("/static/webcam/2026-01-06_18-53-12.jpg");'>
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
@@ -117,7 +117,7 @@
                 <div
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">06/01/2026 14:53:13</span>
+                  <span id="timestamp">06/01/2026 18:53:12</span>
                 </div>
               </div>
               <div
@@ -272,18 +272,6 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-01-06_08-08-08.jpg", timestamp: "06/01/2026 08:08:08" },
-      
-        { url: "/static/webcam/2026-01-06_08-12-23.jpg", timestamp: "06/01/2026 08:12:23" },
-      
-        { url: "/static/webcam/2026-01-06_08-33-30.jpg", timestamp: "06/01/2026 08:33:30" },
-      
-        { url: "/static/webcam/2026-01-06_08-39-08.jpg", timestamp: "06/01/2026 08:39:08" },
-      
-        { url: "/static/webcam/2026-01-06_08-44-59.jpg", timestamp: "06/01/2026 08:44:59" },
-      
-        { url: "/static/webcam/2026-01-06_08-49-11.jpg", timestamp: "06/01/2026 08:49:11" },
-      
         { url: "/static/webcam/2026-01-06_09-08-21.jpg", timestamp: "06/01/2026 09:08:21" },
       
         { url: "/static/webcam/2026-01-06_09-09-35.jpg", timestamp: "06/01/2026 09:09:35" },
@@ -312,6 +300,18 @@
       
         { url: "/static/webcam/2026-01-06_14-53-13.jpg", timestamp: "06/01/2026 14:53:13" },
       
+        { url: "/static/webcam/2026-01-06_17-29-47.jpg", timestamp: "06/01/2026 17:29:47" },
+      
+        { url: "/static/webcam/2026-01-06_17-35-49.jpg", timestamp: "06/01/2026 17:35:49" },
+      
+        { url: "/static/webcam/2026-01-06_18-33-34.jpg", timestamp: "06/01/2026 18:33:34" },
+      
+        { url: "/static/webcam/2026-01-06_18-52-14.jpg", timestamp: "06/01/2026 18:52:14" },
+      
+        { url: "/static/webcam/2026-01-06_18-52-36.jpg", timestamp: "06/01/2026 18:52:36" },
+      
+        { url: "/static/webcam/2026-01-06_18-53-12.jpg", timestamp: "06/01/2026 18:53:12" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -325,7 +325,7 @@
     const timestampEl = document.getElementById("timestamp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
-    const currentTimestamp = "06/01/2026 14:53:13"; // Store initial timestamp
+    const currentTimestamp = "06/01/2026 18:53:12"; // Store initial timestamp
 
     // We will preload only on demand
     let preloaded = [];
@@ -340,7 +340,7 @@
         timelapseIcon.textContent = "play_circle";
         timelapseIcon.classList.remove("animate-spin-custom"); // Ensure spin is off
         // Reset to current live view
-        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-06_14-53-13.jpg")';
+        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-06_18-53-12.jpg")';
         timestampEl.textContent = currentTimestamp;
       } else {
         // Start Request
