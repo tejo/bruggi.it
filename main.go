@@ -1396,35 +1396,6 @@ func haversine(lat1, lon1, lat2, lon2 float64) float64 {
 	return R * c
 }
 
-func cleanupOldWebcamImages(dir string, keep int) {
-	entries, err := os.ReadDir(dir)
-	if err != nil {
-		log.Printf("Error reading webcam dir for cleanup: %v", err)
-		return
-	}
-
-	var snapshots []fs.DirEntry
-	for _, e := range entries {
-		if !e.IsDir() && strings.HasSuffix(e.Name(), ".jpg") && e.Name() != "current.jpg" {
-			snapshots = append(snapshots, e)
-		}
-	}
-
-	// snapshots are sorted oldest to newest (by filename YYYY-MM-DD...)
-	if len(snapshots) > keep {
-		removeCount := len(snapshots) - keep
-		toRemove := snapshots[:removeCount]
-		for _, e := range toRemove {
-			err := os.Remove(filepath.Join(dir, e.Name()))
-			if err != nil {
-				log.Printf("Error removing old webcam image %s: %v", e.Name(), err)
-			} else {
-				fmt.Printf("Removed old webcam image: %s\n", e.Name())
-			}
-		}
-	}
-}
-
 func validatePath(path string) {
 	if path == "" {
 		return
