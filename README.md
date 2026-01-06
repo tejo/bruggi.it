@@ -49,18 +49,7 @@ Access the site at `http://localhost:8080`.
 | `make build-arm` | Compiles the binary for Raspberry Pi (Linux ARM64). |
 | `make clean` | Removes the `dist/` and `bin/` directories. |
 
-## 📷 Webcam Updates
 
-This project includes a built-in tool to manage webcam images. To update the "live" view and archive the previous image:
-
-```bash
-go run main.go -update-webcam /path/to/your/new_image.jpg
-```
-
-This command will:
-1.  Copy the new image to `static/webcam/current.jpg`.
-2.  Save a timestamped copy in `static/webcam/`.
-3.  Regenerate only the webcam HTML pages to include the new image in the time-lapse history.
 
 ## 📂 Project Structure
 

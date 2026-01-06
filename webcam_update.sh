@@ -44,7 +44,6 @@ run_with_retry rpicam-jpeg -o capture.jpg -t 1500 -n
 
 # 4. Copy to Static Folder
 mkdir -p "$WEBCAM_DIR"
-cp capture.jpg "$WEBCAM_DIR/current.jpg"
 cp capture.jpg "$WEBCAM_DIR/$TIMESTAMP.jpg"
 
 # 5. RETENTION POLICY: Keep only last 20 images

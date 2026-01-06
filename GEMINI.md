@@ -63,14 +63,13 @@
 *   **Integration:** When enabled, events are automatically displayed on the homepage.
 
 ### Webcam & Weather
-*   **Live View:** Displays the latest image from `static/webcam/current.jpg`.
-*   **Static Timestamps:** The webcam clock is firm and displays the exact date and time the picture was taken (based on file modification time).
+*   **Live View:** Displays the latest timestamped image from `static/webcam/`.
+*   **Static Timestamps:** The timestamp is extracted directly from the filename (e.g., `YYYY-MM-DD_HH-MM-SS.jpg`).
 *   **Improved Time-lapse:** 
-    *   Plays in reverse (Newest -> Oldest) starting from the current image.
+    *   Plays in reverse (Newest -> Oldest) starting from the latest image.
     *   On-demand preloading with a visual loader inside the button.
     *   Synchronized timestamps that update for each frame during playback.
 *   **Real-time Weather:** Fetches live temperature, wind, and visibility data for Bruggi using the Open-Meteo API.
-*   **Update Tool:** A dedicated flag `-update-webcam` updates images, keeps only the last 20 snapshots, and triggers a re-render.
 
 ### Itineraries
 *   **Filtering:** Static pages generated for `hiking` and `biking` types.
@@ -105,13 +104,7 @@
     make build-arm
     ```
 
-4.  **Update Webcam:**
-    Add a new webcam image (updates `current.jpg`, keeps last 20 snapshots, and refreshes pages).
-    ```bash
-    go run main.go -update-webcam /path/to/new/image.jpg
-    # OR using the binary
-    ./bin/bruggi -update-webcam /path/to/new/image.jpg
-    ```
 
-5.  **Deployment:**
+
+4.  **Deployment:**
     The project uses GitHub Actions to automatically rebuild and commit the `dist/` folder whenever changes are pushed to `main`.

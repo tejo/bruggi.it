@@ -331,6 +331,7 @@ type RenderWebcamPage struct {
 	VisModerate     string
 	Images          []WebcamImage
 	Timestamp       string
+	LatestImage     string
 }
 
 type RenderNav struct {
@@ -360,115 +361,18 @@ type RenderWelcome struct {
 
 func main() {
 	serveMode := flag.Bool("serve", false, "Watch for changes and serve the site")
-	webcamUpdate := flag.String("update-webcam", "", "Path to new webcam image to add")
 	flag.Parse()
 
-	if *webcamUpdate != "" {
-		handleWebcamUpdate(*webcamUpdate)
-	} else if *serveMode {
+	if *serveMode {
 		watchAndServe()
 	} else {
 		buildSite()
 	}
 }
 
-func handleWebcamUpdate(srcPath string) {
-	fmt.Printf("Updating webcam with image: %s\n", srcPath)
 
-	// 1. Prepare Paths
-	webcamDir := "static/webcam"
-	if err := os.MkdirAll(webcamDir, 0755); err != nil {
-		log.Fatalf("Error creating webcam dir: %v", err)
-	}
 
-	distWebcamDir := "dist/static/webcam"
-	// Ensure dist exists (if not, we might be running this without a previous build,
-	// but we try to support it)
-	if err := os.MkdirAll(distWebcamDir, 0755); err != nil {
-		log.Fatalf("Error creating dist webcam dir: %v", err)
-	}
 
-	// 2. Generate Filenames
-	currentName := "current.jpg"
-
-	now := time.Now()
-	timestampName := fmt.Sprintf("%s.jpg", now.Format("2006-01-02_15-04-05"))
-
-	// 3. Copy files to static/webcam (Source of Truth)
-	if err := copyFile(srcPath, filepath.Join(webcamDir, currentName)); err != nil {
-		log.Fatalf("Error updating current.jpg in static: %v", err)
-	}
-	if err := copyFile(srcPath, filepath.Join(webcamDir, timestampName)); err != nil {
-		log.Fatalf("Error adding timestamped image in static: %v", err)
-	}
-
-	// 4. Copy files to dist/static/webcam (Served Content)
-	if err := copyFile(srcPath, filepath.Join(distWebcamDir, currentName)); err != nil {
-		log.Fatalf("Error updating current.jpg in dist: %v", err)
-	}
-	if err := copyFile(srcPath, filepath.Join(distWebcamDir, timestampName)); err != nil {
-		log.Fatalf("Error adding timestamped image in dist: %v", err)
-	}
-
-	// 4a. Cleanup Old Images (Keep last 20)
-	cleanupOldWebcamImages(webcamDir, 20)
-	cleanupOldWebcamImages(distWebcamDir, 20)
-
-	// 5. Update Pages
-	indexData, err := loadIndex("content/index.toml")
-	if err != nil {
-		log.Fatalf("Error loading index: %v", err)
-	}
-	eventsData, err := loadEvents("content/august_events.toml")
-	if err != nil {
-		log.Fatalf("Error loading events: %v", err)
-	}
-
-	updateWebcamPages(indexData, eventsData)
-	fmt.Println("Webcam update complete.")
-}
-
-func updateWebcamPages(indexData *IndexFile, eventsData *EventsFile) {
-	// Re-render ONLY webcam.html for IT and EN
-
-	webcamImages, err := loadWebcamImages("static/webcam")
-	if err != nil {
-		log.Printf("Error loading webcam images: %v", err)
-	}
-
-	timestamp, err := getWebcamTimestamp()
-	if err != nil {
-		log.Printf("Error getting webcam timestamp: %v", err)
-		timestamp = "--:--:--"
-	}
-
-	render := func(locale string, baseUrl string, outPath string) {
-		renderIndex := createRenderIndex(locale, indexData, eventsData)
-		renderIndex.WebcamPage.Images = webcamImages
-		renderIndex.WebcamPage.Timestamp = timestamp
-
-		ctx := pongo2.Context{
-			"locale":        locale,
-			"base_url":      baseUrl,
-			"alternate_url": computeAlternateUrl(locale, "/webcam.html"),
-			"page_title":    "Bruggi Webcams",
-			"t":             renderIndex,
-		}
-
-		// Ensure output dir exists
-		if err := os.MkdirAll(filepath.Dir(outPath), 0755); err != nil {
-			log.Panic(err)
-		}
-
-		tpl := pongo2.Must(pongo2.FromFile("templates/webcam.html"))
-		if err := renderToFile(tpl, ctx, outPath); err != nil {
-			log.Panic(err)
-		}
-	}
-
-	render("it", "", "dist/webcam.html")
-	render("en", "/en", "dist/en/webcam.html")
-}
 
 func buildSite() {
 	fmt.Println("Building site...")
@@ -715,10 +619,15 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 		log.Printf("Error loading webcam images: %v", err)
 	}
 
-	webcamTimestamp, err := getWebcamTimestamp()
-	if err != nil {
-		log.Printf("Error getting webcam timestamp: %v", err)
+	var webcamTimestamp string
+	var latestWebcamImage string
+	if len(webcamImages) > 0 {
+		latest := webcamImages[len(webcamImages)-1]
+		webcamTimestamp = latest.Timestamp
+		latestWebcamImage = latest.Url
+	} else {
 		webcamTimestamp = "--:--:--"
+		latestWebcamImage = "/static/webcam/current.jpg"
 	}
 
 	// Prepare Galleries for this locale
@@ -785,6 +694,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 	// Update WebcamPage with loaded images
 	renderIndex.WebcamPage.Images = webcamImages
 	renderIndex.WebcamPage.Timestamp = webcamTimestamp
+	renderIndex.WebcamPage.LatestImage = latestWebcamImage
 
 	tpl := pongo2.Must(pongo2.FromFile("templates/index.html"))
 	outPath := "dist/index.html"
@@ -1484,14 +1394,6 @@ func haversine(lat1, lon1, lat2, lon2 float64) float64 {
 	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
 
 	return R * c
-}
-
-func getWebcamTimestamp() (string, error) {
-	info, err := os.Stat("static/webcam/current.jpg")
-	if err != nil {
-		return "", err
-	}
-	return info.ModTime().Format("02/01/2006 15:04:05"), nil
 }
 
 func cleanupOldWebcamImages(dir string, keep int) {
