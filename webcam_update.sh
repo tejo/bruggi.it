@@ -6,6 +6,7 @@ trap "echo 'Shutdown signal received! Exiting cleanly.'; exit" SIGTERM SIGINT
 # --- Configuration ---
 REPO_DIR="/home/teo/bruggi.it"
 WEBCAM_DIR="static/webcam"
+WITTY_PATH="/home/pi/wittypi"  # Ensure this path is correct
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 RETENTION_COUNT=20
 MAX_RETRIES=3
@@ -40,15 +41,29 @@ run_with_retry() {
     return 1
 }
 
-# --- 3. Pull Only the Webcam Dir ---
-# This prevents push rejection if the remote has changed (e.g. from another Pi)
+# --- 3. Sync Remote Changes ---
 echo "Syncing remote changes (Sparse Pull)..."
 run_with_retry git pull origin main --rebase
 
-# --- 4. Capture ---
+# --- 4. Capture & Metadata Injection ---
 echo "Capturing image..."
-# Using run_with_retry for the camera in case the pipeline is temporarily locked
 run_with_retry rpicam-jpeg -o capture.jpg -t 2000 -n --width 1920 --height 1080
+
+if [ -f "capture.jpg" ]; then
+    # Get Temperature from Witty Pi
+    # The 'awk' command isolates the numeric value (e.g., 24.5)
+    TEMP=$(sudo "$WITTY_PATH/wittyPi.sh" get_temperature | awk '{print $3}')
+    
+    if [ -n "$TEMP" ]; then
+        echo "Recording Witty Pi Temperature: $TEMP°C"
+        # Check if exiftool is installed before trying to use it
+        if command -v exiftool >/dev/null 2>&1; then
+            exiftool -UserComment="WittyPi_Temp: $TEMP C" -overwrite_original capture.jpg
+        else
+            echo "Warning: exiftool not found. Skipping metadata injection. Install with:  sudo apt update && sudo apt install libimage-exiftool-perl -y"
+        fi
+    fi
+fi
 
 # Move capture to the webcam folder
 mkdir -p "$WEBCAM_DIR"
@@ -59,9 +74,8 @@ echo "Pruning old images (keeping last $RETENTION_COUNT)..."
 ls -1 "$WEBCAM_DIR"/[0-9]*.jpg 2>/dev/null | sort -r | tail -n +$((RETENTION_COUNT + 1)) | xargs -I {} rm -f {}
 
 # --- 6. Git Push ---
-# We ONLY add the webcam directory
 git add "$WEBCAM_DIR"
-git commit -m "webcam update: $TIMESTAMP" || echo "Nothing to commit"
+git commit -m "webcam update: $TIMESTAMP (Temp: $TEMP C)" || echo "Nothing to commit"
 
 echo "Pushing to GitHub..."
 run_with_retry git push origin main
