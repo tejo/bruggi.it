@@ -117,7 +117,12 @@
                 <div
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">08/01/2026 18:41:15</span>
+                  <span id="timestamp">08/01/2026 19:00:00</span>
+                  <span id="temp-container" class="flex items-center gap-2 ">
+                      <span class="mx-1 text-white/50">|</span>
+                      <span class="material-symbols-outlined text-sm">thermostat</span>
+                      <span id="overlay-temp">35.875°C</span>
+                  </span>
                 </div>
               </div>
               <div
@@ -272,45 +277,45 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-01-08_09-01-06.jpg", timestamp: "08/01/2026 09:01:06" },
+        { url: "/static/webcam/2026-01-08_09-01-06.jpg", timestamp: "08/01/2026 09:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_10-01-03.jpg", timestamp: "08/01/2026 10:01:03" },
+        { url: "/static/webcam/2026-01-08_10-01-03.jpg", timestamp: "08/01/2026 10:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_11-01-02.jpg", timestamp: "08/01/2026 11:01:02" },
+        { url: "/static/webcam/2026-01-08_11-01-02.jpg", timestamp: "08/01/2026 11:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_12-01-05.jpg", timestamp: "08/01/2026 12:01:05" },
+        { url: "/static/webcam/2026-01-08_12-01-05.jpg", timestamp: "08/01/2026 12:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_12-55-54.jpg", timestamp: "08/01/2026 12:55:54" },
+        { url: "/static/webcam/2026-01-08_12-55-54.jpg", timestamp: "08/01/2026 13:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_14-01-03.jpg", timestamp: "08/01/2026 14:01:03" },
+        { url: "/static/webcam/2026-01-08_14-01-03.jpg", timestamp: "08/01/2026 14:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_15-01-06.jpg", timestamp: "08/01/2026 15:01:06" },
+        { url: "/static/webcam/2026-01-08_15-01-06.jpg", timestamp: "08/01/2026 15:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_16-01-03.jpg", timestamp: "08/01/2026 16:01:03" },
+        { url: "/static/webcam/2026-01-08_16-01-03.jpg", timestamp: "08/01/2026 16:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-01-05.jpg", timestamp: "08/01/2026 17:01:05" },
+        { url: "/static/webcam/2026-01-08_17-01-05.jpg", timestamp: "08/01/2026 17:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-20-32.jpg", timestamp: "08/01/2026 17:20:32" },
+        { url: "/static/webcam/2026-01-08_17-20-32.jpg", timestamp: "08/01/2026 17:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-30-58.jpg", timestamp: "08/01/2026 17:30:58" },
+        { url: "/static/webcam/2026-01-08_17-30-58.jpg", timestamp: "08/01/2026 18:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-35-01.jpg", timestamp: "08/01/2026 17:35:01" },
+        { url: "/static/webcam/2026-01-08_17-35-01.jpg", timestamp: "08/01/2026 18:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-35-32.jpg", timestamp: "08/01/2026 17:35:32" },
+        { url: "/static/webcam/2026-01-08_17-35-32.jpg", timestamp: "08/01/2026 18:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-41-39.jpg", timestamp: "08/01/2026 17:41:39" },
+        { url: "/static/webcam/2026-01-08_17-41-39.jpg", timestamp: "08/01/2026 18:00:00", temp: "" },
       
-        { url: "/static/webcam/2026-01-08_17-44-50.jpg", timestamp: "08/01/2026 17:44:50" },
+        { url: "/static/webcam/2026-01-08_17-44-50.jpg", timestamp: "08/01/2026 18:00:00", temp: "4.85°C" },
       
-        { url: "/static/webcam/2026-01-08_18-10-41.jpg", timestamp: "08/01/2026 18:10:41" },
+        { url: "/static/webcam/2026-01-08_18-10-41.jpg", timestamp: "08/01/2026 18:00:00", temp: "4.85°C" },
       
-        { url: "/static/webcam/2026-01-08_18-11-14.jpg", timestamp: "08/01/2026 18:11:14" },
+        { url: "/static/webcam/2026-01-08_18-11-14.jpg", timestamp: "08/01/2026 18:00:00", temp: "4.85°C" },
       
-        { url: "/static/webcam/2026-01-08_18-11-52.jpg", timestamp: "08/01/2026 18:11:52" },
+        { url: "/static/webcam/2026-01-08_18-11-52.jpg", timestamp: "08/01/2026 18:00:00", temp: "4.85°C" },
       
-        { url: "/static/webcam/2026-01-08_18-35-04.jpg", timestamp: "08/01/2026 18:35:04" },
+        { url: "/static/webcam/2026-01-08_18-35-04.jpg", timestamp: "08/01/2026 19:00:00", temp: "35.625°C" },
       
-        { url: "/static/webcam/2026-01-08_18-41-15.jpg", timestamp: "08/01/2026 18:41:15" },
+        { url: "/static/webcam/2026-01-08_18-41-15.jpg", timestamp: "08/01/2026 19:00:00", temp: "35.875°C" },
       
     ];
     
@@ -323,9 +328,12 @@
     let imgIndex = 0;
     const webcamImgDiv = document.getElementById("webcam-image");
     const timestampEl = document.getElementById("timestamp");
+    const tempContainer = document.getElementById("temp-container");
+    const overlayTemp = document.getElementById("overlay-temp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
-    const currentTimestamp = "08/01/2026 18:41:15"; // Store initial timestamp
+    const currentTimestamp = "08/01/2026 19:00:00"; // Store initial timestamp
+    const currentTemp = "35.875°C";
 
     // We will preload only on demand
     let preloaded = [];
@@ -342,6 +350,14 @@
         // Reset to current live view
         webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-08_18-41-15.jpg")';
         timestampEl.textContent = currentTimestamp;
+        
+        if (currentTemp) {
+            if (tempContainer) tempContainer.classList.remove('hidden');
+            if (overlayTemp) overlayTemp.textContent = currentTemp;
+        } else {
+            if (tempContainer) tempContainer.classList.add('hidden');
+        }
+
       } else {
         // Start Request
         if (timelapseImages.length === 0) return;
@@ -372,7 +388,7 @@
                     img.onload = checkDone;
                     img.onerror = checkDone;
                 }
-                preloaded.push({ img: img, timestamp: item.timestamp });
+                preloaded.push({ img: img, timestamp: item.timestamp, temp: item.temp });
             });
 
         } else {
@@ -399,6 +415,13 @@
             if (item && item.img.complete) {
                 webcamImgDiv.style.backgroundImage = `url("${item.img.src}")`;
                 timestampEl.textContent = item.timestamp;
+                
+                if (item.temp) {
+                    if (tempContainer) tempContainer.classList.remove('hidden');
+                    if (overlayTemp) overlayTemp.textContent = item.temp;
+                } else {
+                    if (tempContainer) tempContainer.classList.add('hidden');
+                }
             }
             imgIndex = (imgIndex + 1) % preloaded.length;
         };
