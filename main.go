@@ -19,6 +19,7 @@ import (
 	"github.com/flosch/pongo2/v6"
 	"github.com/fsnotify/fsnotify"
 	"github.com/pelletier/go-toml/v2"
+	"github.com/rwcarlsen/goexif/exif"
 )
 
 // Data Structures
@@ -301,8 +302,9 @@ type RenderAugustEvents struct {
 }
 
 type WebcamImage struct {
-	Url       string
-	Timestamp string
+	Url         string
+	Timestamp   string
+	Temperature string
 }
 
 type RenderWebcamPage struct {
@@ -332,6 +334,7 @@ type RenderWebcamPage struct {
 	Images          []WebcamImage
 	Timestamp       string
 	LatestImage     string
+	LatestTemp      string
 }
 
 type RenderNav struct {
@@ -621,10 +624,12 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 
 	var webcamTimestamp string
 	var latestWebcamImage string
+	var latestWebcamTemp string
 	if len(webcamImages) > 0 {
 		latest := webcamImages[len(webcamImages)-1]
 		webcamTimestamp = latest.Timestamp
 		latestWebcamImage = latest.Url
+		latestWebcamTemp = latest.Temperature
 	} else {
 		webcamTimestamp = "--:--:--"
 		latestWebcamImage = "/static/webcam/current.jpg"
@@ -695,6 +700,7 @@ func renderLocale(locale string, baseUrl string, indexData *IndexFile, eventsDat
 	renderIndex.WebcamPage.Images = webcamImages
 	renderIndex.WebcamPage.Timestamp = webcamTimestamp
 	renderIndex.WebcamPage.LatestImage = latestWebcamImage
+	renderIndex.WebcamPage.LatestTemp = latestWebcamTemp
 
 	tpl := pongo2.Must(pongo2.FromFile("templates/index.html"))
 	outPath := "dist/index.html"
@@ -1282,12 +1288,54 @@ func loadWebcamImages(dir string) ([]WebcamImage, error) {
 					log.Printf("Warning: could not parse timestamp from webcam image %s: %v", entry.Name(), err)
 					timestamp = "--:--:--"
 				} else {
-					timestamp = t.Format("02/01/2006 15:04:05")
+					// Round to nearest hour
+					rounded := t.Round(time.Hour)
+					timestamp = rounded.Format("02/01/2006 15:04:05")
+				}
+
+				// Try to read EXIF for Temperature
+				var temperature string
+				filePath := filepath.Join(dir, entry.Name())
+				f, err := os.Open(filePath)
+				if err == nil {
+					x, err := exif.Decode(f)
+					if err == nil {
+						// Look for UserComment
+						tag, err := x.Get(exif.UserComment)
+						if err == nil {
+							// UserComment can be complex, but let's try String() or simple byte check
+							// value is typically "WittyPi_Temp: 24.5 C"
+							// Check if it's ASCII (starts with ASCII\0\0\0 often if strictly compliant, but maybe not)
+							// We can use string(tag.Val) effectively if it's just bytes
+							
+							// The library returns tag.String() which might quote things or show bytes. 
+							// Better to get raw bytes or try to convert.
+							// tag.String() usually formats it.
+							
+							// Let's inspect the raw value (tag.Val)
+							// Often: "ASCII\x00\x00\x00WittyPi_Temp..."
+							
+							raw := string(tag.Val)
+							// Simple cleanup of common UserComment prefixes if present
+							if len(raw) > 8 && raw[:5] == "ASCII" {
+								raw = raw[8:]
+							}
+							
+							// Look for WittyPi_Temp pattern
+							re := regexp.MustCompile(`WittyPi_Temp:\s*([\d\.]+)\s*C`)
+							matches := re.FindStringSubmatch(raw)
+							if len(matches) > 1 {
+								temperature = matches[1] + "°C"
+							}
+						}
+					}
+					f.Close()
 				}
 
 				images = append(images, WebcamImage{
-					Url:       "/static/webcam/" + entry.Name(),
-					Timestamp: timestamp,
+					Url:         "/static/webcam/" + entry.Name(),
+					Timestamp:   timestamp,
+					Temperature: temperature,
 				})
 			}
 		}

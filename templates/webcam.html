@@ -25,6 +25,11 @@
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
                   <span id="timestamp">{{ t.WebcamPage.Timestamp }}</span>
+                  <span id="temp-container" class="flex items-center gap-2 {% if not t.WebcamPage.LatestTemp %}hidden{% endif %}">
+                      <span class="mx-1 text-white/50">|</span>
+                      <span class="material-symbols-outlined text-sm">thermostat</span>
+                      <span id="overlay-temp">{{ t.WebcamPage.LatestTemp }}</span>
+                  </span>
                 </div>
               </div>
               <div
@@ -179,7 +184,7 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       {% for img in t.WebcamPage.Images %}
-        { url: "{{ img.Url }}", timestamp: "{{ img.Timestamp }}" },
+        { url: "{{ img.Url }}", timestamp: "{{ img.Timestamp }}", temp: "{{ img.Temperature }}" },
       {% endfor %}
     ];
     
@@ -192,9 +197,12 @@
     let imgIndex = 0;
     const webcamImgDiv = document.getElementById("webcam-image");
     const timestampEl = document.getElementById("timestamp");
+    const tempContainer = document.getElementById("temp-container");
+    const overlayTemp = document.getElementById("overlay-temp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
     const currentTimestamp = "{{ t.WebcamPage.Timestamp }}"; // Store initial timestamp
+    const currentTemp = "{{ t.WebcamPage.LatestTemp }}";
 
     // We will preload only on demand
     let preloaded = [];
@@ -211,6 +219,14 @@
         // Reset to current live view
         webcamImgDiv.style.backgroundImage = 'url("{{ t.WebcamPage.LatestImage }}")';
         timestampEl.textContent = currentTimestamp;
+        
+        if (currentTemp) {
+            if (tempContainer) tempContainer.classList.remove('hidden');
+            if (overlayTemp) overlayTemp.textContent = currentTemp;
+        } else {
+            if (tempContainer) tempContainer.classList.add('hidden');
+        }
+
       } else {
         // Start Request
         if (timelapseImages.length === 0) return;
@@ -241,7 +257,7 @@
                     img.onload = checkDone;
                     img.onerror = checkDone;
                 }
-                preloaded.push({ img: img, timestamp: item.timestamp });
+                preloaded.push({ img: img, timestamp: item.timestamp, temp: item.temp });
             });
 
         } else {
@@ -268,6 +284,13 @@
             if (item && item.img.complete) {
                 webcamImgDiv.style.backgroundImage = `url("${item.img.src}")`;
                 timestampEl.textContent = item.timestamp;
+                
+                if (item.temp) {
+                    if (tempContainer) tempContainer.classList.remove('hidden');
+                    if (overlayTemp) overlayTemp.textContent = item.temp;
+                } else {
+                    if (tempContainer) tempContainer.classList.add('hidden');
+                }
             }
             imgIndex = (imgIndex + 1) % preloaded.length;
         };
