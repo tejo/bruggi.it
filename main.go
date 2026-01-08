@@ -1312,18 +1312,30 @@ func loadWebcamImages(dir string) ([]WebcamImage, error) {
 							// Better to get raw bytes or try to convert.
 							// tag.String() usually formats it.
 							
-							// Let's inspect the raw value (tag.Val)
-							// Often: "ASCII\x00\x00\x00WittyPi_Temp..."
-							
-							raw := string(tag.Val)
-							// Simple cleanup of common UserComment prefixes if present
-							if len(raw) > 8 && raw[:5] == "ASCII" {
-								raw = raw[8:]
+							// Parse UserComment (Handles ASCII and UNICODE/UTF-16LE)
+							var raw string
+							if len(tag.Val) > 8 && string(tag.Val[:7]) == "UNICODE" {
+								// UTF-16LE
+								payload := tag.Val[8:]
+								var runes []rune
+								for i := 0; i < len(payload)-1; i += 2 {
+									r := uint16(payload[i]) | uint16(payload[i+1])<<8
+									if r != 0 {
+										runes = append(runes, rune(r))
+									}
+								}
+								raw = string(runes)
+							} else {
+								// Default / ASCII
+								raw = string(tag.Val)
+								if len(raw) > 8 && raw[:5] == "ASCII" {
+									raw = raw[8:]
+								}
 							}
 							
 							// Look for WittyPi_Temp pattern
-							// Updated regex to support negative numbers ([-]?\d...)
-							re := regexp.MustCompile(`WittyPi_Temp:\s*([-]?[\d\.]+)\s*C`)
+							// Updated regex to support negative numbers ([-]?\d...) and optional degree symbol
+							re := regexp.MustCompile(`WittyPi_Temp:\s*([-]?[\d\.]+).*C`)
 							matches := re.FindStringSubmatch(raw)
 							if len(matches) > 1 {
 								temperature = matches[1] + "°C"
