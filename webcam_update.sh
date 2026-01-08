@@ -47,7 +47,7 @@ run_with_retry git pull origin main --rebase
 
 # --- 4. Capture & Metadata Injection ---
 echo "Capturing image..."
-run_with_retry rpicam-jpeg -o capture.jpg -t 2000 -n --width 1920 --height 1080
+run_with_retry rpicam-jpeg -o capture.jpg -t 2000 -n --width 1920 --height 1080 --autofocus-mode manual --lens-position 0
 
 if [ -f "capture.jpg" ]; then
     # Get Temperature from Witty Pi
