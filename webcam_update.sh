@@ -1,12 +1,11 @@
 #!/bin/bash
-
 # Clean exit on shutdown signals
 trap "echo 'Shutdown signal received! Exiting cleanly.'; exit" SIGTERM SIGINT
 
 # --- Configuration ---
 REPO_DIR="/home/teo/bruggi.it"
 WEBCAM_DIR="static/webcam"
-WITTY_PATH="/home/pi/wittypi"  # Ensure this path is correct
+WITTY_PATH="/home/teo/wittypi"  # Ensure this path is correct
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 RETENTION_COUNT=20
 MAX_RETRIES=3
@@ -50,18 +49,20 @@ echo "Capturing image..."
 run_with_retry rpicam-jpeg -o capture.jpg -t 2000 -n --width 1920 --height 1080 --autofocus-mode manual --lens-position 0
 
 if [ -f "capture.jpg" ]; then
-    # Get Temperature from Witty Pi
-    # The 'awk' command isolates the numeric value (e.g., 24.5)
-    TEMP=$(sudo "$WITTY_PATH/wittyPi.sh" get_temperature | awk '{print $3}')
+    # Get Temperature from Witty Pi using the interactive menu
+    echo "Getting temperature from Witty Pi..."
+    TEMP=$(echo "13" | sudo "$WITTY_PATH/wittyPi.sh" | grep "Current temperature" | awk '{print $4}')
     
     if [ -n "$TEMP" ]; then
-        echo "Recording Witty Pi Temperature: $TEMP°C"
+        echo "Recording Witty Pi Temperature: $TEMP"
         # Check if exiftool is installed before trying to use it
         if command -v exiftool >/dev/null 2>&1; then
-            exiftool -UserComment="WittyPi_Temp: $TEMP C" -overwrite_original capture.jpg
+            exiftool -UserComment="WittyPi_Temp: $TEMP" -overwrite_original capture.jpg
         else
             echo "Warning: exiftool not found. Skipping metadata injection. Install with:  sudo apt update && sudo apt install libimage-exiftool-perl -y"
         fi
+    else
+        echo "Warning: Could not retrieve temperature from Witty Pi"
     fi
 fi
 
@@ -75,8 +76,7 @@ ls -1 "$WEBCAM_DIR"/[0-9]*.jpg 2>/dev/null | sort -r | tail -n +$((RETENTION_COU
 
 # --- 6. Git Push ---
 git add "$WEBCAM_DIR"
-git commit -m "webcam update: $TIMESTAMP (Temp: $TEMP C)" || echo "Nothing to commit"
-
+git commit -m "webcam update: $TIMESTAMP (Temp: $TEMP)" || echo "Nothing to commit"
 echo "Pushing to GitHub..."
 run_with_retry git push origin main
 
