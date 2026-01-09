@@ -109,33 +109,35 @@
               </div>
               <div class="absolute top-4 left-4 md:top-6 md:left-6 flex items-center gap-3 z-10">
                 <div
-                  class="bg-[#11d411] text-[#102210] text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-2 animate-pulse shadow-[0_0_10px_rgba(17,212,17,0.5)]">
+                  class="bg-[#11d411] text-[#102210] text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full flex items-center gap-2 animate-pulse shadow-[0_0_10px_rgba(17,212,17,0.5)]">
                   <span class="block w-2 h-2 rounded-full bg-[#102210]"></span> LIVE
                 </div>
               </div>
               <div class="absolute top-4 right-4 md:top-6 md:right-6 z-10">
                 <div
-                  class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
-                  <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">09/01/2026 09:00:00</span>
-                  <span id="temp-container" class="flex items-center gap-2 ">
-                      <span class="mx-1 text-white/50">|</span>
-                      <span class="material-symbols-outlined text-sm">thermostat</span>
+                  class="bg-black/40 backdrop-blur-md text-white text-[10px] md:text-sm font-mono px-2 py-1 md:px-3 md:py-1.5 rounded-lg border border-white/10 flex flex-col md:flex-row items-end md:items-center gap-0.5 md:gap-2">
+                  <div class="flex items-center gap-1 md:gap-2">
+                    <span class="material-symbols-outlined text-xs md:text-sm">schedule</span>
+                    <span id="timestamp">09/01/2026 09:00:00</span>
+                  </div>
+                  <span id="temp-container" class="flex items-center gap-1 md:gap-2 ">
+                      <span class="mx-1 text-white/50 hidden md:inline">|</span>
+                      <span class="material-symbols-outlined text-xs md:text-sm">thermostat</span>
                       <span id="overlay-temp">2.75°C</span>
                   </span>
                 </div>
               </div>
               <div
-                class="absolute bottom-0 left-0 w-full p-4 md:p-8 flex flex-col md:flex-row justify-between items-end gap-4 z-10">
+                class="absolute bottom-0 left-0 w-full p-3 md:p-8 flex flex-col md:flex-row justify-between items-end gap-4 z-10">
                 <div class="text-white w-full">
-                  <div class="flex items-center gap-2 mb-2">
-                    <h1 class="text-2xl md:text-5xl font-black tracking-tight text-shadow-lg drop-shadow-md">Bruggi</h1>
+                  <div class="flex items-center gap-2 mb-1 md:mb-2">
+                    <h1 class="text-xl md:text-5xl font-black tracking-tight text-shadow-lg drop-shadow-md">Bruggi</h1>
                     <span
                       class="bg-white/20 text-white text-[10px] md:text-xs font-bold px-2 py-0.5 rounded backdrop-blur-sm border border-white/20">HD</span>
                   </div>
                   <p
-                    class="text-gray-200 text-sm md:text-lg font-medium flex items-center gap-2 drop-shadow-md max-w-2xl">
-                    <span class="material-symbols-outlined text-base">location_on</span>
+                    class="text-gray-200 text-xs md:text-lg font-medium flex items-center gap-1 md:gap-2 drop-shadow-md max-w-2xl">
+                    <span class="material-symbols-outlined text-sm md:text-base">location_on</span>
                     Stazione a Valle (1200m)
                   </p>
                 </div>
