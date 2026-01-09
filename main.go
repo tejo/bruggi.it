@@ -1334,8 +1334,8 @@ func loadWebcamImages(dir string) ([]WebcamImage, error) {
 							}
 							
 							// Look for WittyPi_Temp pattern
-							// Updated regex to support negative numbers ([-]?\d...) and optional degree symbol
-							re := regexp.MustCompile(`WittyPi_Temp:\s*([-]?[\d\.]+).*C`)
+							// Updated regex to support negative numbers and truncate to one decimal place
+							re := regexp.MustCompile(`WittyPi_Temp:\s*([-]?\d+\.?\d?).*C`)
 							matches := re.FindStringSubmatch(raw)
 							if len(matches) > 1 {
 								temperature = matches[1] + "°C"
