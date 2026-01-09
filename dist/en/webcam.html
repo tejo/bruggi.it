@@ -102,7 +102,7 @@
               class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
               <div id="webcam-image"
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
-                style='background-image: url("/static/webcam/2026-01-09_06-04-05.jpg");'>
+                style='background-image: url("/static/webcam/2026-01-09_07-04-05.jpg");'>
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
@@ -117,11 +117,11 @@
                 <div
                   class="bg-black/40 backdrop-blur-md text-white text-sm font-mono px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                   <span class="material-symbols-outlined text-sm">schedule</span>
-                  <span id="timestamp">09/01/2026 06:00:00</span>
+                  <span id="timestamp">09/01/2026 07:00:00</span>
                   <span id="temp-container" class="flex items-center gap-2 ">
                       <span class="mx-1 text-white/50">|</span>
                       <span class="material-symbols-outlined text-sm">thermostat</span>
-                      <span id="overlay-temp">2.125°C</span>
+                      <span id="overlay-temp">2.25°C</span>
                   </span>
                 </div>
               </div>
@@ -277,8 +277,6 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-01-08_10-01-03.jpg", timestamp: "08/01/2026 10:00:00", temp: "" },
-      
         { url: "/static/webcam/2026-01-08_11-01-02.jpg", timestamp: "08/01/2026 11:00:00", temp: "" },
       
         { url: "/static/webcam/2026-01-08_12-01-05.jpg", timestamp: "08/01/2026 12:00:00", temp: "" },
@@ -317,6 +315,8 @@
       
         { url: "/static/webcam/2026-01-09_06-04-05.jpg", timestamp: "09/01/2026 06:00:00", temp: "2.125°C" },
       
+        { url: "/static/webcam/2026-01-09_07-04-05.jpg", timestamp: "09/01/2026 07:00:00", temp: "2.25°C" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -332,8 +332,8 @@
     const overlayTemp = document.getElementById("overlay-temp");
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
-    const currentTimestamp = "09/01/2026 06:00:00"; // Store initial timestamp
-    const currentTemp = "2.125°C";
+    const currentTimestamp = "09/01/2026 07:00:00"; // Store initial timestamp
+    const currentTemp = "2.25°C";
 
     // We will preload only on demand
     let preloaded = [];
@@ -348,7 +348,7 @@
         timelapseIcon.textContent = "play_circle";
         timelapseIcon.classList.remove("animate-spin-custom"); // Ensure spin is off
         // Reset to current live view
-        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-09_06-04-05.jpg")';
+        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-01-09_07-04-05.jpg")';
         timestampEl.textContent = currentTimestamp;
         
         if (currentTemp) {
