@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -26,23 +26,14 @@ jobs:
       - name: Build site
         run: go run main.go
 
-      # Step 1: Commit 'dist' folder back to the 'main' branch
-      - name: Commit and push dist to main
+      - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add dist/
-          # Check if there are changes to commit to avoid empty commit errors
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "docs: auto-rebuild static site [skip ci]"
+            git commit -m "docs: auto-rebuild static site"
             git push
           fi
-
-      # Step 2: Take that same 'dist' folder and push it to 'gh-pages' branch
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          branch: gh-pages
