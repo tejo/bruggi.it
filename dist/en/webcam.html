@@ -102,7 +102,7 @@
               class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
               <div id="webcam-image"
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
-                style='background-image: url("/static/webcam/2026-03-22_16-01-04.jpg");'>
+                style='background-image: url("/static/webcam/2026-03-22_16-22-16.jpg");'>
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
@@ -123,7 +123,7 @@
                   <span id="temp-container" class="flex items-center gap-1 md:gap-2 ">
                       <span class="mx-1 text-white/50 hidden md:inline">|</span>
                       <span class="material-symbols-outlined text-xs md:text-sm">thermostat</span>
-                      <span id="overlay-temp">22°C</span>
+                      <span id="overlay-temp">25.1°C</span>
                   </span>
                 </div>
               </div>
@@ -279,8 +279,6 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-03-21_11-01-04.jpg", timestamp: "21/03/2026 11:00:00", temp: "22.1°C" },
-      
         { url: "/static/webcam/2026-03-21_12-01-04.jpg", timestamp: "21/03/2026 12:00:00", temp: "22.1°C" },
       
         { url: "/static/webcam/2026-03-21_13-01-02.jpg", timestamp: "21/03/2026 13:00:00", temp: "22.1°C" },
@@ -319,6 +317,8 @@
       
         { url: "/static/webcam/2026-03-22_16-01-04.jpg", timestamp: "22/03/2026 16:00:00", temp: "22°C" },
       
+        { url: "/static/webcam/2026-03-22_16-22-16.jpg", timestamp: "22/03/2026 16:00:00", temp: "25.1°C" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -335,7 +335,7 @@
     const timelapseBtn = document.getElementById("timelapse-btn");
     const timelapseIcon = timelapseBtn.querySelector(".material-symbols-outlined");
     const currentTimestamp = "22/03/2026 16:00:00"; // Store initial timestamp
-    const currentTemp = "22°C";
+    const currentTemp = "25.1°C";
 
     // We will preload only on demand
     let preloaded = [];
@@ -350,7 +350,7 @@
         timelapseIcon.textContent = "play_circle";
         timelapseIcon.classList.remove("animate-spin-custom"); // Ensure spin is off
         // Reset to current live view
-        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-03-22_16-01-04.jpg")';
+        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-03-22_16-22-16.jpg")';
         timestampEl.textContent = currentTimestamp;
         
         if (currentTemp) {
