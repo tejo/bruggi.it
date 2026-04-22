@@ -102,7 +102,7 @@
               class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group border border-[#dbe6db] dark:border-[#2a402a]">
               <div id="webcam-image"
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] ease-linear hover:scale-105"
-                style='background-image: url("/static/webcam/2026-04-22_07-48-38.jpg");'>
+                style='background-image: url("/static/webcam/2026-04-22_08-04-12.jpg");'>
               </div>
               <div
                 class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none">
@@ -279,8 +279,6 @@
     // 3. Time-lapse Logic
     const timelapseImages = [
       
-        { url: "/static/webcam/2026-04-20_15-01-02.jpg", timestamp: "20/04/2026 15:00:00", temp: "27.7°C" },
-      
         { url: "/static/webcam/2026-04-20_16-01-03.jpg", timestamp: "20/04/2026 16:00:00", temp: "27.8°C" },
       
         { url: "/static/webcam/2026-04-20_17-01-04.jpg", timestamp: "20/04/2026 17:00:00", temp: "28.1°C" },
@@ -319,6 +317,8 @@
       
         { url: "/static/webcam/2026-04-22_07-48-38.jpg", timestamp: "22/04/2026 08:00:00", temp: "" },
       
+        { url: "/static/webcam/2026-04-22_08-04-12.jpg", timestamp: "22/04/2026 08:00:00", temp: "" },
+      
     ];
     
     // "Start from current and go back" -> Reverse the array (Newest -> Oldest)
@@ -350,7 +350,7 @@
         timelapseIcon.textContent = "play_circle";
         timelapseIcon.classList.remove("animate-spin-custom"); // Ensure spin is off
         // Reset to current live view
-        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-04-22_07-48-38.jpg")';
+        webcamImgDiv.style.backgroundImage = 'url("/static/webcam/2026-04-22_08-04-12.jpg")';
         timestampEl.textContent = currentTimestamp;
         
         if (currentTemp) {
